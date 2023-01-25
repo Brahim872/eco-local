@@ -1,8 +1,7 @@
 <?php
 
-namespace App\Actions\Admin\Clients;
+namespace App\Actions\Admin\User;
 
-use App\Models\Client;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -11,7 +10,7 @@ use Illuminate\Support\Facades\Storage;
 
 class CreateClient
 {
-    public function handle(Request $request): Client
+    public function handle(Request $request): User
     {
 
         $file = $request->file('image');
@@ -21,16 +20,18 @@ class CreateClient
             $path = Storage::disk('public')->putFileAs('uploads', $file, uniqid().'.'.$extension);
         }
 
-        $Client = Client::create([
+        $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
-            'user_id' => Auth::id(),
             'password' => Hash::make($request->password),
             'profile' => $path??NULL,
             'phone' =>  $request->phone,
         ]);
 
 
-        return $Client;
+        $roles = $request->roles ?? [];
+        $user->assignRole($roles);
+
+        return $user;
     }
 }

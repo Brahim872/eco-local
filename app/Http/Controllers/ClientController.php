@@ -2,15 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Actions\Admin\Clients\CreateClient;
-use App\Actions\Admin\User\UpdateClient;
-use App\Actions\Admin\User\UpdateUser;
-use App\Http\Requests\Admin\StoreClientRequest;
-use App\Http\Requests\Admin\UpdateClientRequest;
-use App\Http\Requests\Admin\UpdateUserRequest;
 use App\Models\Client;
-use App\Models\Role;
-use App\Models\User;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
@@ -55,6 +47,9 @@ class ClientController extends Controller
 
 
 
+
+
+
         return view('admin.clients.index', compact('clients'));
     }
 
@@ -62,27 +57,22 @@ class ClientController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return Application|Factory|View
+     * @return \Illuminate\Http\Response
      */
     public function create()
     {
-        return view('admin.clients.create');
-
+        //
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param StoreClientRequest $request
-     * @param \App\Http\Controllers\CreateClient $createClient
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreClientRequest $request, CreateClient $createClient)
+    public function store(Request $request)
     {
-
-        $createClient->handle($request);
-        toastr()->success('client created successfully.');
-        return redirect()->route('client.index');
+        //
     }
 
     /**
@@ -102,27 +92,21 @@ class ClientController extends Controller
      * @param  \App\Models\Client  $client
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Client $client)
     {
-        $client = Client::findOrFail($id);
-
-        return view('admin.clients.edit', compact('client'));
+        //
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param UpdateClientRequest $request
-     * @param \App\Models\Client $client
-     * @param UpdateClient $updateClient
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Models\Client  $client
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateClientRequest $request, $client, UpdateClient $updateClient)
+    public function update(Request $request, Client $client)
     {
-        $user = Client::findOrFail($client);
-        $updateClient->handle($request, $client);
-        toastr()->success('Client updated successfully.');
-        return redirect()->route('client.index');
+        //
     }
 
     /**

@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('bs_login_history', function (Blueprint $table) {
+        Schema::create('login_history', function (Blueprint $table) {
             $table->id();
             $table->string("name",100);
             $table->string("email",200);
@@ -28,6 +28,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('bs_login_history');
+        Schema::dropIfExists('login_history');
     }
 };
