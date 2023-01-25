@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Actions\Admin\User\CreateClient;
+use App\Actions\Admin\User\CreateUser;
 use App\Actions\Admin\User\UpdateClient;
+use App\Actions\Admin\User\UpdateUser;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\StoreUserRequest;
 use App\Http\Requests\Admin\UpdatePasswordUserRequest;
@@ -78,7 +80,7 @@ class UserController extends Controller
      * @param CreateClient $createUser
      * @return RedirectResponse
      */
-    public function store(StoreUserRequest $request, CreateClient $createUser)
+    public function store(StoreUserRequest $request, CreateUser $createUser)
     {
 
         $createUser->handle($request);
@@ -130,7 +132,7 @@ class UserController extends Controller
      * @param UpdateClient $updateUser
      * @return Response
      */
-    public function update(UpdateUserRequest $request, $user, UpdateClient $updateUser)
+    public function update(UpdateUserRequest $request, $user, UpdateUser $updateUser)
     {
         $user = User::findOrFail($user);
         $updateUser->handle($request, $user);

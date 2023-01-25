@@ -41,6 +41,12 @@ class BasicAdminPermissionSeeder extends Seeder
             'user edit',
             'user delete',
 
+            'client main',
+            'client list',
+            'client create',
+            'client edit',
+            'client delete',
+
         ];
 
         foreach ($permissions as $permission) {

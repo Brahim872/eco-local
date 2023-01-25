@@ -25,7 +25,7 @@ Route::middleware('auth')->group(function () {
 
 
 Route::group([
-    'prefix' => 'admin',
+//    'prefix' => 'admin',
     'middleware' => ['auth'],
 ], function () {
 
@@ -56,7 +56,6 @@ Route::group([
             Route::get('edit-account-info', [UserController::class,'accountInfo'])->name('admin.account.info');
             Route::post('edit-account-info', [UserController::class,'accountInfoStore'])->name('admin.account.info.store');
             Route::post('change-password', [UserController::class,'changePasswordStore'])->name('admin.account.password.store');
-
         });
 
 
@@ -83,7 +82,6 @@ Route::group([
             Route::delete('destroy/{id}', [ClientController::class,'destroy'])->name('client.destroy');
             Route::get('edit/{id}', [ClientController::class,'edit'])->name('client.edit');
             Route::put('update/{id}', [ClientController::class,'update'])->name('client.update');
-
         });
 
 
