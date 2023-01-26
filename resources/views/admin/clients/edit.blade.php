@@ -17,6 +17,7 @@
             <form method="POST" action="{{ route('user.update',$user->id) }}"  enctype="multipart/form-data">
                 @csrf
 
+
                 <div class="py-2">
 
                     <x-admin.form.image id="image" class="{{$errors->has('image') ? 'border-red-400' : ''}} w-[50%]"

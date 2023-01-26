@@ -20,7 +20,9 @@ class CreateClient
             $path = Storage::disk('public')->putFileAs('uploads', $file, uniqid().'.'.$extension);
         }
 
-        $user = User::create([
+
+
+        $Client = Client::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
@@ -29,9 +31,6 @@ class CreateClient
         ]);
 
 
-        $roles = $request->roles ?? [];
-        $user->assignRole($roles);
-
-        return $user;
+        return $Client;
     }
 }

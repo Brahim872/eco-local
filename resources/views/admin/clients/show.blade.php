@@ -15,6 +15,7 @@
                             </div>
                         </div>
 
+
                         <div class="flex-none w-auto max-w-full px-3 my-auto">
                             <div class="h-full">
                                 <h5 class="mb-1 font-bold text-2xl flex mb-3">{{$user->name}}</h5>

@@ -44,6 +44,7 @@
                                 />
             </div>
 
+
             <div class="py-2">
                 <x-admin.form.label for="phone" class="{{$errors->has('phone') ? 'text-red-400' : ''}}">{{ __('phone') }}</x-admin.form.label>
 
