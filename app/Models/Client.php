@@ -12,6 +12,7 @@ class Client extends Model
     protected $fillable = [
         'first_name',
         'last_name',
+        'user_id',
         'company_name',
         'address',
         'email',
@@ -20,6 +21,7 @@ class Client extends Model
         'profile',
     ];
 
+    protected $table = "bs_clients";
 
     /**
      * The attributes that should be hidden for serialization.

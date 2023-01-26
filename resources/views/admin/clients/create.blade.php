@@ -2,7 +2,7 @@
     <x-slot  name="title">
         <div class="flex justify-between items-center">
             <h2 class="inline-block text-2xl sm:text-3xl  text-slate-900   block sm:inline-block flex">
-                {{ __('Create user') }}
+                {{ __('Create client') }}
             </h2>
         </div>
     </x-slot>
@@ -10,7 +10,7 @@
 
     <div class="w-full py-2 bg-white overflow-hidden">
 
-        <form method="POST" action="{{ route('user.store') }}"  enctype="multipart/form-data">
+        <form method="POST" action="{{ route('client.store') }}"  enctype="multipart/form-data">
         @csrf
 
             <div class="py-2">
@@ -44,7 +44,6 @@
                                 />
             </div>
 
-
             <div class="py-2">
                 <x-admin.form.label for="phone" class="{{$errors->has('phone') ? 'text-red-400' : ''}}">{{ __('phone') }}</x-admin.form.label>
 
@@ -71,22 +70,6 @@
                                 type="password"
                                 name="password_confirmation"
                                 />
-            </div>
-
-            <div class="py-2">
-                <h3 class="inline-block text-xl sm:text-2xl font-extrabold text-slate-900 tracking-tight py-4 block sm:inline-block flex">Roles</h3>
-                <div class="grid grid-cols-4 gap-4">
-                    @forelse ($roles as $role)
-                        <div class="col-span-4 sm:col-span-2 md:col-span-1">
-                            <label class="form-check-label">
-                                <input type="checkbox" name="roles[]" value="{{ $role->name }}" class="rounded border-gray-300 text-indigo-600 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
-                                {{ $role->name }}
-                            </label>
-                        </div>
-                    @empty
-                        ----
-                    @endforelse
-                </div>
             </div>
 
             <div class="flex justify-end mt-4">
