@@ -77,7 +77,7 @@ Route::group([
         ], function () {
             Route::get('/', [ClientController::class,'index'])->name('client.index');
             Route::get('create', [ClientController::class,'create'])->name('client.create');
-            Route::post('store', [ClientController::class,'store'])->name('client.store');
+            Route::post('store', [ClientController::class,'storeClient'])->name('client.store');
             Route::get('show/{id}', [ClientController::class,'show'])->name('client.show');
             Route::delete('destroy/{id}', [ClientController::class,'destroy'])->name('client.destroy');
             Route::get('edit/{id}', [ClientController::class,'edit'])->name('client.edit');

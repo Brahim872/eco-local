@@ -2,7 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Actions\Admin\Clients\CreateClient;
+use App\Actions\Admin\User\UpdateClient;
+use App\Actions\Admin\User\UpdateUser;
+use App\Http\Requests\Admin\StoreClientRequest;
+use App\Http\Requests\Admin\UpdateClientRequest;
+use App\Http\Requests\Admin\UpdateUserRequest;
 use App\Models\Client;
+use App\Models\Role;
+use App\Models\User;
+use App\Traits\CrudTrait;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
@@ -12,6 +21,10 @@ class ClientController extends Controller
 {
 
 
+    use CrudTrait;
+
+    protected $prefixName = "client";
+    protected $model = Client::class;
 
     public function __construct()
     {
@@ -47,32 +60,14 @@ class ClientController extends Controller
 
 
 
-
-
-
-        return view('admin.clients.index', compact('clients'));
+        return view('admin.client.index', compact('clients'));
     }
 
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+    public function storeClient(StoreClientRequest $request, CreateClient $createClient)
     {
-        //
+        return $this->store($request, $createClient);
     }
 
     /**
@@ -86,37 +81,23 @@ class ClientController extends Controller
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Client  $client
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Client $client)
-    {
-        //
-    }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Client  $client
+     * @param UpdateClientRequest $request
+     * @param \App\Models\Client $client
+     * @param UpdateClient $updateClient
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Client $client)
+    public function update(UpdateClientRequest $request, $client, UpdateClient $updateClient)
     {
-        //
+        $user = Client::findOrFail($client);
+        $updateClient->handle($request, $client);
+        toastr()->success('Client updated successfully.');
+        return redirect()->route('client.index');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Client  $client
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Client $client)
-    {
-        //
-    }
+
+
 }

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "42e3efe9c8cc1d7292dc0a168a60235c",
+    "content-hash": "8ef9a0dcf4518f0f09dcb9ee8afe26ec",
     "packages": [
         {
             "name": "brick/math",
@@ -2372,86 +2372,6 @@
             ],
             "support": {
                 "source": "https://github.com/php-flasher/flasher-laravel/tree/v1.12.0"
-            },
-            "funding": [
-                {
-                    "url": "https://www.paypal.com/paypalme/yoeunes",
-                    "type": "custom"
-                },
-                {
-                    "url": "https://github.com/yoeunes",
-                    "type": "github"
-                },
-                {
-                    "url": "https://ko-fi.com/yoeunes",
-                    "type": "ko_fi"
-                },
-                {
-                    "url": "https://opencollective.com/php-flasher",
-                    "type": "open_collective"
-                },
-                {
-                    "url": "https://www.patreon.com/yoeunes",
-                    "type": "patreon"
-                }
-            ],
-            "time": "2023-01-10T11:33:34+00:00"
-        },
-        {
-            "name": "php-flasher/flasher-toastr",
-            "version": "v1.12.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/php-flasher/flasher-toastr.git",
-                "reference": "ea1c16ce9d2f65a6ce79c08664ef32b3c7049527"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/php-flasher/flasher-toastr/zipball/ea1c16ce9d2f65a6ce79c08664ef32b3c7049527",
-                "reference": "ea1c16ce9d2f65a6ce79c08664ef32b3c7049527",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.3",
-                "php-flasher/flasher": "^1.12"
-            },
-            "type": "library",
-            "autoload": {
-                "files": [
-                    "helpers.php"
-                ],
-                "psr-4": {
-                    "Flasher\\Toastr\\Prime\\": ""
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Younes KHOUBZA",
-                    "email": "younes.khoubza@gmail.com",
-                    "homepage": "https://www.linkedin.com/in/younes-khoubza",
-                    "role": "Developer"
-                }
-            ],
-            "description": "PHPFlasher adapter for Toastr",
-            "homepage": "https://php-flasher.io",
-            "keywords": [
-                "alerts",
-                "laravel",
-                "lumen",
-                "messages",
-                "notifications",
-                "notify",
-                "php",
-                "pnotify",
-                "symfony",
-                "toastr"
-            ],
-            "support": {
-                "source": "https://github.com/php-flasher/flasher-toastr/tree/v1.12.0"
             },
             "funding": [
                 {
@@ -5765,32 +5685,31 @@
         },
         {
             "name": "yoeunes/toastr",
-            "version": "v2.1.0",
+            "version": "v2.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/yoeunes/toastr.git",
-                "reference": "de224ba8f80e68141190a7d30533846e81694329"
+                "reference": "fe9fc7c80d213dd443d899ce925d189714aed422"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/yoeunes/toastr/zipball/de224ba8f80e68141190a7d30533846e81694329",
-                "reference": "de224ba8f80e68141190a7d30533846e81694329",
+                "url": "https://api.github.com/repos/yoeunes/toastr/zipball/fe9fc7c80d213dd443d899ce925d189714aed422",
+                "reference": "fe9fc7c80d213dd443d899ce925d189714aed422",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.3",
-                "php-flasher/flasher-laravel": "^1.9",
-                "php-flasher/flasher-toastr": "^1.9"
+                "php-flasher/flasher-laravel": "^1.12"
             },
             "type": "library",
             "extra": {
                 "laravel": {
-                    "providers": [
-                        "Yoeunes\\Toastr\\ToastrServiceProvider"
-                    ],
                     "aliases": {
                         "Toastr": "Yoeunes\\Toastr\\Facades\\Toastr"
-                    }
+                    },
+                    "providers": [
+                        "Yoeunes\\Toastr\\ToastrServiceProvider"
+                    ]
                 }
             },
             "autoload": {
@@ -5807,33 +5726,36 @@
             ],
             "authors": [
                 {
-                    "name": "Younes Khoubza",
+                    "name": "Younes KHOUBZA",
                     "email": "younes.khoubza@gmail.com",
-                    "homepage": "https://github.com/yoeunes",
+                    "homepage": "https://www.linkedin.com/in/younes-khoubza",
                     "role": "Developer"
                 }
             ],
-            "description": "toastr.js flush notifications for Laravel and Lumen",
+            "description": "toastr.js flush notifications for Laravel",
             "homepage": "https://github.com/yoeunes/toastr",
             "keywords": [
-                "alerts",
-                "flush",
-                "flush messages",
-                "flush notifications",
+                "custom-adapter",
+                "dark-mode",
+                "desktop-notifications",
+                "flash-messages",
+                "framework-agnostic",
+                "javascript",
                 "laravel",
-                "laravel 5",
-                "laravel 6",
-                "laravel 7",
-                "laravel flush notifications",
-                "laravel notification",
-                "laravel notify",
-                "laravel toastr",
-                "lumen",
-                "messages",
-                "notification",
+                "notification-system",
+                "noty",
+                "notyf",
                 "php",
+                "php-flasher",
+                "phpstorm-auto-complete",
+                "pnotify",
+                "rtl",
+                "sweetalert",
+                "symfony",
                 "toastr",
                 "toastr js",
+                "user-experience",
+                "user-feedback",
                 "yoeunes"
             ],
             "support": {
@@ -5844,11 +5766,27 @@
             },
             "funding": [
                 {
+                    "url": "https://www.paypal.com/paypalme/yoeunes",
+                    "type": "custom"
+                },
+                {
                     "url": "https://github.com/yoeunes",
                     "type": "github"
+                },
+                {
+                    "url": "https://ko-fi.com/yoeunes",
+                    "type": "ko_fi"
+                },
+                {
+                    "url": "https://opencollective.com/php-flasher",
+                    "type": "open_collective"
+                },
+                {
+                    "url": "https://www.patreon.com/yoeunes",
+                    "type": "patreon"
                 }
             ],
-            "time": "2022-12-25T01:08:34+00:00"
+            "time": "2023-01-14T02:38:08+00:00"
         }
     ],
     "packages-dev": [
