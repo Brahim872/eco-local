@@ -57,6 +57,20 @@ class ClientController extends Controller
 
         return view('admin.client.index', compact('clients'));
     }
+    /**
+     * Define view vars
+     *
+     * @return array
+     */
+
+
+    protected function getViewVars()
+    {
+
+        return [
+            'admin' =>$this->model::with('users')->firstOrfail()
+        ];
+    }
 
 
     public function storeClient(StoreClientRequest $request, CreateClient $createClient)
@@ -64,7 +78,6 @@ class ClientController extends Controller
 
         return $this->store($request, $createClient);
     }
-
 
 
 

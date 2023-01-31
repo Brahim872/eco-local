@@ -23,7 +23,7 @@ trait CrudTrait
      */
     public function create()
     {
-        return view('admin.'.$this->prefixName.'.create');
+        return view('admin.' . $this->prefixName . '.create');
     }
 
 
@@ -32,25 +32,24 @@ trait CrudTrait
 
         $service->handle($request);
         toastr()->success('resource created successfully.');
-        return redirect()->route($this->prefixName.'.index');
+        return redirect()->route($this->prefixName . '.index');
     }
 
     public function update($request, $client, $service)
     {
         $service->handle($request, $client);
         toastr()->success('resource updated successfully.');
-        return redirect()->route($this->prefixName.'.index');
+        return redirect()->route($this->prefixName . '.index');
     }
-
-
 
 
     public function edit($slug)
     {
-        $client = $this->model::where('slug',$slug)->firstOrFail();
-        return view('admin.'.$this->prefixName.'.edit', compact('client'));
-    }
+        $model = $this->model::where('slug', $slug)->firstOrFail();
 
+        $view = $this->getView('admin.' . $this->prefixName . '.edit');
+        return $view->with('model', $model);
+    }
 
 
     public function destroy($id)
@@ -58,17 +57,17 @@ trait CrudTrait
         $result = $this->model::findOrFail($id);
         $result->delete();
 
-        toastr()->success($this->prefixName.'deleted_successfully.');
-        return redirect()->route($this->prefixName.'.index');
+        toastr()->success($this->prefixName . 'deleted_successfully.');
+        return redirect()->route($this->prefixName . '.index');
     }
 
     public function show($user)
     {
-
         $model = $this->model::where('slug', $user)->firstOrFail();
-        return view('admin.'.$this->prefixName.'.show', compact('model'));
-    }
+        $view = $this->getView('admin.' . $this->prefixName . '.show');
+        return $view->with('model', $model);
 
+    }
 
 
 }
