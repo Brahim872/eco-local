@@ -13,17 +13,19 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('client', function (Blueprint $table) {
+        Schema::create('bs_clients', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id');
             $table->string('first_name')->nullable();
             $table->string('last_name')->nullable();
+            $table->string('user_name')->nullable()->unique();
             $table->string('company_name')->nullable();
             $table->string('address')->nullable();
             $table->string('email')->nullable();
             $table->string('password')->nullable();
-            $table->string('phone_number')->nullable();
+            $table->string('phone')->nullable();
             $table->string('profile')->nullable();
+            $table->string('slug'); // Field name same as your `saveSlugsTo`
 
             $table->timestamp('email_verified_at')->nullable();
             $table->timestamp('deactivated_at')->nullable();
@@ -42,6 +44,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('client');
+        Schema::dropIfExists('bs_clients');
     }
 };

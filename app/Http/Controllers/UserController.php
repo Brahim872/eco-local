@@ -2,26 +2,28 @@
 
 namespace App\Http\Controllers;
 
-use App\Actions\Admin\User\CreateClient;
+use App\Actions\Admin\Clients\UpdateClient;
 use App\Actions\Admin\User\CreateUser;
-use App\Actions\Admin\User\UpdateClient;
 use App\Actions\Admin\User\UpdateUser;
-use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\StoreUserRequest;
 use App\Http\Requests\Admin\UpdatePasswordUserRequest;
 use App\Http\Requests\Admin\UpdateUserRequest;
+use App\Models\Client;
 use App\Models\Role;
 use App\Models\User;
+use App\Traits\CrudTrait;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Validation\Rules;
 
 class UserController extends Controller
 {
+    use CrudTrait;
 
+    protected $prefixName = "user";
+    protected $model = User::class;
 
     public function __construct()
     {
@@ -38,7 +40,7 @@ class UserController extends Controller
         $users = (new User)->newQuery();
 
         if (request()->has('search')) {
-            $users->where('name', 'Like', '%'.request()->input('search').'%');
+            $users->where('name', 'Like', '%' . request()->input('search') . '%');
         }
 
         if (request()->query('sort')) {
@@ -56,54 +58,41 @@ class UserController extends Controller
         $users = $users->paginate(5)->onEachSide(2);
 
 
-
         return view('admin.user.index', compact('users'));
     }
 
     /**
      * Show the form for creating a new resource.
      *
-     * @return Response
+     * @return Application|Factory|View
      */
     public function create()
     {
 
         $roles = Role::all();
         return view('admin.user.create', compact('roles'));
-
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param StoreUserRequest $request
-     * @param CreateClient $createUser
-     * @return RedirectResponse
-     */
-    public function store(StoreUserRequest $request, CreateUser $createUser)
-    {
 
-        $createUser->handle($request);
-        toastr()->success('User created successfully.');
-        return redirect()->route('user.index');
+    public function storeUser(StoreUserRequest $request, CreateUser $createUser)
+    {
+        return $this->store($request, $createUser);
     }
 
     /**
      * Display the specified resource.
      *
      * @param User $user
-     * @return Response
+     * @return Application|Factory|View
      */
     public function show($user)
     {
-        $user = User::findOrFail($user);
+        $user = User::where('slug', $user)->firstOrFail();
         $roles = Role::all();
         $userHasRoles = array_column(json_decode($user->roles, true), 'id');
 
         return view('admin.user.show', compact('user', 'roles', 'userHasRoles'));
     }
-
-
 
 
     /**
@@ -114,14 +103,12 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        $user = User::findOrFail($id);
+        $user = User::where('slug', $id)->firstOrFail();
         $roles = Role::all();
         $userHasRoles = array_column(json_decode($user->roles, true), 'id');
 
         return view('admin.user.edit', compact('user', 'roles', 'userHasRoles'));
     }
-
-
 
 
     /**
@@ -130,17 +117,14 @@ class UserController extends Controller
      * @param UpdateUserRequest $request
      * @param User $user
      * @param UpdateClient $updateUser
-     * @return Response
+     * @return RedirectResponse
      */
-    public function update(UpdateUserRequest $request, $user, UpdateUser $updateUser)
+
+    public function updateUser(UpdateUserRequest $request, $user, UpdateUser $updateUser)
     {
-        $user = User::findOrFail($user);
-        $updateUser->handle($request, $user);
-        toastr()->success('User updated successfully.');
-        return redirect()->route('user.index');
+        $client = User::where('slug', $user)->firstOrFail();
+        return $this->update($request, $client, $updateUser);
     }
-
-
 
 
     /**
@@ -149,17 +133,15 @@ class UserController extends Controller
      * @param UpdatePasswordUserRequest $request
      * @param User $user
      * @param UpdateClient $updateUser
-     * @return Response
+     * @return RedirectResponse
      */
     public function updatePassword(UpdatePasswordUserRequest $request, $user, UpdateClient $updateUser)
     {
-        $user = User::findOrFail($user);
+        $user = User::where('slug', $user)->firstOrFail();
         $updateUser->changePassword($request, $user);
         toastr()->success('User updated successfully.');
         return redirect()->back();
     }
-
-
 
 
     /**
@@ -170,15 +152,12 @@ class UserController extends Controller
      */
     public function destroy($user)
     {
-        $user = User::findOrFail($user);
+        $user = User::where('slug', $user)->firstOrFail();
         $user->delete();
 
         toastr()->success('User deleted successfully.');
         return redirect()->route('user.index');
     }
-
-
-
 
 
 }

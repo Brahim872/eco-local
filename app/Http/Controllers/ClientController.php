@@ -3,19 +3,15 @@
 namespace App\Http\Controllers;
 
 use App\Actions\Admin\Clients\CreateClient;
-use App\Actions\Admin\User\UpdateClient;
-use App\Actions\Admin\User\UpdateUser;
+use App\Actions\Admin\Clients\UpdateClient;
 use App\Http\Requests\Admin\StoreClientRequest;
 use App\Http\Requests\Admin\UpdateClientRequest;
-use App\Http\Requests\Admin\UpdateUserRequest;
 use App\Models\Client;
-use App\Models\Role;
-use App\Models\User;
 use App\Traits\CrudTrait;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
-use Illuminate\Http\Request;
+use Illuminate\Http\RedirectResponse;
 
 class ClientController extends Controller
 {
@@ -41,7 +37,7 @@ class ClientController extends Controller
         $clients = (new Client)->newQuery();
 
         if (request()->has('search')) {
-            $clients->where('name', 'Like', '%'.request()->input('search').'%');
+            $clients->where('name', 'Like', '%' . request()->input('search') . '%');
         }
 
         if (request()->query('sort')) {
@@ -59,45 +55,32 @@ class ClientController extends Controller
         $clients = $clients->paginate(5)->onEachSide(2);
 
 
-
         return view('admin.client.index', compact('clients'));
     }
 
 
-
     public function storeClient(StoreClientRequest $request, CreateClient $createClient)
     {
+
         return $this->store($request, $createClient);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Client  $client
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Client $client)
-    {
-        //
-    }
+
 
 
     /**
      * Update the specified resource in storage.
      *
      * @param UpdateClientRequest $request
-     * @param \App\Models\Client $client
+     * @param Client $client
      * @param UpdateClient $updateClient
-     * @return \Illuminate\Http\Response
+     * @return RedirectResponse
      */
-    public function update(UpdateClientRequest $request, $client, UpdateClient $updateClient)
+    public function updateClient(UpdateClientRequest $request, $client, UpdateClient $updateClient)
     {
-        $user = Client::findOrFail($client);
-        $updateClient->handle($request, $client);
-        toastr()->success('Client updated successfully.');
-        return redirect()->route('client.index');
+        $client = Client::findOrFail($client);
+        return $this->update($request, $client, $updateClient);
     }
-
 
 
 }

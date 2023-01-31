@@ -47,11 +47,11 @@ Route::group([
         ], function () {
             Route::get('/', [UserController::class,'index'])->name('user.index');
             Route::get('create', [UserController::class,'create'])->name('user.create');
-            Route::post('store', [UserController::class,'store'])->name('user.store');
+            Route::post('store', [UserController::class,'storeUser'])->name('user.store');
             Route::get('show/{id}', [UserController::class,'show'])->name('user.show');
             Route::delete('destroy/{id}', [UserController::class,'destroy'])->name('user.destroy');
             Route::get('edit/{id}', [UserController::class,'edit'])->name('user.edit');
-            Route::post('update/{id}', [UserController::class,'update'])->name('user.update');
+            Route::post('update/{id}', [UserController::class,'updateUser'])->name('user.update');
             Route::post('updatePassword/{id}', [UserController::class,'updatePassword'])->name('user.update.password');
             Route::get('edit-account-info', [UserController::class,'accountInfo'])->name('admin.account.info');
             Route::post('edit-account-info', [UserController::class,'accountInfoStore'])->name('admin.account.info.store');
@@ -80,8 +80,8 @@ Route::group([
             Route::post('store', [ClientController::class,'storeClient'])->name('client.store');
             Route::get('show/{id}', [ClientController::class,'show'])->name('client.show');
             Route::delete('destroy/{id}', [ClientController::class,'destroy'])->name('client.destroy');
-            Route::get('edit/{id}', [ClientController::class,'edit'])->name('client.edit');
-            Route::put('update/{id}', [ClientController::class,'update'])->name('client.update');
+            Route::get('edit/{slug}', [ClientController::class,'edit'])->name('client.edit');
+            Route::put('update/{id}', [ClientController::class,'updateClient'])->name('client.update');
         });
 
 

@@ -14,6 +14,7 @@ class CreateClient
     public function handle(Request $request): Client
     {
 
+
         $file = $request->file('image');
 
         if(isset($file)){
@@ -22,7 +23,8 @@ class CreateClient
         }
 
         $Client = Client::create([
-            'name' => $request->name,
+            'first_name' => $request->first_name,
+            'last_name' => $request->last_name,
             'email' => $request->email,
             'user_id' => Auth::id(),
             'password' => Hash::make($request->password),

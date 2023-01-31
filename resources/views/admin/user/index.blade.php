@@ -48,7 +48,7 @@
                             <tr class="text-gray-700">
                                 <x-admin.grid.td>
                                     <div class="text-sm text-gray-900">
-                                        <a href="{{route('user.show', $user->id)}}" class="no-underline hover:underline text-cyan-600">{{ $user->name }}</a>
+                                        <a href="{{route('user.show', $user->slug)}}" class="no-underline hover:underline text-cyan-600">{{ $user->name }}</a>
                                     </div>
                                 </x-admin.grid.td>
                                 <x-admin.grid.td>
@@ -65,10 +65,10 @@
 
                                 @canany(['user edit', 'user delete'])
                                     <x-admin.grid.td style="width: 150px">
-                                        <form action="{{ route('user.destroy', $user->id) }}" method="POST">
+                                        <form action="{{ route('user.destroy', $user->slug) }}" method="POST">
                                             <div class="flex">
                                                 @can('user edit')
-                                                <a href="{{route('user.edit', $user->id)}}" >
+                                                <a href="{{route('user.edit', $user->slug)}}" >
                                                     <x-icons.edit />
                                                 </a>
                                                 @endcan

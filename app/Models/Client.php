@@ -2,12 +2,16 @@
 
 namespace App\Models;
 
+use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Client extends Model
 {
     use HasFactory;
+    use Sluggable;
+
+
 
     protected $fillable = [
         'first_name',
@@ -17,7 +21,7 @@ class Client extends Model
         'address',
         'email',
         'password',
-        'phone_number',
+        'phone',
         'profile',
     ];
 
@@ -47,5 +51,14 @@ class Client extends Model
     }
 
 
+    public function sluggable(): array
+    {
+        return [
+            'slug' => [
+                'source' => ['first_name', 'last_name'],
+                'separator' => '_'
+            ]
+        ];
+    }
 
 }

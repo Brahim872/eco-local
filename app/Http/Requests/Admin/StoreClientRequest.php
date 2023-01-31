@@ -25,7 +25,8 @@ class StoreClientRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => ['required', 'string', 'max:255'],
+            'first_name' => ['required', 'string', 'max:255'],
+            'last_name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:bs_clients'],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ];

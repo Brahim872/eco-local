@@ -48,7 +48,7 @@
                             <tr class="text-gray-700">
                                 <x-admin.grid.td>
                                     <div class="text-sm text-gray-900">
-                                        <a href="{{route('client.show', $client->id)}}" class="no-underline hover:underline text-cyan-600">{{ $client->name }}</a>
+                                        <a href="{{route('client.show', $client->slug)}}" class="no-underline hover:underline text-cyan-600">{{ $client->first_name.' '.$client->last_name }}</a>
                                     </div>
                                 </x-admin.grid.td>
                                 <x-admin.grid.td>
@@ -68,7 +68,7 @@
                                         <form action="{{ route('client.destroy', $client->id) }}" method="POST">
                                             <div class="flex">
                                                 @can('client edit')
-                                                <a href="{{route('client.edit', $client->id)}}" >
+                                                <a href="{{route('client.edit', $client->slug)}}" >
                                                     <x-icons.edit />
                                                 </a>
                                                 @endcan

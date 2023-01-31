@@ -2,11 +2,16 @@
 
 namespace App\Traits;
 
+use App\Actions\Admin\User\UpdateClient;
+use App\Http\Requests\Admin\UpdateClientRequest;
 use App\Models\Client;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 
 trait CrudTrait
 {
@@ -30,13 +35,19 @@ trait CrudTrait
         return redirect()->route($this->prefixName.'.index');
     }
 
-
-
-
-
-    public function edit($id)
+    public function update($request, $client, $service)
     {
-        $client = $this->model::findOrFail($id);
+        $service->handle($request, $client);
+        toastr()->success('resource updated successfully.');
+        return redirect()->route($this->prefixName.'.index');
+    }
+
+
+
+
+    public function edit($slug)
+    {
+        $client = $this->model::where('slug',$slug)->firstOrFail();
         return view('admin.'.$this->prefixName.'.edit', compact('client'));
     }
 
@@ -50,4 +61,14 @@ trait CrudTrait
         toastr()->success($this->prefixName.'deleted_successfully.');
         return redirect()->route($this->prefixName.'.index');
     }
+
+    public function show($user)
+    {
+
+        $model = $this->model::where('slug', $user)->firstOrFail();
+        return view('admin.'.$this->prefixName.'.show', compact('model'));
+    }
+
+
+
 }

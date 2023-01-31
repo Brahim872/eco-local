@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Actions\Admin\User;
+namespace App\Actions\Admin\Clients;
 
+use App\Models\Client;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -9,10 +10,10 @@ use Illuminate\Support\Facades\Storage;
 
 class UpdateClient
 {
-    public function handle(Request $request, User $user): User
+    public function handle(Request $request, Client $model): Client
     {
 
-        $path = $user->profile;
+        $path = $model->profile;
         if ($request->hasFile('image')) {
             $file = $request->file('image');
             $extension = $file->getClientOriginalExtension();
@@ -20,25 +21,15 @@ class UpdateClient
         }
 
 
-
-        $user->update([
-            'name' => $request->name,
+        $model->update([
+            'first_name' => $request->first_name,
+            'last_name' => $request->last_name,
             'email' => $request->email,
-            'password' => Hash::make($request->password),
             'profile' => $path??NULL,
             'phone' =>  $request->phone,
         ]);
 
-//        if ($request->password) {
-//            $user->update([
-//                'password' => Hash::make($request->password),
-//            ]);
-//        }
-
-        $roles = $request->roles ?? [];
-        $user->syncRoles($roles);
-
-        return $user;
+        return $model;
     }
 
 
