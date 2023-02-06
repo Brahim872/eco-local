@@ -61,4 +61,12 @@ class Client extends Model
         ];
     }
 
+    /**
+     * The users that belong to the role.
+     */
+    public function products()
+    {
+        return $this->belongsToMany(Product::class, 'bs_products_clients');
+    }
+
 }

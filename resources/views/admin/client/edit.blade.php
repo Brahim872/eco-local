@@ -15,7 +15,7 @@
     <div id="tab-contents">
         <div class="  w-full py-2 bg-white overflow-hidden" id="first">
 
-            <form method="POST" action="{{ route('client.update',$client->id) }}" enctype="multipart/form-data">
+            <form method="POST" action="{{ route('client.update',$model->id) }}" enctype="multipart/form-data">
                 @csrf
                 @method('PUT')
 
@@ -24,7 +24,7 @@
                     <x-admin.form.image id="image" class="{{$errors->has('image') ? 'border-red-400' : ''}} w-[50%]"
                                         name="image"
                                         accept="image/*"
-                                        src="{{asset('storage/'.$client->profile)}}"
+                                        src="{{asset('storage/'.$model->profile)}}"
                                         value="{{ old('image') }}"
                     />
 
@@ -38,7 +38,7 @@
                                         class="{{$errors->has('first_name') ? 'border-red-400' : ''}} w-[50%]"
                                         type="text"
                                         name="first_name"
-                                        value="{{ $client->first_name??old('first_name') }}"
+                                        value="{{ $model->first_name??old('first_name') }}"
                     />
                 </div>
 
@@ -51,7 +51,7 @@
                                         type="text"
                                         name="last_name"
 
-                                        value="{{ $client->last_name??old('last_name') }}"></x-admin.form.input>
+                                        value="{{ $model->last_name??old('last_name') }}"></x-admin.form.input>
                 </div>
 
                 <div class="py-2">
@@ -61,7 +61,7 @@
                     <x-admin.form.input id="email" class="{{$errors->has('email') ? 'border-red-400' : ''}} w-[50%]"
                                         type="email"
                                         name="email"
-                                        value="{{ $client->email??old('email') }}"
+                                        value="{{ $model->email??old('email') }}"
                     />
                 </div>
 
@@ -74,14 +74,16 @@
                                         type="text"
                                         name="phone"
 
-                                        value="{{ $client->phone??old('phone') }}"
+                                        value="{{ $model->phone??old('phone') }}"
                     />
+
                 </div>
 
 
                 <div class="flex justify-end mt-4">
                     <x-admin.form.button>{{ __('Create') }}</x-admin.form.button>
                 </div>
+
             </form>
         </div>
 

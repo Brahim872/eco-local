@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Actions\Admin\Clients\UpdateClient;
+use App\Actions\Admin\Clients\UpdateProduct;
 use App\Actions\Admin\User\CreateUser;
 use App\Actions\Admin\User\UpdateUser;
 use App\Http\Requests\Admin\StoreUserRequest;
@@ -116,13 +116,13 @@ class UserController extends Controller
      *
      * @param UpdateUserRequest $request
      * @param User $user
-     * @param UpdateClient $updateUser
+     * @param UpdateProduct $updateUser
      * @return RedirectResponse
      */
 
     public function updateUser(UpdateUserRequest $request, $user, UpdateUser $updateUser)
     {
-        $client = User::where('slug', $user)->firstOrFail();
+        $client = User::findOrFail($user);
         return $this->update($request, $client, $updateUser);
     }
 
@@ -132,10 +132,10 @@ class UserController extends Controller
      *
      * @param UpdatePasswordUserRequest $request
      * @param User $user
-     * @param UpdateClient $updateUser
+     * @param UpdateProduct $updateUser
      * @return RedirectResponse
      */
-    public function updatePassword(UpdatePasswordUserRequest $request, $user, UpdateClient $updateUser)
+    public function updatePassword(UpdatePasswordUserRequest $request, $user, UpdateProduct $updateUser)
     {
         $user = User::where('slug', $user)->firstOrFail();
         $updateUser->changePassword($request, $user);

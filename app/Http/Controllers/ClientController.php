@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers;
 
+
 use App\Actions\Admin\Clients\CreateClient;
-use App\Actions\Admin\Clients\UpdateClient;
 use App\Http\Requests\Admin\StoreClientRequest;
 use App\Http\Requests\Admin\UpdateClientRequest;
 use App\Models\Client;
+use App\Models\Product;
 use App\Traits\CrudTrait;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
@@ -52,10 +53,10 @@ class ClientController extends Controller
             $clients->latest();
         }
 
-        $clients = $clients->paginate(5)->onEachSide(2);
+        $model = $clients->paginate(5)->onEachSide(2);
 
 
-        return view('admin.client.index', compact('clients'));
+        return view('admin.client.index', compact('model'));
     }
     /**
      * Define view vars
@@ -66,9 +67,9 @@ class ClientController extends Controller
 
     protected function getViewVars()
     {
-
         return [
-            'admin' =>$this->model::with('users')->firstOrfail()
+            'admin' => $this->model::with('users')->with('products')->firstOrfail(),
+            'products' => Product::all(),
         ];
     }
 
@@ -86,7 +87,7 @@ class ClientController extends Controller
      *
      * @param UpdateClientRequest $request
      * @param Client $client
-     * @param UpdateClient $updateClient
+     * @param UpdateProduct $updateClient
      * @return RedirectResponse
      */
     public function updateClient(UpdateClientRequest $request, $client, UpdateClient $updateClient)

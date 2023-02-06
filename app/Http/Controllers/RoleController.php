@@ -96,8 +96,9 @@ class RoleController extends Controller
      * @param  \App\Models\Role  $role
      * @return \Illuminate\Http\Response
      */
-    public function edit(Role $role)
+    public function edit($role)
     {
+        $role = Role::findOrFail($role);
         $permissions = Permission::all();
         $roleHasPermissions = array_column(json_decode($role->permissions, true), 'id');
 
@@ -111,8 +112,10 @@ class RoleController extends Controller
      * @param  \App\Models\Role  $role
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateRoleRequest $request, Role $role)
+    public function update(UpdateRoleRequest $request, $role)
     {
+
+        $role= Role::findOrFail($role);
         $role->update($request->all());
         $permissions = $request->permissions ?? [];
         $role->syncPermissions($permissions);

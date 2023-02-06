@@ -45,6 +45,7 @@ trait CrudTrait
 
     public function edit($slug)
     {
+
         $model = $this->model::where('slug', $slug)->firstOrFail();
 
         $view = $this->getView('admin.' . $this->prefixName . '.edit');

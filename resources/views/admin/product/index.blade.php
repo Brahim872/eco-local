@@ -3,11 +3,11 @@
     <x-slot  name="title">
         <div class="flex justify-between items-center">
             <h2 class="inline-block text-2xl sm:text-3xl  text-slate-900   block sm:inline-block flex">
-                List clients
+                List products
             </h2>
-            @can('client create')
-                <x-admin.add-link href="{{ route('client.create') }}">
-                    {{ __('Add client') }}
+            @can('product create')
+                <x-admin.add-link href="{{ route('product.create') }}">
+                    {{ __('Add product') }}
                 </x-admin.add-link>
             @endcan
         </div>
@@ -18,7 +18,7 @@
     <div class="py-2">
         <div class="min-w-full border-b border-gray-200  overflow-x-auto">
             <div class="flex justify-between  items-center mb-5">
-                <x-admin.grid.search action="{{ route('client.index') }}" />
+                <x-admin.grid.search action="{{ route('product.index') }}" />
 
             </div>
             <div class="w-full mb-8 overflow-hidden rounded-lg ">
@@ -27,16 +27,16 @@
                         <x-slot name="head">
                             <tr class="text-md font-semibold tracking-wide text-left text-gray-900 bg-gray-100 uppercase border-b border-gray-600">
                                 <x-admin.grid.th>
-                                    @include('admin.includes.sort-link', ['label' => 'Firstname', 'attribute' => 'first_name'])
+                                    @include('admin.includes.sort-link', ['label' => 'name', 'attribute' => 'name'])
                                 </x-admin.grid.th>
                                 <x-admin.grid.th>
-                                    @include('admin.includes.sort-link', ['label' => 'Email', 'attribute' => 'email'])
+                                    @include('admin.includes.sort-link', ['label' => 'description', 'attribute' => 'description'])
                                 </x-admin.grid.th>
 
                                 <x-admin.grid.th>
                                     @include('admin.includes.sort-link', ['label' => 'Date create', 'attribute' => 'created_at'])
                                 </x-admin.grid.th>
-                                @canany(['client edit', 'client delete'])
+                                @canany(['product edit', 'product delete'])
                                 <x-admin.grid.th>
                                     {{ __('Actions') }}
                                 </x-admin.grid.th>
@@ -48,12 +48,12 @@
                             <tr class="text-gray-700">
                                 <x-admin.grid.td>
                                     <div class="text-sm text-gray-900">
-                                        <a href="{{route('client.show', $item->slug)}}" class="no-underline hover:underline text-cyan-600">{{ $item->first_name.' '.$item->last_name }}</a>
+                                       {{ $item->name }}
                                     </div>
                                 </x-admin.grid.td>
                                 <x-admin.grid.td>
                                     <div class="text-sm text-gray-900">
-                                        {{ $item->email }}
+                                        {{ $item->description }}
                                     </div>
                                 </x-admin.grid.td>
 
@@ -63,17 +63,17 @@
                                     </div>
                                 </x-admin.grid.td>
 
-                                @canany(['client edit', 'client delete'])
+                                @canany(['product edit', 'product delete'])
                                     <x-admin.grid.td style="width: 150px">
-                                        <form action="{{ route('client.destroy', $item->id) }}" method="POST">
+                                        <form action="{{ route('product.destroy', $item->id) }}" method="POST">
                                             <div class="flex">
-                                                @can('client edit')
-                                                <a href="{{route('client.edit', $item->slug)}}" >
+                                                @can('product edit')
+                                                <a href="{{route('product.edit', $item->slug)}}" >
                                                     <x-icons.edit />
                                                 </a>
                                                 @endcan
 
-                                                @can('client delete')
+                                                @can('product delete')
                                                     @csrf
                                                     @method('DELETE')
                                                     <button onclick="return confirm('{{ __('Are you sure you want to delete?') }}')">

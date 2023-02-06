@@ -17,7 +17,7 @@ class CreateUser
 
         if(isset($file)){
             $extension = $file->getClientOriginalExtension();
-            $path = Storage::disk('public')->putFileAs('uploads', $file, uniqid().'.'.$extension);
+            $path = Storage::disk('public')->putFileAs('images/profile', $file, uniqid().'.'.$extension);
         }
 
         $user = User::create([
