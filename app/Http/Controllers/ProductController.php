@@ -6,6 +6,7 @@ use App\Actions\Admin\Products\CreateProduct;
 use App\Actions\Admin\Products\UpdateProduct;
 use App\Http\Requests\Admin\StoreProductRequest;
 use App\Http\Requests\Admin\UpdateProductRequest;
+use App\Models\Client;
 use App\Models\Product;
 use App\Traits\CrudTrait;
 use Illuminate\Contracts\Foundation\Application;
@@ -14,6 +15,7 @@ use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
+use function Ramsey\Collection\element;
 
 class ProductController extends Controller
 {
@@ -59,6 +61,7 @@ class ProductController extends Controller
 
         return view('admin.product.index', compact('model'));
     }
+
     /**
      * Define view vars
      *
@@ -70,7 +73,7 @@ class ProductController extends Controller
     {
 
         return [
-            'model' =>$this->model::firstOrfail()
+            'model' => $this->model::firstOrfail()
         ];
     }
 
@@ -80,7 +83,6 @@ class ProductController extends Controller
 
         return $this->store($request, $createProduct);
     }
-
 
 
     /**
@@ -98,23 +100,21 @@ class ProductController extends Controller
     }
 
 
+    public function switchStatus(Request $request)
+    {
 
-    public function switchStatus(Request $request){
+        $data_ = [];
 
-        $exists = DB::table('bs_products_clients')->where('client_id', $request->client_id)->where('product_id', $request->product_id)->exists();
+        $client = Client::find($request->client_id);
+        $product = Product::find($request->product_id);
 
-        if ($exists) {
-            DB::table('bs_products_clients')
-                ->where('client_id', $request->client_id)
-                ->where('product_id', $request->product_id)
-                ->update(['client_id' => $request->client_id, 'product_id' => $request->product_id]);
-        } else {
-            DB::table('bs_products_clients')
-                ->insert(['client_id' => $request->client_id, 'product_id' => $request->product_id]);
-        }
+        $client->products()->toggle($product->id);
+
+        return response()->json([
+            'status' => 200
+        ]);
 
     }
-
 
 
 }

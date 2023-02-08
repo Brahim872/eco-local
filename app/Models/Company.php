@@ -6,24 +6,27 @@ use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Client extends Model
+class Company extends Model
 {
     use HasFactory;
+
     use Sluggable;
 
 
+
     protected $fillable = [
-        'first_name',
-        'last_name',
-        'company_id',
+        'name',
         'address',
         'email',
         'password',
         'phone',
+        'website',
         'profile',
+        'user_id',
+        'slug',
     ];
 
-    protected $table = "bs_clients";
+    protected $table = "bs_companies";
 
     /**
      * The attributes that should be hidden for serialization.
@@ -44,9 +47,10 @@ class Client extends Model
         'email_verified_at' => 'datetime',
     ];
 
-    public function users()
-    {
-        return $this->belongsTo(Company::class, 'company_id', 'id');
+
+
+    public function users(){
+        return $this->belongsTo( User::class, 'user_id', 'id' );
     }
 
 
@@ -54,20 +58,12 @@ class Client extends Model
     {
         return [
             'slug' => [
-                'source' => ['first_name', 'last_name'],
+                'source' => ['id', 'name'],
                 'separator' => '_'
             ]
         ];
     }
 
-    /**
-     * The users that belong to the role.
-     */
-
-    public function products()
-    {
-        return $this->belongsToMany(Product::class, 'bs_products_clients');
-    }
 
     /**
      * Get all of the tags for the post.
@@ -76,4 +72,12 @@ class Client extends Model
     {
         return $this->morphMany(Contacte::class, 'contact');
     }
+
+    public function client(){
+        return $this->hasMany( Client::class, 'company_id', 'id' );
+    }
+
+
+
+
 }

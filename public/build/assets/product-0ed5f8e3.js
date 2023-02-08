@@ -1,0 +1,1 @@
+$(".switchStatus").on("change",function(t){t.preventDefault(),$.ajax({url:$(this).data("url"),method:"GET",data:{client_id:$(this).data("client_id"),product_id:$(this).data("product_id"),status:$(this).is(":checked")},success:function(a){alert("success")}})});

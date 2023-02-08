@@ -7,6 +7,7 @@ use App\Actions\Admin\Clients\CreateClient;
 use App\Http\Requests\Admin\StoreClientRequest;
 use App\Http\Requests\Admin\UpdateClientRequest;
 use App\Models\Client;
+use App\Models\Company;
 use App\Models\Product;
 use App\Traits\CrudTrait;
 use Illuminate\Contracts\Foundation\Application;
@@ -70,6 +71,7 @@ class ClientController extends Controller
         return [
             'admin' => $this->model::with('users')->with('products')->firstOrfail(),
             'products' => Product::all(),
+            'companies' => Company::all(),
         ];
     }
 

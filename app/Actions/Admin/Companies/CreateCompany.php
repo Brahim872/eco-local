@@ -1,31 +1,30 @@
 <?php
 
-namespace App\Actions\Admin\Clients;
+namespace App\Actions\Admin\Companies;
 
-use App\Models\Client;
+use App\Models\Company;
+use App\Models\Contacte;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 
-class CreateClient
+class CreateCompany
 {
-    public function handle(Request $request): Client
+    public function handle(Request $request): Company
     {
 
 
         $file = $request->file('image');
 
         if(isset($file)){
-            $extension = $file->getClientOriginalExtension();
+            $extension = $file->getCompanyOriginalExtension();
             $path = Storage::disk('public')->putFileAs('images/profile', $file, uniqid().'.'.$extension);
         }
 
-
-        $Client = Client::create([
-            'first_name' => $request->first_name,
-            'last_name' => $request->last_name,
+        $Company = Company::create([
+            'name' => $request->name,
             'email' => $request->email,
             'user_id' => Auth::id(),
             'password' => Hash::make($request->password),
@@ -35,6 +34,12 @@ class CreateClient
 
 
 
-        return $Client;
+
+        $tag = new Contacte();
+        $tag->user_id = Auth::id();
+
+        $Company->Contact()->save($tag);
+
+        return $Company;
     }
 }

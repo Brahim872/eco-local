@@ -6,12 +6,12 @@
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
         <title>{{ config('app.name', 'Laravel') }}</title>
-        <!-- Fonts -->
         <link rel="stylesheet" href="https://fonts.bunny.net/css2?family=Nunito:wght@400;600;700&display=swap">
 
 
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js', 'resources/js/product.js'])
+
         @stack('styles')
     </head>
     <body class="font-sans antialiased">
@@ -29,8 +29,8 @@
     </div>
 
 
-
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="{{asset('plugins/js/toastr.js')}}"></script>
 
     <script>
         function searchTable() {

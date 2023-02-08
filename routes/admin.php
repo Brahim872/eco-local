@@ -2,6 +2,7 @@
 
 
 use App\Http\Controllers\ClientController;
+use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\RoleController;
@@ -97,7 +98,20 @@ Route::group([
     Route::get('switch-status', [ProductController::class, 'switchStatus'])->name('switch.status');
 
 
-//    Route::resource('permission', 'PermissionController');
 
-//    Route::resource('user', 'UserController');
+
+
+
+    Route::group([
+        'prefix' => 'company',
+    ], function () {
+        Route::get('/', [CompanyController::class, 'index'])->name('company.index');
+        Route::get('create', [CompanyController::class, 'create'])->name('company.create');
+        Route::post('store', [CompanyController::class, 'storeCompany'])->name('company.store');
+        Route::get('show/{id}', [CompanyController::class, 'show'])->name('company.show');
+        Route::delete('destroy/{id}', [CompanyController::class, 'destroy'])->name('company.destroy');
+        Route::get('edit/{slug}', [CompanyController::class, 'edit'])->name('company.edit');
+        Route::put('update/{id}', [CompanyController::class, 'updateCompany'])->name('company.update');
+    });
+
 });

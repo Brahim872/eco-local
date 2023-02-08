@@ -53,6 +53,12 @@ class BasicAdminPermissionSeeder extends Seeder
             'product edit',
             'product delete',
 
+            'company main',
+            'company list',
+            'company create',
+            'company edit',
+            'company delete',
+
         ];
 
         foreach ($permissions as $permission) {

@@ -1,6 +1,8 @@
 import { defineConfig } from 'vite';
 import laravel from 'laravel-vite-plugin';
 
+// import toaster from './public/plugins/js/toastr';
+
 export default defineConfig({
     plugins: [
         laravel({
