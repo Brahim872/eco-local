@@ -8,7 +8,6 @@
         <title>{{ config('app.name', 'Laravel') }}</title>
         <link rel="stylesheet" href="https://fonts.bunny.net/css2?family=Nunito:wght@400;600;700&display=swap">
         <!-- Livewire styles -->
-        <livewire:styles />
 
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js', 'resources/js/product.js'])
@@ -40,6 +39,5 @@
     </script>
         @stack('scripts')
         <!-- Livewire scripts -->
-        <livewire:scripts />
     </body>
 </html>
