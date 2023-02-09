@@ -2,6 +2,7 @@
 
 namespace App\Actions\Admin\Companies;
 
+use App\Models\Client;
 use App\Models\Company;
 use App\Models\Contacte;
 use App\Models\User;
@@ -37,6 +38,9 @@ class CreateCompany
 
         $tag = new Contacte();
         $tag->user_id = Auth::id();
+        $tag->contact_type = Client::class ;
+
+
 
         $Company->Contact()->save($tag);
 

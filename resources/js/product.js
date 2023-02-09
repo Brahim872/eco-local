@@ -10,7 +10,7 @@ $('.switchStatus').on('change', function (e) {
             'status': $(this).is(':checked'),
         },
         'success': function (data) {
-            $.toastr.success('success --- ');
+            // $.toastr.success('success --- ');
         },
         'error': function (error) {
             console.log(error)

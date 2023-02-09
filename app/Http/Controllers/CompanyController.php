@@ -14,6 +14,7 @@ use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\DB;
 
 class CompanyController extends Controller
 {
@@ -64,8 +65,15 @@ class CompanyController extends Controller
 
     protected function getViewVars()
     {
+
+        $contacts = DB::table('bs_contactes')
+            ->where('contact_type','=','App\Models\Client')
+            ->join('bs_clients','bs_clients.id','=','bs_contactes.contact_id')
+
+        ;
         return [
-            'admin' => $this->model::with('users')->firstOrfail(),
+            'admin' => $this->model::with('users')->first(),
+            'contacts' => $contacts,
         ];
     }
 

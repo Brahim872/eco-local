@@ -12,6 +12,7 @@ class Client extends Model
     use Sluggable;
 
 
+
     protected $fillable = [
         'first_name',
         'last_name',
@@ -44,9 +45,8 @@ class Client extends Model
         'email_verified_at' => 'datetime',
     ];
 
-    public function users()
-    {
-        return $this->belongsTo(Company::class, 'company_id', 'id');
+    public function company(){
+        return $this->belongsTo( Company::class, 'company_id', 'id' );
     }
 
 
@@ -63,7 +63,6 @@ class Client extends Model
     /**
      * The users that belong to the role.
      */
-
     public function products()
     {
         return $this->belongsToMany(Product::class, 'bs_products_clients');

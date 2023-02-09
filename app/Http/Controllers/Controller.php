@@ -24,8 +24,10 @@ class Controller extends BaseController
      */
     protected function getView($name)
     {
+
         $view = view($name);
         $vars = $this->getViewVars();
+
         foreach ($vars as $name => $var) {
             $view->with($name, $var);
         }

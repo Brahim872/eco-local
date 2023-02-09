@@ -68,7 +68,7 @@ class Company extends Model
     /**
      * Get all of the tags for the post.
      */
-    public function Contact()
+    public function contact()
     {
         return $this->morphMany(Contacte::class, 'contact');
     }

@@ -69,7 +69,7 @@ class ClientController extends Controller
     protected function getViewVars()
     {
         return [
-            'admin' => $this->model::with('users')->with('products')->firstOrfail(),
+
             'products' => Product::all(),
             'companies' => Company::all(),
         ];

@@ -13,14 +13,8 @@ class Contacte extends Model
 
 
 
-    protected $fillable = [];
+    protected $fillable = ['contact_type'];
     protected $table = "bs_contactes";
-
-
-    public function Company()
-    {
-        return $this->morphedByMany(Company::class, 'contact');
-    }
 
 
     public function Client()

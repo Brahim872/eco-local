@@ -24,13 +24,20 @@
             </div>
 
             <div class="py-2">
+
                 <x-admin.form.label for="first_name"
                                     class="{{$errors->has('first_name') ? 'text-red-400' : ''}}">{{ __('first_name') }}</x-admin.form.label>
 
-                <x-admin.form.input id="first_name" class="{{$errors->has('first_name') ? 'border-red-400' : ''}} w-[50%]"
+                <x-admin.form.input id="first_name"
+                                    class="{{$errors->has('first_name') ? 'border-red-400' : ''}} w-[50%]"
                                     type="text"
                                     name="first_name"
-                                    value="{{ old('first_name') }}"></x-admin.form.input>
+                                    errors="{{$errors??''}}"
+                                    value="{{ old('first_name') }}">
+                </x-admin.form.input>
+                <x-admin.form.error-field name="first_name"/>
+
+
             </div>
 
 
@@ -42,6 +49,7 @@
                                     type="text"
                                     name="last_name"
                                     value="{{ old('last_name') }}"></x-admin.form.input>
+                <x-admin.form.error-field name="last_name"/>
             </div>
 
             <div class="py-2">
@@ -53,6 +61,7 @@
                                     name="email"
                                     value="{{ old('email') }}"
                 />
+                <x-admin.form.error-field name="email"/>
             </div>
 
             <div class="py-2">
@@ -64,6 +73,7 @@
                                     name="phone"
                                     value="{{ old('phone') }}"
                 />
+                <x-admin.form.error-field name="phone"/>
             </div>
 
             <div class="py-2">
@@ -74,6 +84,8 @@
                                     type="password"
                                     name="password"
                 />
+                <x-admin.form.error-field name="password"/>
+
             </div>
 
             <div class="py-2">
@@ -85,19 +97,28 @@
                                     type="password"
                                     name="password_confirmation"
                 />
+
+                <x-admin.form.error-field name="password_confirmation"/>
+
             </div>
 
             <div class="py-2">
-                <x-admin.form.label for="password_confirmation"
-                                    class="block font-medium text-sm text-gray-700{{$errors->has('password') ? 'text-red-400' : ''}}">{{ __('Password Confirmation') }}</x-admin.form.label>
+                <x-admin.form.label for="company_id"
+                                    class="block font-medium text-sm text-gray-700{{$errors->has('company_id') ? 'text-red-400' : ''}}">{{ __('company_id') }}</x-admin.form.label>
 
-                <x-admin.form.select id="password_confirmation"
-                                    class="{{$errors->has('password') ? 'border-red-400' : ''}} w-[50%]"
-                                    type="password"
-                                    name="password_confirmation"
+                <x-admin.form.select id="company_id"
+                                     class="{{$errors->has('company_id') ? 'border-red-400' : ''}} w-[50%]"
+                                     type="text"
+                                     name="company_id"
                 >
-                    <option value="df">sdfgdfg</option>
+                    <option value="">---</option>
+                    @foreach($companies as $companie)
+                        <option value="{{$companie->id}}">{{$companie->name}}</option>
+                    @endforeach
                 </x-admin.form.select>
+                <x-admin.form.error-field name="company_id"/>
+
+
 
             </div>
 

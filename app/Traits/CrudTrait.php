@@ -23,7 +23,10 @@ trait CrudTrait
      */
     public function create()
     {
-        return view('admin.' . $this->prefixName . '.create');
+
+        $view = $this->getView('admin.' . $this->prefixName . '.create');
+        return $view;
+
     }
 
 

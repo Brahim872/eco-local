@@ -42,8 +42,6 @@
                                     </p>
                                     <p class="mb-1 font-semibold leading-normal text-size-sm flex ">
                                         <x-icons.admin/>
-
-                                        <span class="px-4"> {{$admin->users->name}}  </span>
                                     </p>
                                 </div>
                             </div>
