@@ -59,6 +59,18 @@ class BasicAdminPermissionSeeder extends Seeder
             'company edit',
             'company delete',
 
+            'contact main',
+            'contact list',
+            'contact create',
+            'contact edit',
+            'contact delete',
+
+            'campaign main',
+            'campaign list',
+            'campaign create',
+            'campaign edit',
+            'campaign delete',
+
         ];
 
         foreach ($permissions as $permission) {

@@ -1,8 +1,10 @@
 <?php
 
 
+use App\Http\Controllers\CampaignController;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\CompanyController;
+use App\Http\Controllers\ContacteController;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\RoleController;
@@ -68,6 +70,34 @@ Route::group([
         Route::delete('destroy/{id}', [RoleController::class, 'destroy'])->name('role.destroy');
         Route::get('edit/{id}', [RoleController::class, 'edit'])->name('role.edit');
         Route::put('update/{id}', [RoleController::class, 'update'])->name('role.update');
+
+    });
+
+
+    Route::group([
+        'prefix' => 'contact',
+    ], function () {
+        Route::get('/', [ContacteController::class, 'index'])->name('contact.index');
+        Route::get('create', [ContacteController::class, 'create'])->name('contact.create');
+        Route::post('store', [ContacteController::class, 'store'])->name('contact.store');
+        Route::get('show/{id}', [ContacteController::class, 'show'])->name('contact.show');
+        Route::delete('destroy/{id}', [ContacteController::class, 'destroy'])->name('contact.destroy');
+        Route::get('edit/{id}', [ContacteController::class, 'edit'])->name('contact.edit');
+        Route::put('update/{id}', [ContacteController::class, 'update'])->name('contact.update');
+
+    });
+
+
+    Route::group([
+        'prefix' => 'campaign',
+    ], function () {
+        Route::get('/', [CampaignController::class, 'index'])->name('campaign.index');
+        Route::get('create', [CampaignController::class, 'create'])->name('campaign.create');
+        Route::post('store', [CampaignController::class, 'storeCampaign'])->name('campaign.store');
+        Route::get('show/{id}', [CampaignController::class, 'show'])->name('campaign.show');
+        Route::delete('destroy/{id}', [CampaignController::class, 'destroy'])->name('campaign.destroy');
+        Route::get('edit/{id}', [CampaignController::class, 'edit'])->name('campaign.edit');
+        Route::put('update/{id}', [CampaignController::class, 'update'])->name('campaign.update');
 
     });
 
