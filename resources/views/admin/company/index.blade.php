@@ -5,7 +5,7 @@
             <h2 class="inline-block text-2xl sm:text-3xl  text-slate-900   block sm:inline-block flex">
                 List companies
             </h2>
-            @can('company create')
+            @can('company.create')
                 <x-admin.add-link href="{{ route('company.create') }}">
                     {{ __('Add company') }}
                 </x-admin.add-link>
@@ -63,7 +63,7 @@
                                     </div>
                                 </x-admin.grid.td>
 
-                                @canany(['company edit', 'company delete'])
+                                @canany(['company.edit', 'company.delete'])
                                     <x-admin.grid.td style="width: 150px">
                                         <form action="{{ route('company.destroy', $item->id) }}" method="POST">
                                             <div class="flex">

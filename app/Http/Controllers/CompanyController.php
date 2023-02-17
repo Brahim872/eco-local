@@ -3,8 +3,9 @@
 namespace App\Http\Controllers;
 
 
-use App\Actions\Admin\Companies\CreateCampaign;
-use App\Actions\Admin\Companies\UpdateCampaign;
+
+use App\Actions\Admin\Companies\CreateCompany;
+use App\Actions\Admin\Companies\UpdateCompany;
 use App\Http\Requests\Admin\StoreCompanyRequest;
 use App\Http\Requests\Admin\UpdateCompanyRequest;
 use App\Models\Company;
@@ -78,7 +79,7 @@ class CompanyController extends Controller
     }
 
 
-    public function storeCompany(StoreCompanyRequest $request, CreateCampaign $createCompany)
+    public function storeCompany(StoreCompanyRequest $request, CreateCompany $createCompany)
     {
 
         return $this->store($request, $createCompany);
@@ -94,7 +95,7 @@ class CompanyController extends Controller
      * @param UpdateProduct $updateCompany
      * @return RedirectResponse
      */
-    public function updateCompany(UpdateCompanyRequest $request, $Company, UpdateCampaign $updateCompany)
+    public function updateCompany(UpdateCompanyRequest $request, $Company, UpdateCompany $updateCompany)
     {
         $Company = Company::findOrFail($Company);
         return $this->update($request, $Company, $updateCompany);

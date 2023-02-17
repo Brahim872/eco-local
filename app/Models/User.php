@@ -59,4 +59,22 @@ class User extends Authenticatable
             ]
         ];
     }
+
+
+    public function company(){
+        return $this->hasOne(Company::class);
+    }
+
+    /**
+     * Crypt password before save
+     *
+     * @param string $password
+     * @return void
+     */
+    public function setPasswordAttribute($password)
+    {
+        if (!empty($password)) {
+            $this->attributes['password'] = bcrypt($password);
+        }
+    }
 }
