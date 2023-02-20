@@ -20,8 +20,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="513e558a-8f92-4a6d-ac1e-9a8142575068" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2023_01_022_150709_create_companies_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2023_01_022_150709_create_companies_table.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -244,8 +245,17 @@
       <workItem from="1675690291730" duration="50672000" />
       <workItem from="1676278125898" duration="2394000" />
       <workItem from="1676280634556" duration="18210000" />
-      <workItem from="1676536992892" duration="26850000" />
+      <workItem from="1676536992892" duration="27620000" />
+      <workItem from="1676882496825" duration="1852000" />
     </task>
+    <task id="LOCAL-00001" summary="edit">
+      <created>1676653080728</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1676653080728</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -262,6 +272,10 @@
       </map>
     </option>
     <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="edit" />
+    <option name="LAST_COMMIT_MESSAGE" value="edit" />
   </component>
   <component name="WindowStateProjectService">
     <state x="645" y="192" key="#com.intellij.ide.util.MemberChooser" timestamp="1676308068601">
@@ -308,6 +322,10 @@
       <screen x="0" y="0" width="1680" height="1020" />
     </state>
     <state width="592" height="446" key="SwitcherDM/0.0.1680.1020/1680.-36.1920.1050@0.0.1680.1020" timestamp="1675762121352" />
+    <state x="432" y="230" key="Vcs.Push.Dialog.v2" timestamp="1676653083388">
+      <screen x="0" y="0" width="1680" height="1020" />
+    </state>
+    <state x="432" y="230" key="Vcs.Push.Dialog.v2/0.0.1680.1020/1680.-36.1920.1050@0.0.1680.1020" timestamp="1676653083388" />
     <state x="92" y="92" width="1496" height="836" maximized="true" key="com.intellij.history.integration.ui.views.FileHistoryDialog" timestamp="1676634253334">
       <screen x="0" y="0" width="1680" height="1020" />
     </state>

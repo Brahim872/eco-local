@@ -19,9 +19,6 @@ return new class extends Migration
             $table->bigInteger('user_id')->unsigned();
             $table->string('name');
             $table->string('address')->nullable();
-//            $table->string('email');
-//            $table->string('password');
-//            $table->string('phone')->nullable();
             $table->string('website')->nullable();
             $table->string('profile')->nullable();
             $table->string('slug'); // Field name same as your `saveSlugsTo`
