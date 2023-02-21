@@ -5,7 +5,7 @@
             <h2 class="inline-block text-2xl sm:text-3xl  text-slate-900   block sm:inline-block flex">
                 List users
             </h2>
-            @can('user create')
+            @can('user.create')
                 <x-admin.add-link href="{{ route('user.create') }}">
                     {{ __('Add User') }}
                 </x-admin.add-link>
@@ -36,7 +36,7 @@
                                 <x-admin.grid.th>
                                     @include('admin.includes.sort-link', ['label' => 'Date create', 'attribute' => 'created_at'])
                                 </x-admin.grid.th>
-                                @canany(['user edit', 'user delete'])
+                                @canany(['user.create', 'user.delete'])
                                 <x-admin.grid.th>
                                     {{ __('Actions') }}
                                 </x-admin.grid.th>
@@ -46,11 +46,13 @@
                         <x-slot name="body">
                         @foreach($users as $user)
                             <tr class="text-gray-700">
+
                                 <x-admin.grid.td>
                                     <div class="text-sm text-gray-900">
                                         <a href="{{route('user.show', $user->slug)}}" class="no-underline hover:underline text-cyan-600">{{ $user->name }}</a>
                                     </div>
                                 </x-admin.grid.td>
+
                                 <x-admin.grid.td>
                                     <div class="text-sm text-gray-900">
                                         {{ $user->email }}
@@ -63,17 +65,17 @@
                                     </div>
                                 </x-admin.grid.td>
 
-                                @canany(['user edit', 'user delete'])
+                                @canany(['user.create', 'user.delete'])
                                     <x-admin.grid.td style="width: 150px">
                                         <form action="{{ route('user.destroy', $user->slug) }}" method="POST">
                                             <div class="flex">
-                                                @can('user edit')
+                                                @can('user.create')
                                                 <a href="{{route('user.edit', $user->slug)}}" >
                                                     <x-icons.edit />
                                                 </a>
                                                 @endcan
 
-                                                @can('user delete')
+                                                @can('user.delete')
                                                     @csrf
                                                     @method('DELETE')
                                                     <button onclick="return confirm('{{ __('Are you sure you want to delete?') }}')">

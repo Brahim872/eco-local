@@ -15,7 +15,7 @@ class RolesSeeder extends Seeder
 
     protected $roles = [
         ["id" => 1, "name" => "super-admin"],
-        ["id" => 2, "name" => "admin"],
+        ["id" => 2, "name" => "company"],
 
     ];
 
