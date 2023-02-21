@@ -22,6 +22,24 @@
                                     value="{{ old('image') }}"
                 />
             </div>
+{{--            users--}}
+            <div class="py-2">
+                <x-admin.form.label for="user_id"
+                                    class="block font-medium text-sm text-gray-700{{$errors->has('user_id') ? 'text-red-400' : ''}}">{{ __('user_id') }}</x-admin.form.label>
+
+                <x-admin.form.select id="user_id"
+                                     class="{{$errors->has('user_id') ? 'border-red-400' : ''}} w-[50%]"
+                                     type="text"
+                                     name="user_id"
+                >
+                    <option value="">---</option>
+                    @foreach($users as $id=>$user)
+                        <option value="{{$id}}">{{$user}}</option>
+                    @endforeach
+                </x-admin.form.select>
+                <x-admin.form.error-field name="user_id"/>
+
+            </div>
 
             <div class="py-2">
                 <x-admin.form.label for="name"
@@ -34,39 +52,6 @@
             </div>
 
             <div class="py-2">
-                <x-admin.form.label for="email"
-                                    class="{{$errors->has('email') ? 'text-red-400' : ''}}">{{ __('Email') }}</x-admin.form.label>
-
-                <x-admin.form.input id="email" class="{{$errors->has('email') ? 'border-red-400' : ''}} w-[50%]"
-                                    type="email"
-                                    name="email"
-                                    value="{{ old('email') }}"
-                />
-            </div>
-
-            <div class="py-2">
-                <x-admin.form.label for="address"
-                                    class="{{$errors->has('address') ? 'text-red-400' : ''}}">{{ __('address') }}</x-admin.form.label>
-
-                <x-admin.form.input id="address" class="{{$errors->has('address') ? 'border-red-400' : ''}} w-[50%]"
-                                    type="text"
-                                    name="address"
-                                    value="{{ old('address') }}"
-                />
-            </div>
-
-            <div class="py-2">
-                <x-admin.form.label for="phone"
-                                    class="{{$errors->has('phone') ? 'text-red-400' : ''}}">{{ __('phone') }}</x-admin.form.label>
-
-                <x-admin.form.input id="phone" class="{{$errors->has('phone') ? 'border-red-400' : ''}} w-[50%]"
-                                    type="text"
-                                    name="phone"
-                                    value="{{ old('phone') }}"
-                />
-            </div>
-
-            <div class="py-2">
                 <x-admin.form.label for="website"
                                     class="{{$errors->has('website') ? 'text-red-400' : ''}}">{{ __('website') }}</x-admin.form.label>
 
@@ -74,27 +59,6 @@
                                     type="text"
                                     name="website"
                                     value="{{ old('website') }}"
-                />
-            </div>
-
-            <div class="py-2">
-                <x-admin.form.label for="password"
-                                    class="{{$errors->has('password') ? 'text-red-400' : ''}}">{{ __('Password') }}</x-admin.form.label>
-
-                <x-admin.form.input id="password" class="{{$errors->has('password') ? 'border-red-400' : ''}} w-[50%]"
-                                    type="password"
-                                    name="password"
-                />
-            </div>
-
-            <div class="py-2">
-                <x-admin.form.label for="password_confirmation"
-                                    class="block font-medium text-sm text-gray-700{{$errors->has('password') ? 'text-red-400' : ''}}">{{ __('Password Confirmation') }}</x-admin.form.label>
-
-                <x-admin.form.input id="password_confirmation"
-                                    class="{{$errors->has('password') ? 'border-red-400' : ''}} w-[50%]"
-                                    type="password"
-                                    name="password_confirmation"
                 />
             </div>
 

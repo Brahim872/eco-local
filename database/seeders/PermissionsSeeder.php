@@ -12,8 +12,7 @@ use Illuminate\Support\Facades\DB;
 
 class PermissionsSeeder extends Seeder
 {
-    protected $roleArray = [];
-    protected $dataRole = [];
+
     protected $accessList = [];
     protected $info = [];
 
@@ -23,7 +22,13 @@ class PermissionsSeeder extends Seeder
             'category' => 'permission',
             'access' => [
                 "super-admin" => ["read", "create", "delete"],
-                "company" => ["read", "create", "delete", 'duplicate'],
+            ]
+        ],
+        [
+            'name' => 'role',
+            'category' => 'permission',
+            'access' => [
+                "super-admin" => ["read", "create", "delete"],
             ]
         ],
         [
@@ -31,7 +36,6 @@ class PermissionsSeeder extends Seeder
             'category' => 'company',
             'access' => [
                 "super-admin" => ["read", "create", "delete"],
-                "company" => ["read", "create", "delete", 'duplicate'],
             ]
         ],
         [
@@ -39,7 +43,7 @@ class PermissionsSeeder extends Seeder
             'category' => 'user',
             'access' => [
                 "super-admin" => ["read", "create", "delete"],
-                "company" => ["read", "create", "delete", 'duplicate'],
+                "company" => ["read", "create", "delete"],
             ]
         ],
     ];

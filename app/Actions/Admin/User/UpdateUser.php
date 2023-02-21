@@ -24,7 +24,7 @@ class UpdateUser
         $user->update([
             'name' => $request->name,
             'email' => $request->email,
-            'password' => Hash::make($request->password),
+//            'password' => Hash::make($request->password),
             'profile' => $path??NULL,
             'phone' =>  $request->phone,
         ]);
@@ -63,7 +63,7 @@ class UpdateUser
         $validator->validateWithBag('password');
 
         $user = \Auth::user()->update([
-            'password' => Hash::make($request->input('new_password')),
+            'password' => $request->input('new_password'),
         ]);
 
    return  $user;

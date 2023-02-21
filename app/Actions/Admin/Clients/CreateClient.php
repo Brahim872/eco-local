@@ -29,7 +29,7 @@ class CreateClient
             'last_name' => $request->last_name,
             'email' => $request->email,
             'company_id' => $request->company_id,
-            'password' => Hash::make($request->password),
+            'password' => $request->password,
             'profile' => $path??NULL,
             'phone' =>  $request->phone,
         ]);

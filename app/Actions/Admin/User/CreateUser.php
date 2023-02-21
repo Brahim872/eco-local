@@ -23,13 +23,13 @@ class CreateUser
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
-            'password' => Hash::make($request->password),
+            'password' => $request->password,
             'profile' => $path??NULL,
             'phone' =>  $request->phone,
         ]);
 
 
-        $roles = $request->roles ?? [];
+        $roles = $request->roles ?? 2;
         $user->assignRole($roles);
 
         return $user;

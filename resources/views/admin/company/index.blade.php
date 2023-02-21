@@ -36,7 +36,7 @@
                                 <x-admin.grid.th>
                                     @include('admin.includes.sort-link', ['label' => 'Date create', 'attribute' => 'created_at'])
                                 </x-admin.grid.th>
-                                @canany(['company edit', 'company delete'])
+                                @canany(['company.create', 'company.delete'])
                                 <x-admin.grid.th>
                                     {{ __('Actions') }}
                                 </x-admin.grid.th>
@@ -63,17 +63,17 @@
                                     </div>
                                 </x-admin.grid.td>
 
-                                @canany(['company.edit', 'company.delete'])
+                                @canany(['company.create', 'company.delete'])
                                     <x-admin.grid.td style="width: 150px">
                                         <form action="{{ route('company.destroy', $item->id) }}" method="POST">
                                             <div class="flex">
-                                                @can('company edit')
+                                                @can('company.create')
                                                 <a href="{{route('company.edit', $item->slug)}}" >
                                                     <x-icons.edit />
                                                 </a>
                                                 @endcan
 
-                                                @can('company delete')
+                                                @can('company.delete')
                                                     @csrf
                                                     @method('DELETE')
                                                     <button onclick="return confirm('{{ __('Are you sure you want to delete?') }}')">

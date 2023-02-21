@@ -17,6 +17,8 @@ use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class UserController extends Controller
 {
@@ -61,16 +63,18 @@ class UserController extends Controller
         return view('admin.user.index', compact('users'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return Application|Factory|View
-     */
-    public function create()
+    protected function getViewVars()
     {
+        $roles = [];
+        $roles = Role::select(['id','name'])->get()->pluck('name','id');
+        if(Auth::user()->role('company')){
+            $roles = Role::select(['id','name'])->where('name','!=','super-admin')->get()->pluck('name','id');
+        }
 
-        $roles = Role::all();
-        return view('admin.user.create', compact('roles'));
+
+        return [
+            'roles' => $roles,
+        ];
     }
 
 

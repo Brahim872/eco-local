@@ -52,7 +52,7 @@ class UpdateCompany
         $validator->validateWithBag('password');
 
         $user = \Auth::user()->update([
-            'password' => Hash::make($request->input('new_password')),
+            'password' => $request->input('new_password'),
         ]);
 
         return  $user;

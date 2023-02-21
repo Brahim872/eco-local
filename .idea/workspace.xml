@@ -20,9 +20,29 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="513e558a-8f92-4a6d-ac1e-9a8142575068" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/Traits/DataTableTrait.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/migrations/2023_01_022_150709_create_companies_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2023_01_022_150709_create_companies_table.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Actions/Admin/Campaigns/UpdateCampaign.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Actions/Admin/Campaigns/UpdateCampaign.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Actions/Admin/Clients/CreateClient.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Actions/Admin/Clients/CreateClient.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Actions/Admin/Clients/UpdateClient.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Actions/Admin/Clients/UpdateClient.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Actions/Admin/Companies/CreateCompany.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Actions/Admin/Companies/CreateCompany.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Actions/Admin/Companies/UpdateCompany.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Actions/Admin/Companies/UpdateCompany.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Actions/Admin/Products/UpdateProduct.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Actions/Admin/Products/UpdateProduct.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Actions/Admin/User/CreateUser.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Actions/Admin/User/CreateUser.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Actions/Admin/User/UpdateUser.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Actions/Admin/User/UpdateUser.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Auth/NewPasswordController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Auth/NewPasswordController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Auth/PasswordController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Auth/PasswordController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Auth/RegisteredUserController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Auth/RegisteredUserController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/CompanyController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/CompanyController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/UserController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/UserController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Requests/Admin/StoreCompanyRequest.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Requests/Admin/StoreCompanyRequest.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Models/Company.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Company.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/seeders/PermissionsSeeder.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/seeders/PermissionsSeeder.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/admin/company/create.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/company/create.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/admin/company/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/company/index.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/admin/user/create.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/user/create.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/admin/user/edit.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/user/edit.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/layouts/sidebar.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/layouts/sidebar.blade.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -180,24 +200,24 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="ToolWindowDB Browser.ShowToolbar" value="false" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/database/seeders" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/app/Traits" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="php.override.implement.member.chooser.php.doc" value="NONE" />
     <property name="ts.external.directory.path" value="C:\Program Files\JetBrains\PhpStorm 2020.1\plugins\JavaScriptLanguage\jsLanguageServicesImpl\external" />
   </component>
   <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\laragon\www\eco-local\database\seeders" />
-      <recent name="C:\laragon\www\eco-local\app\Actions\Admin" />
-      <recent name="C:\laragon\www\eco-local\resources\views\admin" />
-      <recent name="C:\laragon\www\eco-local\database\migrations" />
-      <recent name="C:\laragon\www\eco-local\app" />
-    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\laragon\www\eco-local\app\Http\Requests\Admin" />
       <recent name="C:\laragon\www\eco-local\resources\views\components\table" />
       <recent name="C:\laragon\www\eco-local\resources\views\admin\user" />
       <recent name="C:\laragon\www\eco-local\resources\views\admin" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\laragon\www\eco-local\app\Traits" />
+      <recent name="C:\laragon\www\eco-local\database\seeders" />
+      <recent name="C:\laragon\www\eco-local\app\Actions\Admin" />
+      <recent name="C:\laragon\www\eco-local\resources\views\admin" />
+      <recent name="C:\laragon\www\eco-local\database\migrations" />
     </key>
   </component>
   <component name="RunManager" selected="Composer Script.post-autoload-dump">
@@ -286,10 +306,10 @@
       <screen x="0" y="0" width="1680" height="1020" />
     </state>
     <state x="486" y="0" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/0.0.1680.1020/1680.-36.1920.1050@0.0.1680.1020" timestamp="1676633724989" />
-    <state x="570" y="265" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog" timestamp="1676634752367">
+    <state x="570" y="265" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog" timestamp="1676975386976">
       <screen x="0" y="0" width="1680" height="1020" />
     </state>
-    <state x="570" y="265" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.0.1680.1020/1680.-36.1920.1050@0.0.1680.1020" timestamp="1676634752367" />
+    <state x="570" y="265" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.0.1680.1020/1680.-36.1920.1050@0.0.1680.1020" timestamp="1676975386976" />
     <state x="616" y="422" key="ComposerInitDialogKey" timestamp="1675962821136">
       <screen x="0" y="0" width="1680" height="1020" />
     </state>
@@ -334,10 +354,10 @@
       <screen x="0" y="0" width="1680" height="1020" />
     </state>
     <state x="453" y="138" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser/0.0.1680.1020/1680.-36.1920.1050@0.0.1680.1020" timestamp="1675700079579" />
-    <state x="555" y="262" width="585" height="582" key="find.popup" timestamp="1676645630847">
+    <state x="555" y="262" width="585" height="582" key="find.popup" timestamp="1676975777284">
       <screen x="0" y="0" width="1680" height="1020" />
     </state>
-    <state x="555" y="262" width="585" height="582" key="find.popup/0.0.1680.1020/1680.-36.1920.1050@0.0.1680.1020" timestamp="1676645630847" />
+    <state x="555" y="262" width="585" height="582" key="find.popup/0.0.1680.1020/1680.-36.1920.1050@0.0.1680.1020" timestamp="1676975777284" />
     <state x="481" y="236" width="700" height="530" key="recent.locations.popup" timestamp="1675956218881">
       <screen x="0" y="0" width="1680" height="1020" />
     </state>
@@ -350,10 +370,10 @@
       <screen x="0" y="0" width="1680" height="1020" />
     </state>
     <state x="496" y="235" key="run.anything.popup/0.0.1680.1020/1680.-36.1920.1050@0.0.1680.1020" timestamp="1674659257751" />
-    <state x="503" y="220" width="672" height="678" key="search.everywhere.popup" timestamp="1676634798844">
+    <state x="503" y="220" width="672" height="678" key="search.everywhere.popup" timestamp="1676973654065">
       <screen x="0" y="0" width="1680" height="1020" />
     </state>
-    <state x="503" y="220" width="672" height="678" key="search.everywhere.popup/0.0.1680.1020/1680.-36.1920.1050@0.0.1680.1020" timestamp="1676634798844" />
+    <state x="503" y="220" width="672" height="678" key="search.everywhere.popup/0.0.1680.1020/1680.-36.1920.1050@0.0.1680.1020" timestamp="1676973654065" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

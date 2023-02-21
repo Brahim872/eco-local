@@ -3,14 +3,15 @@
 namespace App\Http\Controllers;
 
 
-
 use App\Actions\Admin\Companies\CreateCompany;
 use App\Actions\Admin\Companies\UpdateCompany;
 use App\Http\Requests\Admin\StoreCompanyRequest;
 use App\Http\Requests\Admin\UpdateCompanyRequest;
 use App\Models\Company;
 use App\Models\Product;
+use App\Models\User;
 use App\Traits\CrudTrait;
+use App\Traits\DataTableTrait;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
@@ -22,58 +23,38 @@ class CompanyController extends Controller
 
 
     use CrudTrait;
+    use DataTableTrait;
 
     protected $prefixName = "company";
     protected $model = Company::class;
 
 
-    /**
-     * Display a listing of the resource.
-     *
-     * @return Application|Factory|View
-     */
-    public function index()
-    {
-        $Companys = (new Company)->newQuery();
-
-        if (request()->has('search')) {
-            $Companys->where('name', 'Like', '%' . request()->input('search') . '%');
-        }
-
-        if (request()->query('sort')) {
-            $attribute = request()->query('sort');
-            $sort_order = 'ASC';
-            if (strncmp($attribute, '-', 1) === 0) {
-                $sort_order = 'DESC';
-                $attribute = substr($attribute, 1);
-            }
-            $Companys->orderBy($attribute, $sort_order);
-        } else {
-            $Companys->latest();
-        }
-
-        $model = $Companys->paginate(5)->onEachSide(2);
+    protected $columns = [
+        'id' => [
+            'title' => '#',
+            'searchable' => false,
+        ],
+        'name' => [
+            'title' => 'name',
+            'filterKey' => 'name',
+        ]
+    ];
 
 
-        return view('admin.Company.index', compact('model'));
-    }
     /**
      * Define view vars
      *
      * @return array
      */
-
-
     protected function getViewVars()
     {
 
         $contacts = DB::table('bs_contactes')
-            ->where('contact_type','=','App\Models\Client')
-            ->join('bs_clients','bs_clients.id','=','bs_contactes.contact_id')
-
-        ;
+            ->where('contact_type', '=', 'App\Models\Client')
+            ->join('bs_clients', 'bs_clients.id', '=', 'bs_contactes.contact_id');
         return [
             'admin' => $this->model::with('users')->first(),
+            'users' => User::select(['id', 'name'])->role('company')->get()->pluck('name', 'id'),
             'contacts' => $contacts,
         ];
     }
@@ -84,7 +65,6 @@ class CompanyController extends Controller
 
         return $this->store($request, $createCompany);
     }
-
 
 
     /**

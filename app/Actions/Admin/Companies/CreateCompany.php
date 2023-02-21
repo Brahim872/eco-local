@@ -20,15 +20,13 @@ class CreateCompany
         $file = $request->file('image');
 
         if(isset($file)){
-            $extension = $file->getCompanyOriginalExtension();
+            $extension = $file->getClientOriginalExtension();
             $path = Storage::disk('public')->putFileAs('images/profile', $file, uniqid().'.'.$extension);
         }
 
         $Company = Company::create([
             'name' => $request->name,
-            'email' => $request->email,
-            'user_id' => Auth::id(),
-            'password' => Hash::make($request->password),
+            'user_id' => ($request->user_id)??Auth::id(),
             'profile' => $path??NULL,
             'phone' =>  $request->phone,
         ]);
@@ -36,13 +34,13 @@ class CreateCompany
 
 
 
-        $tag = new Contacte();
-        $tag->user_id = Auth::id();
-        $tag->contact_type = Client::class ;
-
-
-
-        $Company->Contact()->save($tag);
+//        $tag = new Contacte();
+//        $tag->user_id = Auth::id();
+//        $tag->contact_type = Client::class ;
+//
+//
+//
+//        $Company->Contact()->save($tag);
 
         return $Company;
     }

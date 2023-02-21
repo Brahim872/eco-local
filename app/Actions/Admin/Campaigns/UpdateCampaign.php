@@ -36,8 +36,6 @@ class UpdateCampaign
     public function changePassword(Request $request, User $user): User
     {
 
-
-
         $validator->after(function ($validator) use ($request) {
             if ($validator->failed()) {
                 return;
@@ -52,7 +50,7 @@ class UpdateCampaign
         $validator->validateWithBag('password');
 
         $user = \Auth::user()->update([
-            'password' => Hash::make($request->input('new_password')),
+            'password' => $request->input('new_password'),
         ]);
 
         return  $user;

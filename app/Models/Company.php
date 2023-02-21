@@ -8,8 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Company extends Model
 {
-    use HasFactory;
 
+    use HasFactory;
     use Sluggable;
 
 
@@ -34,7 +34,7 @@ class Company extends Model
     {
         return [
             'slug' => [
-                'source' => ['id', 'name'],
+                'source' => ['name'],
                 'separator' => '_'
             ]
         ];
