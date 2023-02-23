@@ -16,40 +16,88 @@ use Illuminate\Support\Facades\Storage;
 trait DataTableTrait
 {
 
+    public $dataTable;
 
     /**
      * Display a listing of the resource.
      *
-     * @return Application|Factory|View
+     * @return string
      */
     public function index()
     {
-        $Companys = (new $this->model)->newQuery();
 
-        if (request()->has('search')) {
-            foreach ($this->columns as $key => $column) {
-                if (isset($column['filterKey'] )) {
-                    $Companys->where($column['filterKey'], 'Like', '%' . request()->input('search') . '%');
-                }
-            }
+        if ($this->currentRequest->ajax()) {
+            return $this->createAjaxResponse();
         }
 
-        if (request()->query('sort')) {
-            $attribute = request()->query('sort');
-            $sort_order = 'ASC';
-            if (strncmp($attribute, '-', 1) === 0) {
-                $sort_order = 'DESC';
-                $attribute = substr($attribute, 1);
-            }
-            $Companys->orderBy($attribute, $sort_order);
-        } else {
-            $Companys->latest();
-        }
-
-        $model = $Companys->paginate(5)->onEachSide(2);
-
-
-        return view('admin.Company.index', compact('model'));
+        return view('admin.' . $this->prefixName . '.index')
+            ->with('columns', $this->columns);
     }
+
+
+    public function getSelect($select)
+    {
+        $ele = [];
+        foreach ($select as $key => $item) {
+            $ele[] = $key;
+        }
+        return $ele;
+    }
+
+    public function initSearch()
+    {
+        if ($this->currentRequest->search) {
+            foreach ($this->columns as $column) {
+                if (isset($column['filterKey'])) {
+                    $this->dataTable = $this->dataTable->orWhere($column['filterKey'], 'like', '%' . $this->currentRequest->search . '%');
+                }
+
+            }
+        }
+    }
+
+    public function initOrderBy()
+    {
+        $keys = array_keys($this->columns);
+        $first_key = $keys[0];
+
+        if ($this->currentRequest->sort) {
+            $orderDir = $this->currentRequest->sort['dir'];
+            $orderCol = $this->currentRequest->sort['col'];
+        } else {
+            $orderDir = 'ASC';
+            $orderCol = $first_key;
+        }
+        $this->dataTable = $this->dataTable->orderBy($orderCol, $orderDir);
+
+    }
+
+    public function createAjaxResponse()
+    {
+        $select = $this->getSelect($this->columns);
+        $this->dataTable = (new $this->model)
+            ->select($select);
+
+        $this->initSearch();
+        $this->initOrderBy();
+
+
+        $this->dataTable = $this->dataTable->paginate(5)->toArray();
+
+        $output = [
+            'paginationInfo' => view('partials.table.pagination-info')
+                ->with('pagination', $this->dataTable)
+                ->render(),
+            'pagination' => view('partials.table.pagination')
+                ->with('pagination', $this->dataTable)
+                ->render(),
+            'data' => view('partials.table.body')
+                ->with('dataTable', $this->dataTable)
+                ->render(),
+        ];
+
+        return response()->json($output);
+    }
+
 
 }

@@ -136,6 +136,7 @@ Route::group([
         'prefix' => 'company',
     ], function () {
         Route::get('/', [CompanyController::class, 'index'])->name('company.index');
+        Route::post('/', [CompanyController::class, 'index'])->name('company.index.post');
         Route::get('create', [CompanyController::class, 'create'])->name('company.create');
         Route::post('store', [CompanyController::class, 'storeCompany'])->name('company.store');
         Route::get('show/{id}', [CompanyController::class, 'show'])->name('company.show');

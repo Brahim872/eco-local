@@ -10,10 +10,10 @@
         <!-- Livewire styles -->
 
         <!-- Scripts -->
-        @vite(['resources/css/app.css', 'resources/js/app.js', 'resources/js/product.js'])
-
+        <link rel="stylesheet" href="{{asset('/css/app.css')}}" />
         @stack('styles')
     </head>
+
     <body class="font-sans antialiased">
     <div class="flex flex-wrap bg-gray-100 w-full h-screen">
         @include('layouts.sidebar')
@@ -31,7 +31,7 @@
 
     <script src="https://cdn.tailwindcss.com"></script>
 {{--    <script src="{{asset('plugins/js/toastr.js')}}"></script>--}}
-
+    <script src="{{asset('/js/app.js')}}"></script>
     <script>
         function searchTable() {
             document.querySelector("#searchForm").submit();

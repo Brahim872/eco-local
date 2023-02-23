@@ -3,7 +3,6 @@
 @tailwind utilities;
 
 
-
 div.dataTables_filter {
     width: max-content;
     float: right;
@@ -30,7 +29,7 @@ div.dataTables_info {
 
 div label select {
     width: 60px;
-    border:0
+    border: 0
 }
 
 div label input {
@@ -52,17 +51,48 @@ a.paginate_button.previous.disabled {
 }
 
 
-.dropdown-menubar{
+.dropdown-menubar {
     cursor: pointer;
     position: relative;
 }
 
-.btn_drop{
+.btn_drop {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
+}
+
+.sortable {
+    position: relative;
+}
+
+[data-dir~="DESC"]::after {
+
+    position: absolute;
+    content: "";
+    width: 17px !important;
+    height: 15px !important;
+    right: 5% !important;
+
+    background-image: url(/icons/desc.svg) !important;
+    background-size: cover;
+    background-repeat: no-repeat;
+
+}
+
+[data-dir~="ASC"]::after {
+
+    position: absolute;
+    content: "";
+    width: 17px !important;
+    height: 15px !important;
+    right: 5% !important;
+
+    background-image: url(/icons/asc.svg) !important;
+    background-size: cover;
+    background-repeat: no-repeat;
 
 }
 

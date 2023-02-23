@@ -17,6 +17,7 @@ use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Http\Request;
 
 class CompanyController extends Controller
 {
@@ -26,20 +27,34 @@ class CompanyController extends Controller
     use DataTableTrait;
 
     protected $prefixName = "company";
+    protected $currentRequest = "";
     protected $model = Company::class;
 
 
     protected $columns = [
         'id' => [
             'title' => '#',
-            'searchable' => false,
+            'filterKey' => 'id',
+            'sortable' => 'id',
         ],
         'name' => [
-            'title' => 'name',
+            'title' => 'company.name',
             'filterKey' => 'name',
+            'sortable' => 'name',
+        ],
+        'website' => [
+            'title' => 'company.website',
+            'filterKey' => 'website',
+            'sortable' => 'website',
         ]
     ];
 
+
+    public function __construct(Request $request)
+    {
+
+        $this->currentRequest = $request;
+    }
 
     /**
      * Define view vars
@@ -80,6 +95,5 @@ class CompanyController extends Controller
         $Company = Company::findOrFail($Company);
         return $this->update($request, $Company, $updateCompany);
     }
-
 
 }

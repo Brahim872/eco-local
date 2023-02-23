@@ -6,8 +6,12 @@ window.Alpine = Alpine;
 
 Alpine.start();
 
+import $ from 'jquery';
+window.$ = window.jQuery = $;
 
 dropDownMenu($('.dropdown-menubar'))
+
+
 
 function dropDownMenu(elem){
     elem.parent().find('.submenu-menubar').toggleClass('hidden')
