@@ -16,37 +16,13 @@ class PermissionsSeeder extends Seeder
     protected $accessList = [];
     protected $info = [];
 
-    protected $datas = [
-        [
-            'name' => 'permission',
-            'category' => 'permission',
-            'access' => [
-                "super-admin" => ["read", "create", "delete"],
-            ]
-        ],
-        [
-            'name' => 'role',
-            'category' => 'permission',
-            'access' => [
-                "super-admin" => ["read", "create", "delete"],
-            ]
-        ],
-        [
-            'name' => 'company',
-            'category' => 'company',
-            'access' => [
-                "super-admin" => ["read", "create", "delete"],
-            ]
-        ],
-        [
-            'name' => 'user',
-            'category' => 'user',
-            'access' => [
-                "super-admin" => ["read", "create", "delete"],
-                "company" => ["read", "create", "delete"],
-            ]
-        ],
-    ];
+    protected $permissions;
+
+    public function __construct()
+    {
+        $this->permissions = config('userpermission.permissions');
+    }
+
 
     public function run()
     {
@@ -54,7 +30,7 @@ class PermissionsSeeder extends Seeder
         $this->info['name'] = '';
         $p = 1;
         $a = [];
-        foreach ($this->datas as $data) {
+        foreach ($this->permissions as $data) {
 
             foreach ($data['access'] as $key => $access) {
 

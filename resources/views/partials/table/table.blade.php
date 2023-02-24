@@ -1,6 +1,16 @@
 
 
-<div id="search"></div>
+
+<div class="header flex justify-start items-center">
+    <div id="search"></div>
+
+    <div id="filter">
+
+    </div>
+</div>
+
+
+<div id="spinner-table"></div>
 
 
 <table class="w-full text-sm text-left text-gray-500 ">
@@ -21,3 +31,5 @@
     <div id="pagination"></div>
     <div id="pagination-info"></div>
 </div>
+
+

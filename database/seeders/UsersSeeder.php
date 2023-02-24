@@ -16,17 +16,13 @@ class UsersSeeder extends Seeder
      *
      * @return void
      */
+    protected $rows;
 
+    public function __construct()
+    {
+        $this->rows = config('userpermission.users');
+    }
 
-    protected $rows = [
-        [
-            'id' => 1,
-            'name' => 'super admin',
-            'email' => 'superadmin@example.com',
-            'password' => 'Pa$$w0rd!',
-            'role' => 'super-admin',
-        ],
-    ];
 
     public function run()
     {

@@ -31,6 +31,8 @@ class CompanyController extends Controller
     protected $model = Company::class;
 
 
+    protected $listFilter;
+
     protected $columns = [
         'id' => [
             'title' => '#',
@@ -41,6 +43,7 @@ class CompanyController extends Controller
             'title' => 'company.name',
             'filterKey' => 'name',
             'sortable' => 'name',
+
         ],
         'website' => [
             'title' => 'company.website',
@@ -54,7 +57,13 @@ class CompanyController extends Controller
     {
 
         $this->currentRequest = $request;
+
+        $this->listFilter = [
+            'name' => (array) (new $this->model)->select(['name'])->get()->toArray(),
+        ];
     }
+
+
 
     /**
      * Define view vars

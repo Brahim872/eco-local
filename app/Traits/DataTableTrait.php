@@ -56,6 +56,21 @@ trait DataTableTrait
         }
     }
 
+    public function initFilter()
+    {
+
+        if ($this->currentRequest->filter) {
+
+            foreach ($this->currentRequest->filter as $key=>$column) {
+
+                    $this->dataTable = $this->dataTable
+                        ->where($key, 'like', '%' . $column . '%');
+
+
+            }
+        }
+    }
+
     public function initOrderBy()
     {
         $keys = array_keys($this->columns);
@@ -78,16 +93,25 @@ trait DataTableTrait
         $this->dataTable = (new $this->model)
             ->select($select);
 
+        $this->initFilter();
         $this->initSearch();
         $this->initOrderBy();
 
 
         $this->dataTable = $this->dataTable->paginate(5)->toArray();
 
+
+
         $output = [
+
+            'filter' => view('partials.table.filter')
+                ->with('listFilter', $this->listFilter??[])
+                ->render(),
+
             'paginationInfo' => view('partials.table.pagination-info')
                 ->with('pagination', $this->dataTable)
                 ->render(),
+
             'pagination' => view('partials.table.pagination')
                 ->with('pagination', $this->dataTable)
                 ->render(),

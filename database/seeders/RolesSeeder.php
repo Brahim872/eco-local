@@ -13,11 +13,15 @@ use Illuminate\Support\Facades\DB;
 class RolesSeeder extends Seeder
 {
 
-    protected $roles = [
-        ["id" => 1, "name" => "super-admin"],
-        ["id" => 2, "name" => "company"],
 
-    ];
+
+    protected $roles;
+
+    public function __construct()
+    {
+        $this->roles = config('userpermission.roles');
+    }
+
 
     public function run()
     {
