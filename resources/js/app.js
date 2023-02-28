@@ -9,6 +9,8 @@ Alpine.start();
 import $ from 'jquery';
 window.$ = window.jQuery = $;
 
+require('js-cookie');
+
 dropDownMenu($('.dropdown-menubar'))
 
 

@@ -10,6 +10,7 @@
         <!-- Livewire styles -->
 
         <!-- Scripts -->
+        <link rel="icon" href="{{asset('/images/logo.png')}}" />
         <link rel="stylesheet" href="{{asset('/css/app.css')}}" />
         @stack('styles')
     </head>
@@ -30,7 +31,6 @@
 
 
     <script src="https://cdn.tailwindcss.com"></script>
-{{--    <script src="{{asset('plugins/js/toastr.js')}}"></script>--}}
     <script src="{{asset('/js/app.js')}}"></script>
     <script>
         function searchTable() {
