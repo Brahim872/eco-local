@@ -47,6 +47,7 @@ Route::group([
         'prefix' => 'user',
     ], function () {
         Route::get('/', [UserController::class, 'index'])->name('user.index');
+        Route::post('/', [UserController::class, 'index'])->name('user.index.post');
         Route::get('create', [UserController::class, 'create'])->name('user.create');
         Route::post('store', [UserController::class, 'storeUser'])->name('user.store');
         Route::get('show/{id}', [UserController::class, 'show'])->name('user.show');

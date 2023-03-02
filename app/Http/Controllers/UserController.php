@@ -12,10 +12,12 @@ use App\Models\Client;
 use App\Models\Role;
 use App\Models\User;
 use App\Traits\CrudTrait;
+use App\Traits\DataTableTrait;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -23,48 +25,42 @@ use Illuminate\Support\Facades\DB;
 class UserController extends Controller
 {
     use CrudTrait;
+    use DataTableTrait;
 
     protected $prefixName = "user";
     protected $model = User::class;
 
-    public function __construct()
+    protected $columns = [
+        'id' => [
+            'title' => '#',
+            'filterKey' => 'id',
+            'sortable' => 'id',
+        ],
+        'name' => [
+            'title' => 'user.name',
+            'filterKey' => 'name',
+            'sortable' => 'name',
+
+        ],
+    ];
+
+
+    public function __construct(Request $request)
     {
 
+        $this->currentRequest = $request;
     }
 
     /**
-     * Display a listing of the resource.
+     * Define view vars
      *
-     * @return Response
+     * @return array
      */
-    public function index()
-    {
-        $users = (new User)->newQuery();
-
-        if (request()->has('search')) {
-            $users->where('name', 'Like', '%' . request()->input('search') . '%');
-        }
-
-        if (request()->query('sort')) {
-            $attribute = request()->query('sort');
-            $sort_order = 'ASC';
-            if (strncmp($attribute, '-', 1) === 0) {
-                $sort_order = 'DESC';
-                $attribute = substr($attribute, 1);
-            }
-            $users->orderBy($attribute, $sort_order);
-        } else {
-            $users->latest();
-        }
-
-        $users = $users->paginate(5)->onEachSide(2);
-
-
-        return view('admin.user.index', compact('users'));
-    }
 
     protected function getViewVars()
     {
+
+
         $roles = [];
         $roles = Role::select(['id','name'])->get()->pluck('name','id');
         if(Auth::user()->role('company')){

@@ -38,9 +38,17 @@ trait DataTableTrait
     public function getSelect($select)
     {
         $ele = [];
+
         foreach ($select as $key => $item) {
-            $ele[] = $key;
+
+            if(isset($item['parameterLink']) ){
+                $ele[] = $item['parameterLink'].' as hide_slug';
+            }
+            if(!isset($item['display']) || $item['display']==true){
+                $ele[] = $key;
+            }
         }
+
         return $ele;
     }
 
@@ -80,16 +88,17 @@ trait DataTableTrait
             $orderDir = $this->currentRequest->sort['dir'];
             $orderCol = $this->currentRequest->sort['col'];
         } else {
-            $orderDir = 'ASC';
+            $orderDir = 'DESC';
             $orderCol = $first_key;
         }
-        $this->dataTable = $this->dataTable->orderBy($orderCol, $orderDir);
 
+        $this->dataTable = $this->dataTable->orderBy($orderCol, $orderDir);
     }
 
     public function createAjaxResponse()
     {
         $select = $this->getSelect($this->columns);
+
         $this->dataTable = (new $this->model)
             ->select($select);
 
@@ -115,8 +124,10 @@ trait DataTableTrait
             'pagination' => view('partials.table.pagination')
                 ->with('pagination', $this->dataTable)
                 ->render(),
+
             'data' => view('partials.table.body')
                 ->with('dataTable', $this->dataTable)
+                ->with('columns', $this->columns)
                 ->render(),
         ];
 

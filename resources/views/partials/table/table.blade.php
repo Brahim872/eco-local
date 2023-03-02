@@ -1,6 +1,3 @@
-
-
-
 <div class="header flex justify-start items-center">
     <div id="search"></div>
 
@@ -17,8 +14,10 @@
     <thead class="text-xs rounded-lg text-gray-700 uppercase bg-gray-100 ">
     <tr>
         @foreach($columns as $key=>$rows)
-            <th @if(isset($rows['sortable'])) class="sortable px-6 py-3" scope="col"
-                data-sort="{{$rows['sortable']}}" @endif >{{$rows['title']}} </th>
+            @if(!isset($rows['display']) || $rows['display']==true)
+                <th @if(isset($rows['sortable'])) class="sortable px-6 py-3" scope="col"
+                    data-sort="{{$rows['sortable']}}" @endif >{{$rows['title']}} </th>
+            @endif
         @endforeach
     </tr>
 

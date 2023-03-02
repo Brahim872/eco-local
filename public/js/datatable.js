@@ -107,6 +107,7 @@ const TableDatatablesAjax = {
             $.ajax({
                 url: $(e.currentTarget).attr('data-href'),
                 type: 'GET',
+                data:JSON.parse(localStorage.getItem('data-table')),
                 success: function (data) {
                     $('#bs__table').html(data['data']);
                     $('#pagination').html(data['pagination']);

@@ -39,12 +39,18 @@ class CompanyController extends Controller
             'title' => 'company.name',
             'filterKey' => 'name',
             'sortable' => 'name',
+            'link'=>'campaign.show',
+            'parameterLink'=>'slug'
 
         ],
         'website' => [
             'title' => 'company.website',
             'filterKey' => 'website',
             'sortable' => 'website',
+        ],
+        'slug' => [
+            'title' => 'company.slug',
+            'display'=>false,
         ]
     ];
 
