@@ -20,7 +20,7 @@ use Illuminate\Support\Facades\Route;
 //    ->middleware('auth');
 
 
-Route::get('data-admin',[ApiUserController::class,'index'])->name('api:user.index');
+Route::get('data-backend',[ApiUserController::class,'index'])->name('api:user.index');
 
 
 

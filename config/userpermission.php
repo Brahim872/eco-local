@@ -5,16 +5,16 @@ return [
     'users' => [
         [
             'id' => 1,
-            'name' => 'super admin',
+            'name' => 'super backend',
             'email' => 'superadmin@example.com',
             'password' => 'Pa$$w0rd!',
-            'role' => 'super-admin',
+            'role' => 'super-backend',
         ],
     ],
 
 
     'roles' => [
-        ["id" => 1, "name" => "super-admin"],
+        ["id" => 1, "name" => "super-backend"],
         ["id" => 2, "name" => "company"],
 
     ],
@@ -24,28 +24,36 @@ return [
             'name' => 'permission',
             'category' => 'permission',
             'access' => [
-                "super-admin" => ["read", "create", "delete"],
+                "super-backend" => ["read", "create", "delete"],
             ]
         ],
         [
             'name' => 'role',
             'category' => 'permission',
             'access' => [
-                "super-admin" => ["read", "create", "delete"],
+                "super-backend" => ["read", "create", "delete"],
             ]
         ],
         [
             'name' => 'company',
             'category' => 'company',
             'access' => [
-                "super-admin" => ["read", "create", "delete"],
+                "super-backend" => ["read", "create", "delete"],
             ]
         ],
         [
             'name' => 'user',
             'category' => 'user',
             'access' => [
-                "super-admin" => ["read", "create", "delete"],
+                "super-backend" => ["read", "create", "delete"],
+                "company" => ["read", "create", "delete"],
+            ]
+        ],
+        [
+            'name' => 'contact',
+            'category' => 'contact',
+            'access' => [
+                "super-backend" => ["read", "create", "delete"],
                 "company" => ["read", "create", "delete"],
             ]
         ],

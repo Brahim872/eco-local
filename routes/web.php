@@ -19,9 +19,20 @@ Route::get('/', function () {
 });
 
 
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth', 'verified'])->name('dashboard');
 
 
 
+Route::group([
+//    'prefix' => 'backend',
+    'middleware' => ['auth'],
+], function () {
 
-require __DIR__.'/admin.php';
-require __DIR__.'/auth.php';
+    require __DIR__ . '/admin.php';
+    require __DIR__ . '/backend/companies.php';
+    require __DIR__ . '/backend/conatacts.php';
+});
+
+require __DIR__ . '/auth.php';

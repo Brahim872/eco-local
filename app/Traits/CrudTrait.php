@@ -23,19 +23,50 @@ trait CrudTrait
      */
     public function create()
     {
-
-        $view = $this->getView('admin.' . $this->prefixName . '.create');
+        $view = $this->getView('backend.' . $this->prefixName . '.form');
         return $view;
-
     }
 
 
-    public function store(Request $request, $service)
+    public function store(Request $request)
     {
 
-        $service->handle($request);
+
+
+        $attr =  $this->beforeSave($request->all(), (new $this->model));
+
+        $saveModel = (new $this->model)->create($attr);
+
+        if ($saveModel) {
+            $this->afterSave($request->all(), $saveModel);
+        }
+
         toastr()->success('resource created successfully.');
         return redirect()->route($this->prefixName . '.index');
+    }
+
+    /**
+     * After save Model
+     *
+     * @param array $attributes
+     * @param BaseModel $model
+     * @return void
+     */
+    protected function afterSave(array $attributes, $model)
+    {
+
+    }
+
+    /**
+     * Before save Model
+     *
+     * @param array $attributes
+     * @param $model
+     * @return void
+     */
+    protected function beforeSave(array $attributes, $model)
+    {
+            return $attributes;
     }
 
     public function update($request, $client, $service)
@@ -48,10 +79,9 @@ trait CrudTrait
 
     public function edit($slug)
     {
-
         $model = $this->model::where('slug', $slug)->firstOrFail();
 
-        $view = $this->getView('admin.' . $this->prefixName . '.edit');
+        $view = $this->getView('backend.' . $this->prefixName . '.form');
         return $view->with('model', $model);
     }
 
@@ -67,8 +97,10 @@ trait CrudTrait
 
     public function show($user)
     {
-        $model = $this->model::where('slug', $user)->firstOrFail();
-        $view = $this->getView('admin.' . $this->prefixName . '.show');
+
+        $model = $this->model::where('slug', $user)->first();
+        $view = $this->getView('backend.' . $this->prefixName . '.show');
+
         return $view->with('model', $model);
 
     }

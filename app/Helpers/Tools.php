@@ -2,7 +2,6 @@
 
 namespace App\Helpers;
 
-use App\Models\Contents\Langue;
 
 class Tools
 {
@@ -69,6 +68,20 @@ class Tools
             return '/';
         }
         return $text;
+    }
+
+
+
+    function validateEmail($email) {
+        // The regular expression pattern for email validation
+        $pattern = '/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/';
+
+        // Test the email against the pattern
+        if (preg_match($pattern, $email)) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
 }

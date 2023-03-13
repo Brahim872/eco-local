@@ -29,6 +29,7 @@ class UserController extends Controller
 
     protected $prefixName = "user";
     protected $model = User::class;
+    protected $withAction = false;
 
     protected $columns = [
         'id' => [
@@ -62,22 +63,24 @@ class UserController extends Controller
 
 
         $roles = [];
-        $roles = Role::select(['id','name'])->get()->pluck('name','id');
-        if(Auth::user()->role('company')){
-            $roles = Role::select(['id','name'])->where('name','!=','super-admin')->get()->pluck('name','id');
+        $roles = Role::select(['id', 'name'])->get()->pluck('name', 'id');
+        if (Auth::user()->role('company')) {
+            $roles = Role::select(['id', 'name'])->where('name', '!=', 'super-backend')->get()->pluck('name', 'id');
         }
-
 
         return [
             'roles' => $roles,
         ];
     }
 
-
-    public function storeUser(StoreUserRequest $request, CreateUser $createUser)
+    protected function afterSave(array $attributes, $model)
     {
-        return $this->store($request, $createUser);
+        if (isset($attributes['roles'])) {
+            $roles = $attributes['roles'] ?? 'company';
+            $model->assignRole($roles);
+        }
     }
+
 
     /**
      * Display the specified resource.
@@ -85,13 +88,14 @@ class UserController extends Controller
      * @param User $user
      * @return Application|Factory|View
      */
-    public function show($user)
+    public
+    function show($user)
     {
         $user = User::where('slug', $user)->firstOrFail();
         $roles = Role::all();
         $userHasRoles = array_column(json_decode($user->roles, true), 'id');
 
-        return view('admin.user.show', compact('user', 'roles', 'userHasRoles'));
+        return view('backend.user.show', compact('user', 'roles', 'userHasRoles'));
     }
 
 
@@ -101,13 +105,14 @@ class UserController extends Controller
      * @param User $user
      * @return Response
      */
-    public function edit($id)
+    public
+    function edit($id)
     {
         $user = User::where('slug', $id)->firstOrFail();
         $roles = Role::all();
         $userHasRoles = array_column(json_decode($user->roles, true), 'id');
 
-        return view('admin.user.edit', compact('user', 'roles', 'userHasRoles'));
+        return view('backend.user.edit', compact('user', 'roles', 'userHasRoles'));
     }
 
 
@@ -120,7 +125,8 @@ class UserController extends Controller
      * @return RedirectResponse
      */
 
-    public function updateUser(UpdateUserRequest $request, $user, UpdateUser $updateUser)
+    public
+    function updateUser(UpdateUserRequest $request, $user, UpdateUser $updateUser)
     {
         $client = User::findOrFail($user);
         return $this->update($request, $client, $updateUser);
@@ -135,7 +141,8 @@ class UserController extends Controller
      * @param UpdateProduct $updateUser
      * @return RedirectResponse
      */
-    public function updatePassword(UpdatePasswordUserRequest $request, $user, UpdateProduct $updateUser)
+    public
+    function updatePassword(UpdatePasswordUserRequest $request, $user, UpdateProduct $updateUser)
     {
         $user = User::where('slug', $user)->firstOrFail();
         $updateUser->changePassword($request, $user);
@@ -150,7 +157,8 @@ class UserController extends Controller
      * @param User $user
      * @return Response
      */
-    public function destroy($user)
+    public
+    function destroy($user)
     {
         $user = User::where('slug', $user)->firstOrFail();
         $user->delete();

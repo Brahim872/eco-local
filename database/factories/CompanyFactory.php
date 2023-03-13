@@ -2,6 +2,8 @@
 
 namespace Database\Factories;
 
+use App\Models\Company;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -9,6 +11,9 @@ use Illuminate\Database\Eloquent\Factories\Factory;
  */
 class CompanyFactory extends Factory
 {
+
+
+    protected $model = Company::class;
     /**
      * Define the model's default state.
      *
@@ -17,7 +22,10 @@ class CompanyFactory extends Factory
     public function definition()
     {
         return [
-            //
+            'user_id' => User::factory(),
+            'name' => $this->faker->sentence,
+            'address' => $this->faker->address,
+            'website' => $this->faker->url,
         ];
     }
 }

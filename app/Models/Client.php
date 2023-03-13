@@ -73,6 +73,6 @@ class Client extends Model
      */
     public function Contact()
     {
-        return $this->morphMany(Contacte::class, 'contact');
+        return $this->morphMany(Contact::class, 'contact');
     }
 }

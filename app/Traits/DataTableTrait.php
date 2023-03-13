@@ -30,8 +30,10 @@ trait DataTableTrait
             return $this->createAjaxResponse();
         }
 
-        return view('admin.' . $this->prefixName . '.index')
-            ->with('columns', $this->columns);
+        return view('backend.' . $this->prefixName . '.index')
+            ->with('columns', $this->columns)
+            ->with('prefixName', $this->prefixName)
+            ->with('withAction', $this->withAction??null);
     }
 
 
@@ -128,6 +130,8 @@ trait DataTableTrait
             'data' => view('partials.table.body')
                 ->with('dataTable', $this->dataTable)
                 ->with('columns', $this->columns)
+                ->with('prefixName', $this->prefixName)
+                ->with('withAction', $this->withAction??NULL)
                 ->render(),
         ];
 

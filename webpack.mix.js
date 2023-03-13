@@ -12,5 +12,5 @@ const mix = require('laravel-mix');
  |
  */
 
-mix.js(['resources/js/app.js', 'resources/js/product.js'], 'js/app.js')
+mix.js(['resources/js/app.js', 'resources/js/product.js', 'resources/js/tabs.js'], 'js/app.js')
     .css('resources/css/app.css', 'css/app.css');

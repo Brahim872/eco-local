@@ -17,6 +17,7 @@ return new class extends Migration
 
             $table->id();
             $table->bigInteger('user_id')->unsigned();
+            $table->bigInteger('city_id')->unsigned();
             $table->string('name');
             $table->string('address')->nullable();
             $table->string('website')->nullable();
@@ -26,6 +27,7 @@ return new class extends Migration
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('city_id')->references('id')->on('cities');
 
         });
     }

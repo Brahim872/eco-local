@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\City;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -16,6 +17,8 @@ class DatabaseSeeder extends Seeder
         $this->call(RolesSeeder::class);
         $this->call(PermissionsSeeder::class);
         $this->call(UsersSeeder::class);
+//        $this->call(CitySeeder::class);
+//        \App\Models\Company::factory(100)->create();
 
     }
 }

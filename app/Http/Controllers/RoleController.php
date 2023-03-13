@@ -42,7 +42,7 @@ class RoleController extends Controller
 
         $roles = $roles->paginate(5)->onEachSide(2);
 
-        return view('admin.role.index', compact('roles'));
+        return view('backend.role.index', compact('roles'));
     }
 
     /**
@@ -55,7 +55,7 @@ class RoleController extends Controller
         $permissions = Permission::get()->groupBy('category');
 
 
-        return view('admin.role.create', compact('permissions'));
+        return view('backend.role.create', compact('permissions'));
     }
 
     /**
@@ -87,7 +87,7 @@ class RoleController extends Controller
         $permissions = Permission::all();
         $roleHasPermissions = array_column(json_decode($role->permissions, true), 'id');
 
-        return view('admin.role.show', compact('role', 'permissions', 'roleHasPermissions'));
+        return view('backend.role.show', compact('role', 'permissions', 'roleHasPermissions'));
     }
 
     /**
@@ -102,7 +102,7 @@ class RoleController extends Controller
         $permissions = Permission::all();
         $roleHasPermissions = array_column(json_decode($role->permissions, true), 'id');
 
-        return view('admin.role.edit', compact('role', 'permissions', 'roleHasPermissions'));
+        return view('backend.role.edit', compact('role', 'permissions', 'roleHasPermissions'));
     }
 
     /**

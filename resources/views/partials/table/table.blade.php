@@ -19,6 +19,9 @@
                     data-sort="{{$rows['sortable']}}" @endif >{{$rows['title']}} </th>
             @endif
         @endforeach
+        @if($withAction)
+            <th > Actions </th>
+        @endif
     </tr>
 
     </thead>

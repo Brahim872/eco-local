@@ -18,7 +18,6 @@
 
     <ul class="space-y-2 text-sm">
 
-
         <x-admin.aside.asidbare title="Dashboard" route="{{ route('dashboard') }}">
             <svg class="h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -35,33 +34,44 @@
                 </svg>
             </x-admin.aside.asidbare>
         @endcan
-        {{--        <x-admin.aside.asidbare title="client" route="{{ route('client.index') }}">--}}
-        {{--            <svg class="h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">--}}
-        {{--                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"--}}
-        {{--                      d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>--}}
-        {{--            </svg>--}}
-        {{--        </x-admin.aside.asidbare>--}}
 
-        {{--        <x-admin.aside.asidbare title="products" route="{{ route('product.index') }}">--}}
-        {{--            <svg class="h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">--}}
-        {{--                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"--}}
-        {{--                      d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>--}}
-        {{--            </svg>--}}
-        {{--        </x-admin.aside.asidbare>--}}
+        @can('contact.read')
+            <x-admin.aside.asidbare title="contacts" route="{{ route('contact.index') }}">
+                <svg class="h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                     stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                          d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                </svg>
+            </x-admin.aside.asidbare>
+        @endcan
 
-        {{--        <x-admin.aside.asidbare title="contacts" route="{{ route('contact.index') }}">--}}
+        {{--        <x-backend.aside.asidbare title="client" route="{{ route('client.index') }}">--}}
         {{--            <svg class="h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">--}}
         {{--                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"--}}
         {{--                      d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>--}}
         {{--            </svg>--}}
-        {{--        </x-admin.aside.asidbare>--}}
+        {{--        </x-backend.aside.asidbare>--}}
 
-        {{--        <x-admin.aside.asidbare title="campaigns" route="{{ route('campaign.index') }}">--}}
+        {{--        <x-backend.aside.asidbare title="products" route="{{ route('product.index') }}">--}}
         {{--            <svg class="h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">--}}
         {{--                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"--}}
         {{--                      d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>--}}
         {{--            </svg>--}}
-        {{--        </x-admin.aside.asidbare>--}}
+        {{--        </x-backend.aside.asidbare>--}}
+
+        {{--        <x-backend.aside.asidbare title="contacts" route="{{ route('contact.index') }}">--}}
+        {{--            <svg class="h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">--}}
+        {{--                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"--}}
+        {{--                      d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>--}}
+        {{--            </svg>--}}
+        {{--        </x-backend.aside.asidbare>--}}
+
+        {{--        <x-backend.aside.asidbare title="campaigns" route="{{ route('campaign.index') }}">--}}
+        {{--            <svg class="h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">--}}
+        {{--                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"--}}
+        {{--                      d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>--}}
+        {{--            </svg>--}}
+        {{--        </x-backend.aside.asidbare>--}}
 
 
         @php

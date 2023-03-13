@@ -5,8 +5,8 @@ namespace App\Http\Controllers;
 
 use App\Actions\Admin\Companies\CreateCompany;
 use App\Actions\Admin\Companies\UpdateCompany;
-use App\Http\Requests\Admin\StoreCompanyRequest;
 use App\Http\Requests\Admin\UpdateCompanyRequest;
+use App\Models\City;
 use App\Models\Company;
 use App\Models\User;
 use App\Traits\CrudTrait;
@@ -25,6 +25,7 @@ class CompanyController extends Controller
     protected $prefixName = "company";
     protected $currentRequest = "";
     protected $model = Company::class;
+    protected $withAction = true;
 
 
     protected $listFilter;
@@ -39,8 +40,8 @@ class CompanyController extends Controller
             'title' => 'company.name',
             'filterKey' => 'name',
             'sortable' => 'name',
-            'link'=>'campaign.show',
-            'parameterLink'=>'slug'
+            'link' => 'company.show',
+            'parameterLink' => 'slug'
 
         ],
         'website' => [
@@ -50,21 +51,18 @@ class CompanyController extends Controller
         ],
         'slug' => [
             'title' => 'company.slug',
-            'display'=>false,
+            'display' => false,
         ]
     ];
 
 
     public function __construct(Request $request)
     {
-
         $this->currentRequest = $request;
-
-        $this->listFilter = [
-            'name' => (array) (new $this->model)->select(['name'])->get()->toArray(),
-        ];
+//        $this->listFilter = [
+//            'name' => (array)(new $this->model)->select(['name'])->get()->toArray(),
+//        ];
     }
-
 
 
     /**
@@ -74,22 +72,16 @@ class CompanyController extends Controller
      */
     protected function getViewVars()
     {
-
         $contacts = DB::table('bs_contactes')
             ->where('contact_type', '=', 'App\Models\Client')
             ->join('bs_clients', 'bs_clients.id', '=', 'bs_contactes.contact_id');
+
         return [
-            'admin' => $this->model::with('users')->first(),
+            'backend' => $this->model::with('users')->first(),
             'users' => User::select(['id', 'name'])->role('company')->get()->pluck('name', 'id'),
+            'cities' => City::select(['id', 'name'])->get()->pluck('name', 'id'),
             'contacts' => $contacts,
         ];
-    }
-
-
-    public function storeCompany(StoreCompanyRequest $request, CreateCompany $createCompany)
-    {
-
-        return $this->store($request, $createCompany);
     }
 
 

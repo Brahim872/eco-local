@@ -1,4 +1,5 @@
 @foreach($dataTable['data'] as $key=>$rows)
+
     <tr class="bg-white border-b  ">
         @foreach($rows as $id=>$item)
             @if(!isset($columns[$id]['display']) || $columns[$id]['display']==true)
@@ -18,6 +19,9 @@
                 @endif
             @endif
         @endforeach
+        @if($withAction)
+            <td> @include('backend.'.$prefixName.'.actions')</td>
+        @endif
     </tr>
 @endforeach
 

@@ -20,6 +20,7 @@ class Company extends Model
         'website',
         'profile',
         'user_id',
+        'city_id',
         'slug',
     ];
 
@@ -46,11 +47,17 @@ class Company extends Model
      */
     public function contact()
     {
-        return $this->morphMany(Contacte::class, 'contact');
+        return $this->hasMany(Contact::class, 'company_id');
     }
 
     public function client(){
         return $this->hasMany( Client::class, 'company_id', 'id' );
+    }
+
+
+
+    public function cities(){
+        return $this->hasMany( City::class, 'city_id', 'id' );
     }
 
 

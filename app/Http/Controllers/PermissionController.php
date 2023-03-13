@@ -47,7 +47,7 @@ class PermissionController extends Controller
 
         $permissions = $permissions->paginate(5)->onEachSide(2);
 
-        return view('admin.permission.index', compact('permissions'));
+        return view('backend.permission.index', compact('permissions'));
     }
 
     /**
@@ -57,7 +57,7 @@ class PermissionController extends Controller
      */
     public function create()
     {
-        return view('admin.permission.create');
+        return view('backend.permission.create');
     }
 
     /**
@@ -82,7 +82,7 @@ class PermissionController extends Controller
     public function show($permission)
     {
         $permission = Permission::findOrFail($permission);
-        return view('admin.permission.show', compact('permission'));
+        return view('backend.permission.show', compact('permission'));
     }
 
     /**
@@ -94,7 +94,7 @@ class PermissionController extends Controller
     public function edit( $permission)
     {
         $permission = Permission::findOrFail($permission);
-        return view('admin.permission.edit', compact('permission'));
+        return view('backend.permission.edit', compact('permission'));
     }
 
     /**
