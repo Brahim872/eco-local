@@ -1,16 +1,5 @@
 const TableDataTableHtml = {
-    initSearch: function () {
-        $('#search').html(` <form>
-                                    <div>
-                                    <input type="text"
-                                            id="search_datatable"
-                                            placeholder="Search...."
-                                            class = 'bg-gray-50 border
-                                            border-gray-300 text-gray-900 text-sm
-                                            rounded-lg focus:ring-gray-500 focus:border-gray-500 mb-4 block  w-full p-2.5'>
-                                        </div>
-                                    </form>`)
-    },
+
     initSpinner: function (status) {
 
         if (status == true) {
@@ -26,7 +15,6 @@ const TableDataTableHtml = {
     },
 
     init: function () {
-        this.initSearch();
         this.initSpinner();
     }
 
@@ -40,10 +28,7 @@ const TableDatatablesAjax = {
                 url: $(location).attr('href'),
                 type: 'GET',
                 success: function (data) {
-                    $('#pagination').html(data['pagination']);
-                    $('#pagination-info').html(data['paginationInfo']);
-                    $('#bs__table').html(data['data']);
-                    $('#filter').html(data['filter'])
+                    $('#mytable_BS').html(data['data'])
                     TableDataTableHtml.initSpinner(false);
                 },
             })
@@ -88,7 +73,7 @@ const TableDatatablesAjax = {
                 data: JSON.parse( localStorage.getItem('data-table') ),
                 success: function (data) {
                     iconSort(e)
-                    $('#bs__table').html(data['data']);
+                    $('#mytable_BS').html(data['data'])
                     TableDataTableHtml.initSpinner(false);
                 }
             })
@@ -109,9 +94,7 @@ const TableDatatablesAjax = {
                 type: 'GET',
                 data: JSON.parse(localStorage.getItem('data-table')),
                 success: function (data) {
-                    $('#bs__table').html(data['data']);
-                    $('#pagination').html(data['pagination']);
-                    $('#pagination-info').html(data['paginationInfo']);
+                    $('#mytable_BS').html(data['data'])
                     TableDataTableHtml.initSpinner(false);
                 }
             })
@@ -134,9 +117,7 @@ const TableDatatablesAjax = {
                 type: 'POST',
                 data: obj,
                 success: function (data) {
-                    $('#bs__table').html(data['data']);
-                    $('#pagination').html(data['pagination']);
-                    $('#pagination-info').html(data['paginationInfo']);
+                    $('#mytable_BS').html(data['data'])
                     TableDataTableHtml.initSpinner(false);
 
                 }
@@ -163,9 +144,7 @@ const TableDatatablesAjax = {
                 type: 'POST',
                 data: obj,
                 success: function (data) {
-                    $('#bs__table').html(data['data']);
-                    $('#pagination').html(data['pagination']);
-                    $('#pagination-info').html(data['paginationInfo']);
+                    $('#mytable_BS').html(data['data'])
                     TableDataTableHtml.initSpinner(false);
 
                 }

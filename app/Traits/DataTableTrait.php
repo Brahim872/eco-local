@@ -119,15 +119,7 @@ trait DataTableTrait
                 ->with('listFilter', $this->listFilter??[])
                 ->render(),
 
-            'paginationInfo' => view('partials.table.pagination-info')
-                ->with('pagination', $this->dataTable)
-                ->render(),
-
-            'pagination' => view('partials.table.pagination')
-                ->with('pagination', $this->dataTable)
-                ->render(),
-
-            'data' => view('partials.table.body')
+            'data' => view('partials.table.table')
                 ->with('dataTable', $this->dataTable)
                 ->with('columns', $this->columns)
                 ->with('prefixName', $this->prefixName)
