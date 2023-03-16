@@ -119,6 +119,8 @@ trait DataTableTrait
                 ->with('listFilter', $this->listFilter??[])
                 ->render(),
 
+            'table' =>$this->prefixName,
+
             'data' => view('partials.table.table')
                 ->with('dataTable', $this->dataTable)
                 ->with('columns', $this->columns)

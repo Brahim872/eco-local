@@ -1,5 +1,6 @@
 const TableDataTableHtml = {
 
+
     initSpinner: function (status) {
 
         if (status == true) {
@@ -9,7 +10,7 @@ const TableDataTableHtml = {
                                     </div>`)
         }
         if (status == false) {
-            console.log("true")
+
             $('#spinner-table').html(``)
         }
     },
@@ -21,6 +22,40 @@ const TableDataTableHtml = {
 }
 
 const TableDatatablesAjax = {
+    initLocalStorage: function (table) {
+        let dataL = {
+            'sort': {
+                'col': '',
+                'dir': ''
+            },
+            'search': '',
+            'page': '',
+        }
+        localStorage.setItem('data-table-' + table, JSON.stringify(dataL));
+
+    },
+    getLocalDataTable: function (table) {
+
+        return JSON.parse(localStorage.getItem('data-table-' + table))
+
+    },
+    storeLocalDataTable: function (data) {
+
+        let dataL = TableDatatablesAjax.getLocalDataTable(data['table']);
+
+        dataL = {
+            'sort': {
+                'col': data['col'] ?? dataL.sort.col,
+                'dir': data['dir'] ?? dataL.sort.dir
+            },
+            'search': data['search'] ?? dataL.search??'',
+            'page': data['page'] ?? dataL.page??'',
+        }
+
+
+        localStorage.setItem('data-table-' + data['table'], JSON.stringify(dataL));
+
+    },
     initDataTable: async function () {
         try {
             TableDataTableHtml.initSpinner(true);
@@ -30,134 +65,149 @@ const TableDatatablesAjax = {
                 success: function (data) {
                     $('#mytable_BS').html(data['data'])
                     TableDataTableHtml.initSpinner(false);
+                    TableDatatablesAjax.initLocalStorage(data['table'])
                 },
             })
         } catch (error) {
             console.log(error);
         }
+
     },
     sortDataTable: function () {
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-        });
 
-        function iconSort(e) {
+        let elementClick;
 
-            if ($(e.target).attr('data-dir') == 'DESC') {
-                $('.sortable').removeAttr('data-dir')
-                $(e.target).attr('data-dir', 'ASC')
-            } else {
-                $('.sortable').removeAttr('data-dir')
-                $(e.target).attr('data-dir', 'DESC')
-            }
+        $(document).on('click', '.sortable', (e) => {
+            elementClick = e
 
-        }
+            this.storeLocalDataTable({
+                'table': $(e.target).parents('table').attr('data-table'),
+                'dir': $(e.currentTarget).attr('data-dir') ?? 'ASC',
+                'col': $(e.currentTarget).attr('data-sort'),
+            });
 
-        $('.sortable').on('click', (e) => {
-
-            let array = {
-                'sort': {
-                    'col': $(e.target).attr('data-sort'),
-                    'dir': $(e.target).attr('data-dir') ?? 'ASC'
-                }
-            }
-
-            localStorage.setItem('data-table', JSON.stringify(array));
 
             TableDataTableHtml.initSpinner(true);
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            })
+            console.log(this.getLocalDataTable($(e.target).parents('table').attr('data-table')))
             $.ajax({
                 url: $(location).attr('href'),
                 type: 'POST',
-                data: JSON.parse( localStorage.getItem('data-table') ),
+                data: this.getLocalDataTable($(e.target).parents('table').attr('data-table')),
                 success: function (data) {
-                    iconSort(e)
-                    $('#mytable_BS').html(data['data'])
-                    TableDataTableHtml.initSpinner(false);
-                }
+                    function resolveAfter2Seconds() {
+                        return new Promise(resolve => {
+                            resolve($('#mytable_BS').html(data['data']));
+                        });
+                    }
+
+                    resolveAfter2Seconds().then((e) => {
+                        let $dataLocal = TableDatatablesAjax.getLocalDataTable(data.table);
+                        TableDatatablesAjax.storeLocalDataTable({
+                            'table': data['table'],
+                            'dir': $('.sort_' + $dataLocal['sort']['col']).attr('data-dir'),
+                            'col': $('.sort_' + $dataLocal['sort']['col']).attr('data-sort'),
+                        })
+
+                        let sort = $dataLocal['sort']['dir'] == "ASC" ? 'DESC' : 'ASC';
+                        $('.sortable').removeAttr('data-dir')
+                        $('.sort_' + $dataLocal['sort']['col']).attr('data-dir', sort)
+
+                    });
+
+                },
             })
+
         })
+
+
     },
-    paginationDataTable: function () {
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-        });
 
-        $(document).on('click', '.page_item', (e) => {
 
-            TableDataTableHtml.initSpinner(true);
-            $.ajax({
-                url: $(e.currentTarget).attr('data-href'),
-                type: 'GET',
-                data: JSON.parse(localStorage.getItem('data-table')),
-                success: function (data) {
-                    $('#mytable_BS').html(data['data'])
-                    TableDataTableHtml.initSpinner(false);
-                }
-            })
-        })
-    },
-    searchDataTable: function () {
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-        });
-
-        $(document).on('keyup', '#search_datatable', function (e) {
-            TableDataTableHtml.initSpinner(true);
-            let obj = JSON.parse(localStorage.getItem('data-table'))
-            obj['search'] = $(e.currentTarget).val().toLowerCase()
-
-            $.ajax({
-                url: $(document).attr('href'),
-                type: 'POST',
-                data: obj,
-                success: function (data) {
-                    $('#mytable_BS').html(data['data'])
-                    TableDataTableHtml.initSpinner(false);
-
-                }
-            })
-        })
-    },
-    filterDataTable: function () {
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-        });
-
-        $(document).on('change', '.filter_table_data', function (e) {
-            TableDataTableHtml.initSpinner(true);
-            let obj = JSON.parse(localStorage.getItem('data-table'))
-
-            obj['filter'] = {
-                [$(e.currentTarget).attr('name')]: $(e.currentTarget).val().toLowerCase(),
-            }
-
-            $.ajax({
-                url: $(document).attr('href'),
-                type: 'POST',
-                data: obj,
-                success: function (data) {
-                    $('#mytable_BS').html(data['data'])
-                    TableDataTableHtml.initSpinner(false);
-
-                }
-            })
-        })
-    },
+    // paginationDataTable: function () {
+    //     $.ajaxSetup({
+    //         headers: {
+    //             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    //         }
+    //     });
+    //
+    //     $(document).on('click', '.page_item', (e) => {
+    //
+    //         TableDataTableHtml.initSpinner(true);
+    //         $.ajax({
+    //             url: $(e.currentTarget).attr('data-href'),
+    //             type: 'GET',
+    //             data: JSON.parse(localStorage.getItem('data-table')),
+    //             success: function (data) {
+    //                 $('#mytable_BS').html(data['data'])
+    //                 TableDataTableHtml.initSpinner(false);
+    //             }
+    //         })
+    //     })
+    // },
+    // searchDataTable: function () {
+    //     $.ajaxSetup({
+    //         headers: {
+    //             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    //         }
+    //     });
+    //
+    //     $(document).on('keyup', '#search_datatable', function (e) {
+    //         TableDataTableHtml.initSpinner(true);
+    //         let obj = JSON.parse(localStorage.getItem('data-table'))
+    //         obj['search'] = $(e.currentTarget).val().toLowerCase()
+    //
+    //         $.ajax({
+    //             url: $(document).attr('href'),
+    //             type: 'POST',
+    //             data: obj,
+    //             success: function (data) {
+    //                 $('#mytable_BS').html(data['data'])
+    //                 TableDataTableHtml.initSpinner(false);
+    //
+    //             }
+    //         })
+    //     })
+    // },
+    // filterDataTable: function () {
+    //     $.ajaxSetup({
+    //         headers: {
+    //             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    //         }
+    //     });
+    //
+    //     $(document).on('change', '.filter_table_data', function (e) {
+    //         TableDataTableHtml.initSpinner(true);
+    //         let obj = JSON.parse(localStorage.getItem('data-table'))
+    //
+    //         obj['filter'] = {
+    //             [$(e.currentTarget).attr('name')]: $(e.currentTarget).val().toLowerCase(),
+    //         }
+    //
+    //         $.ajax({
+    //             url: $(document).attr('href'),
+    //             type: 'POST',
+    //             data: obj,
+    //             success: function (data) {
+    //                 $('#mytable_BS').html(data['data'])
+    //                 TableDataTableHtml.initSpinner(false);
+    //             }
+    //         })
+    //     })
+    // },
 
     init: function () {
         this.initDataTable().then(() => {
-            this.paginationDataTable();
-            this.searchDataTable();
             this.sortDataTable();
-            this.filterDataTable();
+            // this.storeLocalDataTable();
+
+            // this.paginationDataTable();
+            // this.searchDataTable();
+            // this.filterDataTable();
         });
     }
 
