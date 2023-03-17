@@ -3092,6 +3092,37 @@ $('.switchStatus').on('change', function (e) {
 
 /***/ }),
 
+/***/ "./resources/js/tabs.js":
+/*!******************************!*\
+  !*** ./resources/js/tabs.js ***!
+  \******************************/
+/***/ (() => {
+
+$(document).ready(function () {
+  var tab = localStorage.getItem('tabs');
+  tabsEvent(tab, $('a[href="' + tab + '"]'));
+  function tabsEvent(tabId, this_) {
+    // Remove the active class from all tabs and tab panels
+    $('.tabs-nav li').removeClass('font-semibold border-gray-700');
+    $('.tab-content>div').addClass('hidden');
+
+    // Add the active class to the clicked tab and tab panel
+    $(this_).parent().addClass(' font-semibold border-gray-700 ');
+    $(tabId).removeClass('hidden');
+  }
+  $('.tabs-nav a').on('click', function () {
+    // Get the ID of the tab panel
+    var tabId = $(this).attr('href');
+    localStorage.setItem('tabs', tabId);
+    tabsEvent(tabId, this);
+
+    // Prevent the default link behavior
+    return false;
+  });
+});
+
+/***/ }),
+
 /***/ "./node_modules/base64-js/index.js":
 /*!*****************************************!*\
   !*** ./node_modules/base64-js/index.js ***!
@@ -43961,6 +43992,7 @@ const toJSONObject = (obj) => {
 /******/ 	// This entry module depends on other loaded chunks and execution need to be delayed
 /******/ 	__webpack_require__.O(undefined, ["css/app"], () => (__webpack_require__("./resources/js/app.js")))
 /******/ 	__webpack_require__.O(undefined, ["css/app"], () => (__webpack_require__("./resources/js/product.js")))
+/******/ 	__webpack_require__.O(undefined, ["css/app"], () => (__webpack_require__("./resources/js/tabs.js")))
 /******/ 	var __webpack_exports__ = __webpack_require__.O(undefined, ["css/app"], () => (__webpack_require__("./resources/css/app.css")))
 /******/ 	__webpack_exports__ = __webpack_require__.O(__webpack_exports__);
 /******/ 	

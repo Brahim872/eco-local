@@ -9,7 +9,6 @@ use App\Http\Requests\Admin\UpdateCompanyRequest;
 use App\Models\City;
 use App\Models\Company;
 use App\Models\Contact;
-use App\Models\User;
 use App\Traits\CrudTrait;
 use App\Traits\DataTableTrait;
 use Illuminate\Http\RedirectResponse;
@@ -30,39 +29,57 @@ class ContactController extends Controller
 
 
     protected $listFilter;
+    protected $innerJoin = [
+        ['bs_companies','bs_companies.id','contacts.company_id']
+    ];
 
     protected $columns = [
         'id' => [
             'title' => '#',
-            'filterKey' => 'id',
-            'sortable' => 'id',
+            'filterKey' => 'contacts.id',
+            'sortable' => 'contacts.id',
+            'table'=>'contacts'
+        ],
+        'first_name' => [
+            'title' => 'contact.first_name',
+            'filterKey' => 'contacts.first_name',
+            'sortable' => 'contacts.first_name',
+            'table'=>'contacts'
+        ],
+        'last_name' => [
+            'title' => 'contact.last_name',
+            'filterKey' => 'contacts.last_name',
+            'sortable' => 'contacts.last_name',
+            'table'=>'contacts'
+        ],
+        'email' => [
+            'title' => 'contact.email',
+            'filterKey' => 'contacts.last_name',
+            'sortable' => 'contacts.last_name',
+            'table'=>'contacts'
         ],
         'name' => [
-            'title' => 'company.name',
-            'filterKey' => 'name',
-            'sortable' => 'name',
+            'title' => 'contact.company_id',
+            'filterKey' => 'bs_companies.name',
+            'sortable' => 'bs_companies.name',
             'link' => 'company.show',
-            'parameterLink' => 'slug'
-
-        ],
-        'website' => [
-            'title' => 'company.website',
-            'filterKey' => 'website',
-            'sortable' => 'website',
+            'parameterLink' => 'bs_companies.slug',
+            'table'=>'bs_companies'
         ],
         'slug' => [
             'title' => 'company.slug',
             'display' => false,
         ]
+
     ];
 
 
     public function __construct(Request $request)
     {
         $this->currentRequest = $request;
-//        $this->listFilter = [
-//            'name' => (array)(new $this->model)->select(['name'])->get()->toArray(),
-//        ];
+        $this->listFilter = [
+            'companies' => (array) Company::select(['id','name'])->get()->toArray(),
+        ];
     }
 
 
@@ -78,9 +95,7 @@ class ContactController extends Controller
             ->join('bs_clients', 'bs_clients.id', '=', 'bs_contactes.contact_id');
 
         return [
-            'backend' => $this->model::with('users')->first(),
-            'users' => User::select(['id', 'name'])->role('company')->get()->pluck('name', 'id'),
-            'cities' => City::select(['id', 'name'])->get()->pluck('name', 'id'),
+            'companies' => Company::select(['id', 'name'])->get()->pluck('name', 'id'),
             'contacts' => $contacts,
         ];
     }
@@ -91,7 +106,6 @@ class ContactController extends Controller
      *
      * @param UpdateCompanyRequest $request
      * @param Company $Company
-     * @param UpdateProduct $updateCompany
      * @return RedirectResponse
      */
     public function updateCompany(UpdateCompanyRequest $request, $Company, UpdateCompany $updateCompany)

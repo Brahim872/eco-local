@@ -1,26 +1,27 @@
-let tabsContainer = document.querySelector("#tabs");
-let tabTogglers = tabsContainer.querySelectorAll("a");
+$(document).ready(function () {
+    let tab = localStorage.getItem('tabs');
+    tabsEvent(tab,$('a[href="'+tab+'"]'))
 
-tabTogglers.forEach(function (toggler) {
-    toggler.addEventListener("click", function (e) {
-        e.preventDefault();
+    function tabsEvent(tabId, this_) {
+        // Remove the active class from all tabs and tab panels
+        $('.tabs-nav li').removeClass('font-semibold border-gray-700');
+        $('.tab-content>div').addClass('hidden');
 
-        let tabName = this.getAttribute("href");
+        // Add the active class to the clicked tab and tab panel
+        $(this_).parent().addClass(' font-semibold border-gray-700 ');
+        $(tabId).removeClass('hidden');
+    }
 
-        let tabContents = document.querySelector("#tab-contents");
+    $('.tabs-nav a').on('click', function () {
 
-        for (let i = 0; i < tabContents.children.length; i++) {
+        // Get the ID of the tab panel
+        var tabId = $(this).attr('href');
 
-            tabTogglers[i].parentElement.classList.remove("border-blue-400", "border-b", "-mb-px", "opacity-100");
-            tabContents.children[i].classList.remove("hidden");
-            if ("#" + tabContents.children[i].id === tabName) {
-                continue;
-            }
-            tabContents.children[i].classList.add("hidden");
+        localStorage.setItem('tabs', tabId);
+        tabsEvent(tabId, this)
 
-        }
-        e.target.parentElement.classList.add("border-blue-400", "border-b-4", "-mb-px", "opacity-100");
+
+        // Prevent the default link behavior
+        return false;
     });
 });
-
-document.getElementById("default-tab").click();

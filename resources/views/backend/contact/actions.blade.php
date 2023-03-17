@@ -1,6 +1,6 @@
 
 <div class="flex">
-    <a  href="{{route($prefixName.'.edit',$rows['hide_slug'])}}">
+    <a  href="{{route($prefixName.'.edit',$rows['id'])}}">
         <x-icons.edit />
     </a>
 

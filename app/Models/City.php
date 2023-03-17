@@ -9,9 +9,14 @@ class City extends Model
 {
     use HasFactory;
 
-
-    public function companies(){
-        return $this->belongsTo( Company::class, 'city_id', 'id' );
+    protected $fillable = [
+        'name'
+    ];
+    protected $guarded = [];
+    public $timestamps = false;
+    public function companies()
+    {
+        return $this->belongsTo(Company::class, 'city_id', 'id');
     }
 
 }

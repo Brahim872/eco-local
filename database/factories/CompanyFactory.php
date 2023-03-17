@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\City;
 use App\Models\Company;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
@@ -23,7 +24,8 @@ class CompanyFactory extends Factory
     {
         return [
             'user_id' => User::factory(),
-            'name' => $this->faker->sentence,
+            'city_id' => City::factory(),
+            'name' => $this->faker->company(),
             'address' => $this->faker->address,
             'website' => $this->faker->url,
         ];

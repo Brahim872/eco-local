@@ -32,10 +32,11 @@ trait CrudTrait
     {
 
 
-
         $attr =  $this->beforeSave($request->all(), (new $this->model));
 
         $saveModel = (new $this->model)->create($attr);
+
+
 
         if ($saveModel) {
             $this->afterSave($request->all(), $saveModel);

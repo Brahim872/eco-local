@@ -43,14 +43,14 @@ trait DataTableTrait
 
         foreach ($select as $key => $item) {
 
+
             if(isset($item['parameterLink']) ){
                 $ele[] = $item['parameterLink'].' as hide_slug';
             }
             if(!isset($item['display']) || $item['display']==true){
-                $ele[] = $key;
+                $ele[] = $item['table'].'.'.$key;
             }
         }
-
         return $ele;
     }
 
@@ -81,10 +81,26 @@ trait DataTableTrait
         }
     }
 
+
+    public function initJoins()
+    {
+        if ($this->innerJoin) {
+
+            foreach ( $this->innerJoin as $join ) {
+
+                    $this->dataTable = $this->dataTable
+                        ->join($join[0],$join[1],$join[2]);
+
+
+            }
+        }
+    }
+
     public function initOrderBy()
     {
         $keys = array_keys($this->columns);
-        $first_key = $keys[0];
+        $first_key = $this->columns[$keys[0]]['sortable'];
+
 
         if ($this->currentRequest->sort) {
             $orderDir = $this->currentRequest->sort['dir'];
@@ -104,13 +120,13 @@ trait DataTableTrait
         $this->dataTable = (new $this->model)
             ->select($select);
 
+        $this->initJoins();
         $this->initFilter();
         $this->initSearch();
         $this->initOrderBy();
 
 
         $this->dataTable = $this->dataTable->paginate(5)->toArray();
-
 
 
         $output = [

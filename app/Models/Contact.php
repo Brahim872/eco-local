@@ -19,7 +19,8 @@ class Contact extends Model
         'last_name',
         'email',
     ];
-    protected $table = "bs_contactes";
+
+    protected $table = "contacts";
 
 
     public function companies(){
