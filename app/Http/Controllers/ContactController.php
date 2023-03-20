@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 
 use App\Actions\Admin\Companies\CreateCompany;
 use App\Actions\Admin\Companies\UpdateCompany;
+use App\Helpers\Tools;
 use App\Http\Requests\Admin\UpdateCompanyRequest;
 use App\Models\City;
 use App\Models\Company;
@@ -30,7 +31,7 @@ class ContactController extends Controller
 
     protected $listFilter;
     protected $innerJoin = [
-        ['bs_companies','bs_companies.id','contacts.company_id']
+        ['bs_companies', 'bs_companies.id', 'contacts.company_id']
     ];
 
     protected $columns = [
@@ -38,25 +39,25 @@ class ContactController extends Controller
             'title' => '#',
             'filterKey' => 'contacts.id',
             'sortable' => 'contacts.id',
-            'table'=>'contacts'
+            'table' => 'contacts'
         ],
         'first_name' => [
             'title' => 'contact.first_name',
             'filterKey' => 'contacts.first_name',
             'sortable' => 'contacts.first_name',
-            'table'=>'contacts'
+            'table' => 'contacts'
         ],
         'last_name' => [
             'title' => 'contact.last_name',
             'filterKey' => 'contacts.last_name',
             'sortable' => 'contacts.last_name',
-            'table'=>'contacts'
+            'table' => 'contacts'
         ],
         'email' => [
             'title' => 'contact.email',
             'filterKey' => 'contacts.last_name',
             'sortable' => 'contacts.last_name',
-            'table'=>'contacts'
+            'table' => 'contacts'
         ],
         'name' => [
             'title' => 'contact.company_id',
@@ -64,7 +65,7 @@ class ContactController extends Controller
             'sortable' => 'bs_companies.name',
             'link' => 'company.show',
             'parameterLink' => 'bs_companies.slug',
-            'table'=>'bs_companies'
+            'table' => 'bs_companies'
         ],
         'slug' => [
             'title' => 'company.slug',
@@ -78,7 +79,7 @@ class ContactController extends Controller
     {
         $this->currentRequest = $request;
         $this->listFilter = [
-            'companies' => (array) Company::select(['id','name'])->get()->toArray(),
+            'companies' => (array)Company::select(['id', 'name'])->get()->toArray(),
         ];
     }
 
@@ -101,17 +102,35 @@ class ContactController extends Controller
     }
 
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param UpdateCompanyRequest $request
-     * @param Company $Company
-     * @return RedirectResponse
-     */
-    public function updateCompany(UpdateCompanyRequest $request, $Company, UpdateCompany $updateCompany)
+    protected function beforeSave(array $attributes, $model)
     {
-        $Company = Company::findOrFail($Company);
-        return $this->update($request, $Company, $updateCompany);
+        if (isset($attributes['content'])) {
+
+            $contents = array();
+            $errors = array();
+            foreach (explode(PHP_EOL, $attributes['content']) as $number=>$lines) {
+
+                if (!Tools::validateEmail(explode(',', $lines)[0])){
+                    $errors["errors"] = 'error format email in line : '.$number+1 ;
+                    ;
+                }
+
+                $contents[] = array(
+                    'company_id' => $attributes['company_id'],
+                    'email' => explode(',', $lines)[0],
+                    'first_name' => explode(',', $lines)[1]??null,
+                    'last_name' => explode(',', $lines)[2]??null,
+                );
+
+            }
+            if($errors){
+                return $errors;
+            };
+            return $contents;
+
+        }else{
+            return $attributes;
+        }
     }
 
 }

@@ -31,7 +31,6 @@ class RolesSeeder extends Seeder
             $myRoles[] = $role['name'];
         }
 
-
         Role::whereNotIn('name',$myRoles)->delete();
 
         foreach ($this->roles as $index => $role) {

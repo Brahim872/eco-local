@@ -74,7 +74,7 @@ class Tools
 
 
 
-    function validateEmail($email) {
+    public static function validateEmail($email) {
         // The regular expression pattern for email validation
         $pattern = '/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/';
 

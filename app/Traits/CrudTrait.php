@@ -32,9 +32,15 @@ trait CrudTrait
     {
 
 
-        $attr =  $this->beforeSave($request->all(), (new $this->model));
+        $attr =  $this->beforeSave($request->except('_token'), (new $this->model));
 
-        $saveModel = (new $this->model)->create($attr);
+
+        if(isset($attr['errors'])){
+            toastr()->error($attr['errors']);
+            return redirect()->back()->withInput($request->all());
+        }
+
+        $saveModel = (new $this->model)->insert($attr);
 
 
 

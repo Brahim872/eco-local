@@ -93,7 +93,50 @@
 
                 </div>
                 <div id="second" class="hidden p-4">
-                    Second tab
+
+                    <form method="POST" action="{{ route('contact.store') }}" enctype="multipart/form-data">
+                        @csrf
+
+                        <div class="py-2">
+                            <x-admin.form.label for="company_id"
+                                                class="block font-medium text-sm text-gray-700{{$errors->has('company_id') ? 'text-red-400' : ''}}">{{ __('company_id') }}</x-admin.form.label>
+
+                            <x-admin.form.select id="company_id_2"
+                                                 class="search-select_2 {{$errors->has('company_id') ? 'border-red-400' : ''}} w-full w-[50%]"
+                                                 type="text"
+                                                 name="company_id"
+                            >
+                                <option value="">{{old('company_id')}}</option>
+                                @foreach($companies as $id=>$company)
+                                    <option value="{{$id}}"  @if(isset($model->company_id) && $model->company_id == $id || old('company_id') == $id) selected @endif>{{$company}}</option>
+                                @endforeach
+                            </x-admin.form.select>
+                            <x-admin.form.error-field name="company_id"/>
+
+                        </div>
+
+
+                        <div class="py-2">
+                            <x-admin.form.label for="content"
+                                                class="{{$errors->has('content') ? 'text-red-400' : ''}}">{{ __('content') }}</x-admin.form.label>
+
+
+                            <textarea  name="content" class = 'rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 block mt-1 w-full' >{{{ isset($model->content)? $model->content : old('content') }}}</textarea>
+
+                            {{--                            <x-admin.form.textarea id="content" class="{{$errors->has('content') ? 'border-red-400' : ''}} w-[50%]"--}}
+{{--                                                name="content"--}}
+{{--                                                value="{{isset($model->content)? $model->content : old('content') }}">{{{ isset($model->content)? $model->content : old('content') }}}</x-admin.form.textarea>--}}
+                            <x-admin.form.error-field name="content"/>
+
+                        </div>
+
+
+
+                        <div class="flex justify-end mt-4">
+                            <x-admin.form.button>{{ __('Create') }}</x-admin.form.button>
+                        </div>
+                    </form>
+
                 </div>
                 <div id="third" class="hidden p-4">
                     Third tab

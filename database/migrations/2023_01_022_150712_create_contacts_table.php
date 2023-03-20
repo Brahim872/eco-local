@@ -23,7 +23,7 @@ return new class extends Migration
             $table->timestamp('unsubscribed_at')->nullable();
             $table->timestamps();
 
-            $table->foreign('company_id')->references('id')->on('companies')->onDelete('cascade');
+            $table->foreign('company_id')->references('id')->on('bs_companies')->onDelete('cascade');
 
         });
     }
