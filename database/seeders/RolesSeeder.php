@@ -14,7 +14,6 @@ class RolesSeeder extends Seeder
 {
 
 
-
     protected $roles;
 
     public function __construct()
@@ -25,11 +24,22 @@ class RolesSeeder extends Seeder
 
     public function run()
     {
-        Role::query()->delete();
+//        Role::query()->delete();
+
+        $myRoles = [];
+        foreach ($this->roles as $index => $role) {
+            $myRoles[] = $role['name'];
+        }
+
+
+        Role::whereNotIn('name',$myRoles)->delete();
 
         foreach ($this->roles as $index => $role) {
-
-            Role::create(
+            Role::updateOrCreate(
+                [
+                    'id' => $role['id'],
+                    'name' => $role['name']
+                ],
                 [
                     'id' => $role['id'],
                     'name' => $role['name']

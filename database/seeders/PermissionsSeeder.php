@@ -26,7 +26,7 @@ class PermissionsSeeder extends Seeder
 
     public function run()
     {
-        Permission::query()->delete();
+//        Permission::query()->delete();
         $this->info['name'] = '';
         $p = 1;
         $a = [];
