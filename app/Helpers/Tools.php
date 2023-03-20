@@ -3,6 +3,8 @@
 namespace App\Helpers;
 
 
+use Illuminate\Support\Facades\File;
+
 class Tools
 {
 
@@ -81,6 +83,17 @@ class Tools
             return true;
         } else {
             return false;
+        }
+    }
+
+
+    function includeRoutes($dir){
+        $files = File::allFiles(base_path('routes/'.$dir));
+
+        foreach ($files as $file) {
+            if (file_exists(base_path('routes/'.$dir).'/'.$file->getFilename()) && pathinfo($file->getFilename(), PATHINFO_EXTENSION) === 'php') {
+                require_once base_path('routes/'.$dir).'/'.$file->getFilename() ;
+            }
         }
     }
 

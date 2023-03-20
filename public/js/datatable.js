@@ -49,28 +49,32 @@ const TableDataTableHtml = {
 }
 
 const TableDatatablesAjax = {
+    pathname: $(location).attr('pathname'),
     initLocalStorage: function (table) {
-        let dataL = {
-            'sort': {
-                'col': '',
-                'dir': ''
-            },
-            'search': '',
-            'page': '',
+        // let dataL = ''
+        let dataL = TableDatatablesAjax.getLocalDataTable(table);
+        if (!dataL) {
+            dataL = {
+                'sort': {
+                    'col': '',
+                    'dir': ''
+                },
+                'search': '',
+                'page': '',
+            }
         }
-        localStorage.setItem('data-table-' + table, JSON.stringify(dataL));
+
+        localStorage.setItem('data-table' + this.pathname, JSON.stringify(dataL));
 
     },
     getLocalDataTable: function (table) {
-
-        return JSON.parse(localStorage.getItem('data-table-' + table))
-
+        return JSON.parse(localStorage.getItem('data-table' + this.pathname))
     },
     storeLocalDataTable: function (data) {
 
-        let dataL = TableDatatablesAjax.getLocalDataTable(data['table']);
+        let dataL = TableDatatablesAjax.getLocalDataTable(this.pathname);
         let dataSort = {};
-
+        console.log(dataL)
 
         if (dataL.sort.col || data['col']) {
             dataSort = {
@@ -83,25 +87,31 @@ const TableDatatablesAjax = {
             'sort': dataSort,
             'search': data['search'] ?? dataL.search ?? '',
             'page': data['page'] ?? dataL.page ?? '',
+            'pagination': data['pagination'] ?? dataL.pagination ?? '',
         }
 
-
-        localStorage.setItem('data-table-' + data['table'], JSON.stringify(dataL));
+        localStorage.setItem('data-table' + this.pathname, JSON.stringify(dataL));
 
     },
     initDataTable: async function () {
         try {
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
 
             TableDataTableHtml.initSpinner(true);
             await $.ajax({
                 url: $(location).attr('href'),
-                type: 'GET',
+                type: 'POST',
+                data: this.getLocalDataTable(this.pathname),
                 success: function (data) {
-
-                    TableDatatablesAjax.initLocalStorage(data['table'])
+                    TableDatatablesAjax.initLocalStorage(this.pathname)
                     TableDataTableHtml.initReloadTable(data)
                 },
             })
+
         } catch (error) {
             console.log(error);
         }
@@ -115,7 +125,7 @@ const TableDatatablesAjax = {
             elementClick = e
 
             this.storeLocalDataTable({
-                'table': $(e.target).parents('table').attr('data-table'),
+                'table': this.pathname,
                 'dir': $(e.currentTarget).attr('data-dir') ?? 'ASC',
                 'col': $(e.currentTarget).attr('data-sort'),
             });
@@ -130,7 +140,7 @@ const TableDatatablesAjax = {
             $.ajax({
                 url: $(location).attr('href'),
                 type: 'POST',
-                data: this.getLocalDataTable($(e.target).parents('table').attr('data-table')),
+                data: this.getLocalDataTable(this.pathname),
                 success: function (data) {
                     function resolveAfter2Seconds() {
                         return new Promise(resolve => {
@@ -141,7 +151,7 @@ const TableDatatablesAjax = {
                     resolveAfter2Seconds().then((e) => {
                         let $dataLocal = TableDatatablesAjax.getLocalDataTable(data.table);
                         TableDatatablesAjax.storeLocalDataTable({
-                            'table': data['table'],
+                            'table': this.pathname,
                             'dir': $('.sort_' + $dataLocal['sort']['col']).attr('data-dir'),
                             'col': $('.sort_' + $dataLocal['sort']['col']).attr('data-sort'),
                         })
@@ -171,10 +181,9 @@ const TableDatatablesAjax = {
             var url = $(e.currentTarget).attr('data-href');
             const urlParams = new URLSearchParams(url.split('?')[1]);
             const page = urlParams.get('page');
-            const tableName = $(e.target).parents('#parent-table').attr('data-table')
 
             this.storeLocalDataTable({
-                'table': tableName,
+                'table': this.pathname,
                 'page': page,
             });
 
@@ -182,7 +191,7 @@ const TableDatatablesAjax = {
             $.ajax({
                 url: $(e.currentTarget).attr('data-href'),
                 type: 'POST',
-                data: this.getLocalDataTable(tableName),
+                data: this.getLocalDataTable(this.pathname),
                 success: function (data) {
                     TableDataTableHtml.initReloadTable(data)
                 }
@@ -201,10 +210,9 @@ const TableDatatablesAjax = {
         $(document).on('keyup', '#search_datatable', function (e) {
             TableDataTableHtml.initSpinner(true);
 
-            const tableName = $(e.target).parents('#mytable_BS').find('#parent-table').attr('data-table')
 
             TableDatatablesAjax.storeLocalDataTable({
-                'table': tableName,
+                'table': this.pathname,
                 'search': $(e.target).val().toLowerCase(),
             });
 
@@ -220,32 +228,32 @@ const TableDatatablesAjax = {
     },
 
 
-    // filterDataTable: function () {
-    //     $.ajaxSetup({
-    //         headers: {
-    //             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-    //         }
-    //     });
-    //
-    //     $(document).on('change', '.filter_table_data', function (e) {
-    //         TableDataTableHtml.initSpinner(true);
-    //         let obj = JSON.parse(localStorage.getItem('data-table'))
-    //
-    //         obj['filter'] = {
-    //             [$(e.currentTarget).attr('name')]: $(e.currentTarget).val().toLowerCase(),
-    //         }
-    //
-    //         $.ajax({
-    //             url: $(document).attr('href'),
-    //             type: 'POST',
-    //             data: obj,
-    //             success: function (data) {
-    //                 $('#mytable_BS').html(data['data'])
-    //                 TableDataTableHtml.initSpinner(false);
-    //             }
-    //         })
-    //     })
-    // },
+    numberPaginationDataTable: function () {
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+
+        $(document).on('change', '#number_pagination', (e) => {
+            this.storeLocalDataTable({
+                'table': this.pathname,
+                'pagination': $(e.target).val(),
+            });
+
+            console.log(this.getLocalDataTable(this.pathname))
+
+            TableDataTableHtml.initSpinner(true);
+            $.ajax({
+                url: $(e.currentTarget).attr('data-href'),
+                type: 'POST',
+                data: this.getLocalDataTable(this.pathname),
+                success: function (data) {
+                    TableDataTableHtml.initReloadTable(data)
+                }
+            })
+        })
+    },
 
     init: function () {
         this.initDataTable().then(() => {
@@ -254,6 +262,7 @@ const TableDatatablesAjax = {
 
             this.paginationDataTable();
             this.searchDataTable();
+            this.numberPaginationDataTable();
             // this.filterDataTable();
         });
     }

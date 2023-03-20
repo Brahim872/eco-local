@@ -29,10 +29,7 @@ Route::group([
 //    'prefix' => 'backend',
     'middleware' => ['auth'],
 ], function () {
-
-    require __DIR__ . '/admin.php';
-    require __DIR__ . '/backend/companies.php';
-    require __DIR__ . '/backend/conatacts.php';
+    (new App\Helpers\Tools)->includeRoutes('backend');
 });
 
 require __DIR__ . '/auth.php';

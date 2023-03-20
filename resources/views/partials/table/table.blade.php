@@ -53,6 +53,7 @@
     </table>
 
     <div class="mt-4  w-max flex items-center">
+        <div id="column-number">@include('partials.table.column-number')</div>
         <div id="pagination">@include('partials.table.pagination')</div>
         <div id="pagination-info">@include('partials.table.pagination-info')</div>
     </div>

@@ -48,7 +48,12 @@ trait DataTableTrait
                 $ele[] = $item['parameterLink'].' as hide_slug';
             }
             if(!isset($item['display']) || $item['display']==true){
-                $ele[] = $item['table'].'.'.$key;
+
+                if(isset($item['table'])){
+                    $ele[] = $item['table'].'.'.$key;
+                }else{
+                    $ele[] =  $key;
+                }
             }
         }
         return $ele;
@@ -84,7 +89,7 @@ trait DataTableTrait
 
     public function initJoins()
     {
-        if ($this->innerJoin) {
+        if (isset($this->innerJoin)) {
 
             foreach ( $this->innerJoin as $join ) {
 
@@ -101,8 +106,7 @@ trait DataTableTrait
         $keys = array_keys($this->columns);
         $first_key = $this->columns[$keys[0]]['sortable'];
 
-
-        if ($this->currentRequest->sort) {
+        if ($this->currentRequest->sort && $this->currentRequest->sort['dir']) {
             $orderDir = $this->currentRequest->sort['dir'];
             $orderCol = $this->currentRequest->sort['col'];
         } else {
@@ -126,7 +130,8 @@ trait DataTableTrait
         $this->initOrderBy();
 
 
-        $this->dataTable = $this->dataTable->paginate(5)->toArray();
+
+        $this->dataTable = $this->dataTable->paginate($this->currentRequest->pagination??10)->toArray();
 
 
         $output = [
