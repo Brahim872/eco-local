@@ -121,7 +121,6 @@ class ContactController extends Controller
                     'first_name' => explode(',', $lines)[1]??null,
                     'last_name' => explode(',', $lines)[2]??null,
                 );
-
             }
             if($errors){
                 return $errors;
