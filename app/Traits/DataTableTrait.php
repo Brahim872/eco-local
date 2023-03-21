@@ -133,6 +133,7 @@ trait DataTableTrait
 
         $this->dataTable = $this->dataTable->paginate($this->currentRequest->pagination??10)->toArray();
 
+//        dd($this->dataTable);
 
         $output = [
 

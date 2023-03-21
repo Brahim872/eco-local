@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 
 use App\Actions\Admin\Companies\CreateCompany;
 use App\Actions\Admin\Companies\UpdateCompany;
+use App\Helpers\Tools;
 use App\Http\Requests\Admin\UpdateCompanyRequest;
 use App\Models\City;
 use App\Models\Company;
@@ -14,6 +15,7 @@ use App\Traits\DataTableTrait;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class CompanyController extends Controller
 {
@@ -35,6 +37,14 @@ class CompanyController extends Controller
             'title' => '#',
             'filterKey' => 'id',
             'sortable' => 'id',
+        ],
+
+        'profile' => [
+            'title' => 'user.profile',
+            'isImage' => true,
+
+            'class'=>'column_avatar',
+
         ],
         'name' => [
             'title' => 'company.name',
@@ -64,6 +74,21 @@ class CompanyController extends Controller
 //        ];
     }
 
+
+
+
+
+    protected function beforeSave(array $attributes, $model)
+    {
+        $file = $this->currentRequest->file('image');
+        if (isset($attributes['image']) && Tools::isValidFile($attributes['image'])) {
+            $extension = $file->getClientOriginalExtension();
+            $path = Storage::disk('public')->putFileAs('images/'.$this->prefixName, $file, uniqid().'.'.$extension);
+        }
+        $attributes['profile'] = $path??null;
+
+        return $attributes;
+    }
 
     /**
      * Define view vars

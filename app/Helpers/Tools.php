@@ -4,6 +4,7 @@ namespace App\Helpers;
 
 
 use Illuminate\Support\Facades\File;
+use SplFileInfo;
 
 class Tools
 {
@@ -72,7 +73,10 @@ class Tools
         return $text;
     }
 
-
+    public static function isValidFile($file)
+    {
+        return $file instanceof SplFileInfo && $file->getPath() !== '';
+    }
 
     public static function validateEmail($email) {
         // The regular expression pattern for email validation

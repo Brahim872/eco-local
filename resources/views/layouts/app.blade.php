@@ -22,7 +22,6 @@
         <div class="w-10/12 ">
             @include('layouts.navigation')
 
-
             <div class="p-4 text-gray-500">
                 {{ $slot }}
             </div>

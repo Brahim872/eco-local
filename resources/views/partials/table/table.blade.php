@@ -29,15 +29,22 @@
                         @if(explode('_',$id)[0] != 'hide')
 
                             @if(isset($columns[$id]['link']) && isset($columns[$id]['parameterLink']))
-                                <td scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap ">
+                                <td scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap @if(isset($columns[$id]['class'])) {{$columns[$id]['class']}} @endif ">
                                     <a class="font-medium text-blue-600 hover:underline"
                                        href="{{route($columns[$id]['link'],$rows['hide_slug'])}}">
                                         {{$item}}
                                     </a>
                                 </td>
+                            @elseif(isset($columns[$id]['isImage']))
+
+                                <td scope="row"
+                                    class="px-6 py-4 w-max font-medium text-gray-900 whitespace-nowrap @if(isset($columns[$id]['class'])) {{$columns[$id]['class']}} @endif">
+                                    <img alt="" class="w-12 h-12 border rounded-full "
+                                         src="{{asset($item?'storage/'.$item:'images/default.jpg')}}">
+                                </td>
                             @else
                                 <td scope="row"
-                                    class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap ">{{$item}}</td>
+                                    class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap @if(isset($columns[$id]['class'])) {{$columns[$id]['class']}} @endif">{{$item}}</td>
                             @endif
                         @endif
                     @endif

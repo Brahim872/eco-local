@@ -21,7 +21,7 @@
     height: 26px;
     position: absolute;
     top: 50%;
-    transform: translate(-50%,-50%);
+    transform: translate(-50%, -50%);
     right: 1px;
     width: 20px;
 }
@@ -118,6 +118,11 @@ a.paginate_button.previous.disabled {
     background-size: cover;
     background-repeat: no-repeat;
 
+}
+
+
+.column_avatar  {
+    width: 100px !important;
 }
 
 

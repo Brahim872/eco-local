@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Actions\Admin\Clients\UpdateProduct;
 use App\Actions\Admin\User\CreateUser;
 use App\Actions\Admin\User\UpdateUser;
+use App\Helpers\Tools;
 use App\Http\Requests\Admin\StoreUserRequest;
 use App\Http\Requests\Admin\UpdatePasswordUserRequest;
 use App\Http\Requests\Admin\UpdateUserRequest;
@@ -21,6 +22,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 
 class UserController extends Controller
 {
@@ -37,13 +39,22 @@ class UserController extends Controller
             'filterKey' => 'id',
             'sortable' => 'id',
         ],
+        'profile' => [
+            'title' => 'user.profile',
+            'isImage' => true,
+            'class'=>'column_avatar',
+        ],
         'name' => [
             'title' => 'user.name',
             'filterKey' => 'name',
             'sortable' => 'name',
-
         ],
+
     ];
+    /**
+     * @var Request
+     */
+    private $currentRequest;
 
 
     public function __construct(Request $request)
@@ -71,6 +82,18 @@ class UserController extends Controller
         return [
             'roles' => $roles,
         ];
+    }
+
+    protected function beforeSave(array $attributes, $model)
+    {
+        $file = $this->currentRequest->file('image');
+        if (Tools::isValidFile($attributes['image'])) {
+            $extension = $file->getClientOriginalExtension();
+            $path = Storage::disk('public')->putFileAs('images/users', $file, uniqid().'.'.$extension);
+        }
+        $attributes['profile'] = $path??null;
+
+        return $attributes;
     }
 
     protected function afterSave(array $attributes, $model)
