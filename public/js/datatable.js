@@ -16,23 +16,23 @@ const TableDataTableHtml = {
 
         $('#mytable_BS').html(`
 
-                <div class="header flex justify-start items-center">
-                    <div id="search">
-                        <form>
-                            <div>
-                                <input type="text"
-                                       value=""
-                                       id="search_datatable"
-                                       placeholder="Search...."
-                                       class='bg-gray-50 border
-                                                        border-gray-300 text-gray-900 text-sm
-                                                        rounded-lg focus:ring-gray-500 focus:border-gray-500 mb-4 block  w-full p-2.5'>
-                            </div>
-                        </form>
+                    <div class="header flex justify-start items-center">
+                        <div id="search">
+                            <form>
+                                <div>
+                                    <input type="text"
+                                           value=""
+                                           id="search_datatable"
+                                           placeholder="Search...."
+                                           class='bg-gray-50 border  border-gray-300 text-gray-900 text-sm
+                                                            rounded-lg focus:ring-gray-500 focus:border-gray-500 mb-4 block  w-full p-2.5'>
+                                </div>
+                            </form>
+                        </div>
                     </div>
-                </div>
-                <div id="spinner-table"></div>
-                <div id="own_table"></div>
+                    <div id="spinner-table"></div>
+                    <div id="own_table"></div>
+
                 `)
     },
 
@@ -74,7 +74,6 @@ const TableDatatablesAjax = {
 
         let dataL = TableDatatablesAjax.getLocalDataTable(this.pathname);
         let dataSort = {};
-        console.log(dataL)
 
         if (dataL.sort.col || data['col']) {
             dataSort = {
@@ -150,6 +149,7 @@ const TableDatatablesAjax = {
 
                     resolveAfter2Seconds().then((e) => {
                         let $dataLocal = TableDatatablesAjax.getLocalDataTable(data.table);
+
                         TableDatatablesAjax.storeLocalDataTable({
                             'table': this.pathname,
                             'dir': $('.sort_' + $dataLocal['sort']['col']).attr('data-dir'),
@@ -160,10 +160,8 @@ const TableDatatablesAjax = {
                         $('.sortable').removeAttr('data-dir')
                         $('.sort_' + $dataLocal['sort']['col']).attr('data-dir', sort)
                     });
-
                 },
             })
-
         })
 
 
@@ -178,7 +176,7 @@ const TableDatatablesAjax = {
         });
 
         $(document).on('click', '.page_item', (e) => {
-            var url = $(e.currentTarget).attr('data-href');
+            const url = $(e.currentTarget).attr('data-href');
             const urlParams = new URLSearchParams(url.split('?')[1]);
             const page = urlParams.get('page');
 
@@ -219,7 +217,7 @@ const TableDatatablesAjax = {
             $.ajax({
                 url: $(document).attr('href'),
                 type: 'POST',
-                data: TableDatatablesAjax.getLocalDataTable(tableName),
+                data: TableDatatablesAjax.getLocalDataTable(this.pathname),
                 success: function (data) {
                     TableDataTableHtml.initReloadTable(data, true)
                 }
@@ -241,7 +239,6 @@ const TableDatatablesAjax = {
                 'pagination': $(e.target).val(),
             });
 
-            console.log(this.getLocalDataTable(this.pathname))
 
             TableDataTableHtml.initSpinner(true);
             $.ajax({

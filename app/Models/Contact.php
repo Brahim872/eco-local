@@ -20,6 +20,21 @@ class Contact extends Model
         'email',
     ];
 
+    /**
+     * Get the validation rules that apply to the request.
+     *
+     * @return array
+     */
+//    public function rules()
+//    {
+//        return [
+//            'company_id' => 'required',
+//            'first_name' => 'required',
+//            'last_name' => 'required',
+//            'email' => 'required',
+//        ];
+//    }
+
     protected $table = "contacts";
 
 

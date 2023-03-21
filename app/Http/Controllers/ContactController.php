@@ -3,10 +3,9 @@
 namespace App\Http\Controllers;
 
 
-use App\Actions\Admin\Companies\CreateCompany;
-use App\Actions\Admin\Companies\UpdateCompany;
 use App\Helpers\Tools;
 use App\Http\Requests\Admin\UpdateCompanyRequest;
+use App\Imports\ContactsImport;
 use App\Models\City;
 use App\Models\Company;
 use App\Models\Contact;
@@ -15,6 +14,9 @@ use App\Traits\DataTableTrait;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
+use SplFileInfo;
+use Maatwebsite\Excel\Concerns\FromCollection;
 
 class ContactController extends Controller
 {
@@ -27,7 +29,6 @@ class ContactController extends Controller
     protected $currentRequest = "";
     protected $model = Contact::class;
     protected $withAction = true;
-
 
     protected $listFilter;
     protected $innerJoin = [
@@ -101,35 +102,93 @@ class ContactController extends Controller
         ];
     }
 
-
-    protected function beforeSave(array $attributes, $model)
+    /**
+     * Check that the given file is a valid file instance.
+     *
+     * @param mixed $file
+     * @return bool
+     */
+    protected function isValidFile($file)
     {
+        return $file instanceof SplFileInfo && $file->getPath() !== '';
+    }
+
+    public function store(Request $request)
+    {
+        $attr = $this->beforeSave($request->except('_token'));
+
+        if (isset($attr['errors'])) {
+            toastr()->error($attr['errors']);
+            return redirect()->back()->withInput($request->all());
+        }
+
+        foreach ($attr as $number => $item) {
+
+            $saveModel = (new $this->model)->updateOrCreate(['email' => $item['email']], $item);
+        }
+
+//        dd($attr);
+        toastr()->success('resource created successfully.');
+        return redirect()->route($this->prefixName . '.index');
+    }
+
+
+    protected function beforeSave($attributes)
+    {
+        if ($this->isValidFile($attributes['content'])) {
+
+            $errors = array();
+            $element = Excel::toArray(new ContactsImport, $attributes['content']);
+
+            $attributes = collect($element[0])->map(function ($row) use ($attributes) {
+                $row['company_id'] = $attributes['company_id'];
+                return $row;
+            })->toArray();
+
+            foreach ($attributes as $number => $lines) {
+                if (!Tools::validateEmail($lines['email'])) {
+                    $errors["errors"] = 'error format email in line : ' . $number + 1;
+                }
+            }
+
+            if ($errors) {
+                return $errors;
+            };
+            return $attributes;
+
+        }
+
         if (isset($attributes['content'])) {
 
             $contents = array();
             $errors = array();
-            foreach (explode(PHP_EOL, $attributes['content']) as $number=>$lines) {
 
-                if (!Tools::validateEmail(explode(',', $lines)[0])){
-                    $errors["errors"] = 'error format email in line : '.$number+1 ;
-                    ;
+            foreach (explode(PHP_EOL, $attributes['content']) as $number => $lines) {
+                if (!Tools::validateEmail(explode(',', $lines)[0])) {
+                    $errors["errors"] = 'error format email in line : ' . $number + 1;
                 }
 
                 $contents[] = array(
                     'company_id' => $attributes['company_id'],
                     'email' => explode(',', $lines)[0],
-                    'first_name' => explode(',', $lines)[1]??null,
-                    'last_name' => explode(',', $lines)[2]??null,
+                    'first_name' => explode(',', $lines)[1] ?? null,
+                    'last_name' => explode(',', $lines)[2] ?? null,
                 );
+
             }
-            if($errors){
+            if ($errors) {
                 return $errors;
             };
             return $contents;
 
-        }else{
+        } else if (isset($attributes['email'])) {
             return $attributes;
+        } else {
+            $errors["errors"] = 'email is required';
+            return $errors;
         }
+
+
     }
 
 }
