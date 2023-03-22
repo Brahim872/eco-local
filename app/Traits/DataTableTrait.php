@@ -45,12 +45,21 @@ trait DataTableTrait
 
 
             if(isset($item['parameterLink']) ){
-                $ele[] = $item['parameterLink'].' as hide_slug';
+                if(isset($item['from'])){
+                    $ele[] = $item['from'].'.'.$item['parameterLink'];
+                }else{
+                    $ele[] = $item['parameterLink'];
+                }
             }
+
             if(!isset($item['display']) || $item['display']==true){
 
-                if(isset($item['table'])){
-                    $ele[] = $item['table'].'.'.$key;
+                if(isset($item['select'])){
+                    if (isset($item['as'])){
+                        $ele[] = $item['from'].'.'. $item['select'].' as '.$item['as'];
+                    }else{
+                        $ele[] =  $item['from'].'.'.$item['select'];
+                    }
                 }else{
                     $ele[] =  $key;
                 }
@@ -78,8 +87,8 @@ trait DataTableTrait
 
             foreach ($this->currentRequest->filter as $key=>$column) {
 
-                    $this->dataTable = $this->dataTable
-                        ->where($key, 'like', '%' . $column . '%');
+                $this->dataTable = $this->dataTable
+                    ->where($key, 'like', '%' . $column . '%');
 
 
             }
@@ -93,8 +102,18 @@ trait DataTableTrait
 
             foreach ( $this->innerJoin as $join ) {
 
-                    $this->dataTable = $this->dataTable
-                        ->join($join[0],$join[1],$join[2]);
+                $this->dataTable = $this->dataTable
+                    ->join($join[0],$join[1],$join[2]);
+
+
+            }
+        }
+        if (isset($this->leftJoin)) {
+
+            foreach ( $this->leftJoin as $join ) {
+
+                $this->dataTable = $this->dataTable
+                    ->leftJoin($join[0],$join[1],$join[2]);
 
 
             }
@@ -115,6 +134,7 @@ trait DataTableTrait
         }
 
         $this->dataTable = $this->dataTable->orderBy($orderCol, $orderDir);
+
     }
 
     public function createAjaxResponse()
@@ -129,11 +149,8 @@ trait DataTableTrait
         $this->initSearch();
         $this->initOrderBy();
 
-
-
         $this->dataTable = $this->dataTable->paginate($this->currentRequest->pagination??10)->toArray();
 
-//        dd($this->dataTable);
 
         $output = [
 

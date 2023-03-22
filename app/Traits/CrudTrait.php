@@ -40,7 +40,7 @@ trait CrudTrait
             return redirect()->back()->withInput($request->all());
         }
 
-        $saveModel = (new $this->model)->create($attr);
+        $saveModel = (new $this->model)->insert($attr);
 
 
 
@@ -73,7 +73,7 @@ trait CrudTrait
      */
     protected function beforeSave(array $attributes, $model)
     {
-            return $attributes;
+        return $attributes;
     }
 
     public function update($request, $client, $service)
