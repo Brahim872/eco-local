@@ -13,14 +13,17 @@
         <div class=" mx-auto mt-4  rounded">
             <!-- Tabs -->
             <ul id="tabs" class="tabs-nav flex   space-x-2 overflow-x-auto overflow-y-hidden  flex-nowrap ">
-                <li class="flex items-center flex-shrink-0 px-5 py-2 border-b-4 border-gray-700 text-gray-400"><a
-                        id="default-tab" href="#first">All</a></li>
-                <li class="flex items-center flex-shrink-0 px-5 py-2 border-b-4 text-gray-400"><a
-                        href="#second">Clothes</a></li>
-                <li class="flex items-center flex-shrink-0 px-5 py-2 border-b-4 text-gray-400"><a href="#third">Electronics</a>
+                <li class="flex items-center flex-shrink-0 px-5 py-2 border-b-4 border-gray-700 text-gray-400">
+                    <a id="default-tab" href="#first">Subscriber</a>
                 </li>
                 <li class="flex items-center flex-shrink-0 px-5 py-2 border-b-4 text-gray-400">
-                    <a href="#fourth">Others</a>
+                    <a href="#second">Insert</a>
+                </li>
+                <li class="flex items-center flex-shrink-0 px-5 py-2 border-b-4 text-gray-400">
+                    <a href="#third">Upload</a>
+                </li>
+                <li class="flex items-center flex-shrink-0 px-5 py-2 border-b-4 text-gray-400">
+                    <a href="#fourth">Upload</a>
                 </li>
             </ul>
             <!-- Tab Contents -->

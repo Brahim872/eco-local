@@ -4,23 +4,18 @@ namespace App\Http\Controllers;
 
 
 use App\Helpers\Tools;
-use App\Http\Requests\Admin\UpdateCompanyRequest;
 use App\Imports\ContactsImport;
-use App\Models\City;
 use App\Models\Company;
 use App\Models\Contact;
 use App\Traits\CrudTrait;
 use App\Traits\DataTableTrait;
-use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
 use SplFileInfo;
-use Maatwebsite\Excel\Concerns\FromCollection;
 
 class ContactController extends Controller
 {
-
 
     use CrudTrait;
     use DataTableTrait;
@@ -38,35 +33,41 @@ class ContactController extends Controller
     protected $columns = [
         'id' => [
             'title' => '#',
+            'select' => 'id',
+            'from' => 'contacts',
             'filterKey' => 'contacts.id',
             'sortable' => 'contacts.id',
-            'table' => 'contacts'
         ],
         'first_name' => [
             'title' => 'contact.first_name',
+            'select' => 'first_name',
+            'from' => 'contacts',
             'filterKey' => 'contacts.first_name',
             'sortable' => 'contacts.first_name',
-            'table' => 'contacts'
         ],
         'last_name' => [
             'title' => 'contact.last_name',
+
+            'select' => 'last_name',
+            'from' => 'contacts',
             'filterKey' => 'contacts.last_name',
             'sortable' => 'contacts.last_name',
-            'table' => 'contacts'
         ],
         'email' => [
             'title' => 'contact.email',
+            'select' => 'email',
+            'from' => 'contacts',
             'filterKey' => 'contacts.last_name',
             'sortable' => 'contacts.last_name',
-            'table' => 'contacts'
         ],
         'name' => [
             'title' => 'contact.company_id',
+            'select' => 'name',
+            'from' => 'bs_companies',
             'filterKey' => 'bs_companies.name',
             'sortable' => 'bs_companies.name',
             'link' => 'company.show',
-            'parameterLink' => 'bs_companies.slug',
-            'table' => 'bs_companies'
+            'parameterLink' => 'slug as hide_slug',
         ],
         'slug' => [
             'title' => 'company.slug',
@@ -123,11 +124,9 @@ class ContactController extends Controller
         }
 
         foreach ($attr as $number => $item) {
-
-            $saveModel = (new $this->model)->updateOrCreate(['email' => $item['email']], $item);
+            $saveModel = (new $this->model)->updateOrCreate(['email' => $item['email'],'company_id' => $item['company_id']], $item);
         }
 
-//        dd($attr);
         toastr()->success('resource created successfully.');
         return redirect()->route($this->prefixName . '.index');
     }
@@ -135,7 +134,7 @@ class ContactController extends Controller
 
     protected function beforeSave($attributes)
     {
-        if ($this->isValidFile($attributes['content'])) {
+        if (isset($attributes['content']) && $this->isValidFile($attributes['content'])) {
 
             $errors = array();
             $element = Excel::toArray(new ContactsImport, $attributes['content']);

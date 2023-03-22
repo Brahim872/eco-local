@@ -3099,8 +3099,20 @@ $('.switchStatus').on('change', function (e) {
 /***/ (() => {
 
 $(document).ready(function () {
-  var tab = localStorage.getItem('tabs');
-  tabsEvent(tab, $('a[href="' + tab + '"]'));
+  function getAllHrefs() {
+    return $('.tabs-nav a').map(function () {
+      return $(this).attr('href');
+    }).get();
+  }
+  var tab = $('.tabs-nav').find('li:first-child a').attr('href');
+  if (localStorage.getItem('tabs') && jQuery.inArray(localStorage.getItem('tabs'), getAllHrefs()) === -1) {
+    localStorage.removeItem('tabs');
+  }
+  if (localStorage.getItem('tabs')) {
+    tab = localStorage.getItem('tabs');
+  }
+  var child = $('a[href="' + tab + '"]');
+  tabsEvent(tab, child);
   function tabsEvent(tabId, this_) {
     // Remove the active class from all tabs and tab panels
     $('.tabs-nav li').removeClass('font-semibold border-gray-700');

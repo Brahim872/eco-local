@@ -19,7 +19,7 @@ class Campaign extends Model
         'archived_at',
         'scheduled_at'
     ];
-    protected $table = "bs_campaigns";
+    protected $table = "campaigns";
 
 
     public function sluggable(): array

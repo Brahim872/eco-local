@@ -35,27 +35,33 @@ class CompanyController extends Controller
     protected $columns = [
         'id' => [
             'title' => '#',
+            'select'=>'id',
+            'from'=>'bs_companies',
             'filterKey' => 'id',
             'sortable' => 'id',
         ],
 
         'profile' => [
-            'title' => 'user.profile',
+            'title' => '',
             'isImage' => true,
-
+            'select'=>'profile',
+            'from'=>'bs_companies',
             'class'=>'column_avatar',
-
         ],
         'name' => [
             'title' => 'company.name',
+            'select'=>'name',
+            'from'=>'bs_companies',
             'filterKey' => 'name',
             'sortable' => 'name',
             'link' => 'company.show',
-            'parameterLink' => 'slug'
+            'parameterLink' => 'slug as hide_slug'
 
         ],
         'website' => [
             'title' => 'company.website',
+            'select'=>'website',
+            'from'=>'bs_companies',
             'filterKey' => 'website',
             'sortable' => 'website',
         ],
@@ -86,6 +92,7 @@ class CompanyController extends Controller
             $path = Storage::disk('public')->putFileAs('images/'.$this->prefixName, $file, uniqid().'.'.$extension);
         }
         $attributes['profile'] = $path??null;
+
 
         return $attributes;
     }

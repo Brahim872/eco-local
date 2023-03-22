@@ -44,7 +44,6 @@ class CampaignController extends Controller
             'sortable' => 'name',
             'link' => 'company.show',
             'parameterLink' => 'slug'
-
         ],
         'website' => [
             'title' => 'company.website',
@@ -86,29 +85,6 @@ class CampaignController extends Controller
             'contacts' => $contacts,
         ];
 
-    }
-
-    protected function afterSave(array $attributes, $model)
-    {
-        if (isset($attributes['roles'])) {
-            $roles = $attributes['roles'] ?? 'company';
-            $model->assignRole($roles);
-        }
-    }
-
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param UpdateCompanyRequest $request
-     * @param Company $Company
-     * @param UpdateCompany $updateCompany
-     * @return RedirectResponse
-     */
-    public function updateCompany(UpdateCompanyRequest $request, $Company, UpdateCompany $updateCompany)
-    {
-        $Company = Company::findOrFail($Company);
-        return $this->update($request, $Company, $updateCompany);
     }
 
 }

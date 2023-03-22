@@ -57,6 +57,14 @@ return [
                 "company" => ["read", "create", "delete"],
             ]
         ],
+        [
+            'name' => 'campaign',
+            'category' => 'campaign',
+            'access' => [
+                "super-backend" => ["read", "create", "delete"],
+                "company" => ["read", "create", "delete"],
+            ]
+        ],
     ],
 
 

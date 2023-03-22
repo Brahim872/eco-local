@@ -25,15 +25,15 @@ class Contact extends Model
      *
      * @return array
      */
-//    public function rules()
-//    {
-//        return [
-//            'company_id' => 'required',
-//            'first_name' => 'required',
-//            'last_name' => 'required',
-//            'email' => 'required',
-//        ];
-//    }
+    public function rules()
+    {
+        return [
+            'company_id' => 'required',
+            'first_name' => 'required',
+            'last_name' => 'required',
+            'email' => 'required',
+        ];
+    }
 
     protected $table = "contacts";
 

@@ -40,7 +40,7 @@ trait CrudTrait
             return redirect()->back()->withInput($request->all());
         }
 
-        $saveModel = (new $this->model)->insert($attr);
+        $saveModel = (new $this->model)->create($attr);
 
 
 
