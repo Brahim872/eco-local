@@ -28,7 +28,7 @@ Route::group([
     Route::get('edit/{slug}', [CompanyController::class, 'edit'])
         ->name('company.edit');
 
-    Route::put('update/{id}', [CompanyController::class, 'updateCompany'])
+    Route::post('update/{id}', [CompanyController::class, 'update'])
         ->name('company.update');
 
 });

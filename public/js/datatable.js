@@ -12,38 +12,24 @@ const TableDataTableHtml = {
             this.spinnerTable.html(``)
         }
     },
-    initTemplate: function () {
-
-        $('#mytable_BS').html(`
-
-                    <div class="header flex justify-start items-center">
-                        <div id="search">
-                            <form>
-                                <div>
-                                    <input type="text"
-                                           value=""
-                                           id="search_datatable"
-                                           placeholder="Search...."
-                                           class='bg-gray-50 border  border-gray-300 text-gray-900 text-sm
-                                                            rounded-lg focus:ring-gray-500 focus:border-gray-500 mb-4 block  w-full p-2.5'>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                    <div id="spinner-table"></div>
-                    <div id="own_table"></div>
-
-                `)
-    },
+    // initTemplate: function () {
+    //
+    //     $('#mytable_BS').html(``)
+    // },
 
     initReloadTable: function (data, focus = false) {
-        $('#own_table').html(data['data'])
+
+        let dataL = TableDatatablesAjax.getLocalDataTable($(location).attr('pathname'));
+        $('#mytable_BS').html(data['data'])
+
+        let fieldSearch = $('#search_datatable').val(dataL.search)
+
         TableDataTableHtml.initSpinner(false);
     },
 
     init: function () {
         this.initSpinner();
-        this.initTemplate();
+        // this.initTemplate();
     }
 
 }
@@ -61,6 +47,7 @@ const TableDatatablesAjax = {
                 },
                 'search': '',
                 'page': '',
+                'filter': '',
             }
         }
 
@@ -87,6 +74,7 @@ const TableDatatablesAjax = {
             'search': data['search'] ?? dataL.search ?? '',
             'page': data['page'] ?? dataL.page ?? '',
             'pagination': data['pagination'] ?? dataL.pagination ?? '',
+            'filter': data['filter'] ?? dataL.filter ?? '',
         }
 
         localStorage.setItem('data-table' + this.pathname, JSON.stringify(dataL));
@@ -143,13 +131,14 @@ const TableDatatablesAjax = {
                 success: function (data) {
                     function resolveAfter2Seconds() {
                         return new Promise(resolve => {
-                            resolve($('#own_table').html(data['data']));
+                            resolve($('#mytable_BS').html(data['data']));
                         });
                     }
 
                     resolveAfter2Seconds().then((e) => {
                         let $dataLocal = TableDatatablesAjax.getLocalDataTable(data.table);
 
+                        $('#search_datatable').val($dataLocal.search)
                         TableDatatablesAjax.storeLocalDataTable({
                             'table': this.pathname,
                             'dir': $('.sort_' + $dataLocal['sort']['col']).attr('data-dir'),
@@ -208,7 +197,6 @@ const TableDatatablesAjax = {
         $(document).on('keyup', '#search_datatable', function (e) {
             TableDataTableHtml.initSpinner(true);
 
-
             TableDatatablesAjax.storeLocalDataTable({
                 'table': this.pathname,
                 'search': $(e.target).val().toLowerCase(),
@@ -220,6 +208,48 @@ const TableDatatablesAjax = {
                 data: TableDatatablesAjax.getLocalDataTable(this.pathname),
                 success: function (data) {
                     TableDataTableHtml.initReloadTable(data, true)
+                    if($('#search_datatable').val() != ''){
+                        $('#search_datatable').focus()
+                    }
+                }
+            })
+        })
+    },
+
+
+    filterDataTable: function () {
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+
+        $(document).on('change', '.filter_table_data', function (e) {
+            TableDataTableHtml.initSpinner(true);
+
+            console.log($(e.currentTarget).val())
+
+            let datFilt =  {
+                    'field': $(e.currentTarget).attr('name'),
+                    'value': $(e.currentTarget).val()
+                }
+            TableDatatablesAjax.storeLocalDataTable({
+                'table': this.pathname,
+                'filter':  {
+                    datFilt
+                },
+            });
+
+            console.log(TableDatatablesAjax.getLocalDataTable(this.pathname))
+            $.ajax({
+                url: $(document).attr('href'),
+                type: 'POST',
+                data: TableDatatablesAjax.getLocalDataTable(this.pathname),
+                success: function (data) {
+                    TableDataTableHtml.initReloadTable(data, true)
+                    if($('#search_datatable').val() != ''){
+                        $('#search_datatable').focus()
+                    }
                 }
             })
         })
@@ -260,7 +290,7 @@ const TableDatatablesAjax = {
             this.paginationDataTable();
             this.searchDataTable();
             this.numberPaginationDataTable();
-            // this.filterDataTable();
+            this.filterDataTable();
         });
     }
 

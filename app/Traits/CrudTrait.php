@@ -23,7 +23,9 @@ trait CrudTrait
      */
     public function create()
     {
-        $view = $this->getView('backend.' . $this->prefixName . '.form');
+        $view = $this->getView('backend.' . $this->prefixName . '.form')
+
+            ->with('action',route($this->prefixName.'.store'));
         return $view;
     }
 
@@ -69,17 +71,34 @@ trait CrudTrait
      *
      * @param array $attributes
      * @param $model
-     * @return void
+     * @return array
      */
     protected function beforeSave(array $attributes, $model)
     {
         return $attributes;
     }
 
-    public function update($request, $client, $service)
+    public function update(Request $request,$id)
     {
-        $service->handle($request, $client);
-        toastr()->success('resource updated successfully.');
+
+        $attr =  $this->beforeSave($request->except('_token'), (new $this->model));
+
+
+        if(isset($attr['errors'])){
+            toastr()->error($attr['errors']);
+            return redirect()->back()->withInput($request->all());
+        }
+
+        $saveModel = (new $this->model)->find($id)->update($attr);
+
+
+
+
+        if ($saveModel) {
+            $this->afterSave($request->all(), $saveModel);
+        }
+
+        toastr()->success('resource created successfully.');
         return redirect()->route($this->prefixName . '.index');
     }
 
@@ -89,7 +108,8 @@ trait CrudTrait
         $model = $this->model::where('slug', $slug)->firstOrFail();
 
         $view = $this->getView('backend.' . $this->prefixName . '.form');
-        return $view->with('model', $model);
+        return $view->with('model', $model)
+            ->with('action',route($this->prefixName.'.update',$model->id));
     }
 
 

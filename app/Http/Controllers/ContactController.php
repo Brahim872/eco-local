@@ -80,8 +80,12 @@ class ContactController extends Controller
     public function __construct(Request $request)
     {
         $this->currentRequest = $request;
+
         $this->listFilter = [
-            'companies' => (array)Company::select(['id', 'name'])->get()->toArray(),
+
+                'companies' => ['company_id',Company::whereHas("contact")->select(['id', 'name'])->get()->pluck('name','id')],
+                'contacts' => ['email',Contact::select(['email', 'email'])->get()->pluck('email', 'email')],
+
         ];
     }
 
@@ -124,7 +128,7 @@ class ContactController extends Controller
         }
 
         foreach ($attr as $number => $item) {
-            $saveModel = (new $this->model)->updateOrCreate(['email' => $item['email'],'company_id' => $item['company_id']], $item);
+            $saveModel = (new $this->model)->updateOrCreate(['email' => $item['email'], 'company_id' => $item['company_id']], $item);
         }
 
         toastr()->success('resource created successfully.');

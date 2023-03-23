@@ -83,15 +83,18 @@ trait DataTableTrait
     public function initFilter()
     {
 
+
         if ($this->currentRequest->filter) {
 
             foreach ($this->currentRequest->filter as $key=>$column) {
+
 
                 $this->dataTable = $this->dataTable
                     ->where($key, 'like', '%' . $column . '%');
 
 
             }
+//            dd();
         }
     }
 
@@ -145,7 +148,7 @@ trait DataTableTrait
             ->select($select);
 
         $this->initJoins();
-        $this->initFilter();
+//        $this->initFilter();
         $this->initSearch();
         $this->initOrderBy();
 
@@ -154,14 +157,14 @@ trait DataTableTrait
 
         $output = [
 
-            'filter' => view('partials.table.filter')
-                ->with('listFilter', $this->listFilter??[])
-                ->render(),
-
+//            'filter' => view('partials.table.filter')
+//                ->with('listFilter', $this->listFilter??[])
+//                ->render(),
             'table' =>$this->prefixName,
 
             'data' => view('partials.table.table')
                 ->with('dataTable', $this->dataTable)
+                ->with('listFilter', $this->listFilter)
                 ->with('columns', $this->columns)
                 ->with('prefixName', $this->prefixName)
                 ->with('withAction', $this->withAction??NULL)

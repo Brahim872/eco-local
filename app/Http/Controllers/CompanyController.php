@@ -75,9 +75,9 @@ class CompanyController extends Controller
     public function __construct(Request $request)
     {
         $this->currentRequest = $request;
-//        $this->listFilter = [
-//            'name' => (array)(new $this->model)->select(['name'])->get()->toArray(),
-//        ];
+        $this->listFilter = [
+            'name' => (array)(new $this->model)->select(['name'])->get()->toArray(),
+        ];
     }
 
 
@@ -90,8 +90,12 @@ class CompanyController extends Controller
         if (isset($attributes['image']) && Tools::isValidFile($attributes['image'])) {
             $extension = $file->getClientOriginalExtension();
             $path = Storage::disk('public')->putFileAs('images/'.$this->prefixName, $file, uniqid().'.'.$extension);
+            $attributes['profile'] = $path;
+
+        }else{
+
+            $attributes['profile'] =  $this->currentRequest->profile;
         }
-        $attributes['profile'] = $path??null;
 
 
         return $attributes;

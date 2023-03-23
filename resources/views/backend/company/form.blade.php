@@ -10,16 +10,18 @@
 
     <div class="w-full py-2 bg-white overflow-hidden">
 
-        <form method="POST" action="{{ route('company.store') }}" enctype="multipart/form-data">
+        <form method="POST" action="{{ $action??'' }}" enctype="multipart/form-data">
             @csrf
 
             <div class="py-2">
-
+                @if(isset($model->profile))
+                    <input type="hidden" name="profile" value="{{$model->profile}}">
+                @endif
                 <x-admin.form.image id="image" class="{{$errors->has('image') ? 'border-red-400' : ''}} "
                                     name="image"
                                     accept="image/*"
-
-                                    value="{{ old('image') }}"
+                                    src="{{isset($model->profile)? asset('storage/'.$model->profile) : old('profile') }}"
+                                    value="{{isset($model->profile)? $model->profile : old('profile') }}"
                 />
             </div>
 
