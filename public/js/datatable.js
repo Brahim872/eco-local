@@ -17,12 +17,20 @@ const TableDataTableHtml = {
     //     $('#mytable_BS').html(``)
     // },
 
-    initReloadTable: function (data, focus = false) {
+    initReloadTable: function (data) {
 
         let dataL = TableDatatablesAjax.getLocalDataTable($(location).attr('pathname'));
         $('#mytable_BS').html(data['data'])
 
         let fieldSearch = $('#search_datatable').val(dataL.search)
+
+        $.each(dataL.filter,(ind,elem)=>{
+            console.log('dfkgj')
+            if ($('#form_filter_dataTable').find('select[name="'+elem['name']+'"] option').val() == elem['value']){
+                $('#form_filter_dataTable').find('select[name="'+elem['name']+'"] option').attr('selected','true')
+            }
+        })
+        // let fieldSearch =
 
         TableDataTableHtml.initSpinner(false);
     },
@@ -208,7 +216,7 @@ const TableDatatablesAjax = {
                 data: TableDatatablesAjax.getLocalDataTable(this.pathname),
                 success: function (data) {
                     TableDataTableHtml.initReloadTable(data, true)
-                    if($('#search_datatable').val() != ''){
+                    if ($('#search_datatable').val() != '') {
                         $('#search_datatable').focus()
                     }
                 }
@@ -227,17 +235,12 @@ const TableDatatablesAjax = {
         $(document).on('change', '.filter_table_data', function (e) {
             TableDataTableHtml.initSpinner(true);
 
-            console.log($(e.currentTarget).val())
 
-            let datFilt =  {
-                    'field': $(e.currentTarget).attr('name'),
-                    'value': $(e.currentTarget).val()
-                }
+            var formData = $('#form_filter_dataTable').serializeArray()
+
             TableDatatablesAjax.storeLocalDataTable({
                 'table': this.pathname,
-                'filter':  {
-                    datFilt
-                },
+                'filter': formData,
             });
 
             console.log(TableDatatablesAjax.getLocalDataTable(this.pathname))
@@ -246,8 +249,9 @@ const TableDatatablesAjax = {
                 type: 'POST',
                 data: TableDatatablesAjax.getLocalDataTable(this.pathname),
                 success: function (data) {
+
                     TableDataTableHtml.initReloadTable(data, true)
-                    if($('#search_datatable').val() != ''){
+                    if ($('#search_datatable').val() != '') {
                         $('#search_datatable').focus()
                     }
                 }

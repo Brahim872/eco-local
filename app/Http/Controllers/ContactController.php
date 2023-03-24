@@ -81,12 +81,12 @@ class ContactController extends Controller
     {
         $this->currentRequest = $request;
 
-        $this->listFilter = [
-
-                'companies' => ['company_id',Company::whereHas("contact")->select(['id', 'name'])->get()->pluck('name','id')],
-                'contacts' => ['email',Contact::select(['email', 'email'])->get()->pluck('email', 'email')],
-
-        ];
+//        $this->listFilter = [
+//
+//                'companies' => ['company_id',Company::whereHas("contact")->select(['id', 'name'])->get()->pluck('name','id')],
+//                'contacts' => ['email',Contact::select(['email', 'email'])->get()->pluck('email', 'email')],
+//
+//        ];
     }
 
 
