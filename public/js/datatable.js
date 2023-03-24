@@ -155,7 +155,7 @@ const TableDatatablesAjax = {
 
                         let sort = $dataLocal['sort']['dir'] == "ASC" ? 'DESC' : 'ASC';
                         $('.sortable').removeAttr('data-dir')
-                        $('.sort_' + $dataLocal['sort']['col']).attr('data-dir', sort)
+                        $('.sort_' + $dataLocal['sort']['col'].replace(".", "_")).attr('data-dir', sort)
                     });
                 },
             })

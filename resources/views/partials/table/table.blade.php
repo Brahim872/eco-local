@@ -27,7 +27,7 @@
             <tr>
                 @foreach($columns as $key=>$rows)
                     @if(!isset($rows['display']) || $rows['display']==true)
-                        <th @if(isset($rows['sortable'])) class="sortable sort_{{$rows['sortable']}} px-6 py-3" scope="col"
+                        <th @if(isset($rows['sortable'])) class="sortable sort_{{str_replace('.','_',$rows['sortable'])}} px-6 py-3" scope="col"
                             data-sort="{{$rows['sortable']}}" @endif >{{$rows['title']}} </th>
                     @endif
                 @endforeach
